@@ -1,0 +1,245 @@
+# -------------------------------------------
+# Rainbond-Console:
+# -------------------------------------------
+
+# Refer to README for configuration details
+# Please refer to the official documentation for installation https://www.rainbond.com/docs/install/other-methods/install-from-rancher/
+
+
+# Specify up the dynamic storage used by the RainBond component
+# If not, please refer https://artifacthub.io/packages/helm/kvaps/nfs-server-provisioner
+pvc:
+  storageClassName: ""
+  # 5Gi
+  storageSize: 5Gi
+
+# Redis configuration,Refer to README for configuration details
+redis:
+  # Specify the full name of Redis
+  fullname: rainbond-redis
+
+  # Specify the Redis image
+  image:
+    repository: redis
+    pullPolicy: IfNotPresent
+    tag: 4.0.12
+
+  # Specify the Redis Password 
+  password: "123456"
+  podAnnotations: {}
+
+  # Set the Redis Labels
+  selectorLabels: 
+    rainbond: redis
+
+  # Set POD resource limits
+  resources:
+    limits:
+      cpu: 80m
+      memory: 64Mi
+    requests:
+      cpu: 30m
+      memory: 64Mi
+
+  nodeSelector: {}
+  affinity: {}
+
+# Mysql configuration,Refer to README for configuration details
+mysql:
+
+  # Specify the full name of Mysql
+  fullname: rainbond-mysql
+
+  # Specify the Mysql image
+  image:
+    repository: mysql
+    pullPolicy: IfNotPresent
+    tag: 5.7.23
+
+  # Specify your MySQL account password and database
+  secret:
+    user: admin
+    password: admin
+    rootpassword: root
+    database: console
+
+  podAnnotations: {}
+
+  # Set the MySQL Labels
+  selectorLabels: 
+    rainbond: mysql
+
+  # Set POD resource limits
+  resources:
+    limits:
+      cpu: 640m
+      memory: 512Mi
+    requests:
+      cpu: 120m
+      memory: 512Mi
+
+  nodeSelector: {}
+  affinity: {}
+
+# Separate versions of the front and back ends of RainBond-Console
+# Cluster installation controller configuration
+# Deprecated, please refer to the official documentation to install the detached console from the Rainstore https://www.rainbond.com/docs/user-operations/ha-deploy/console-recover/
+adaptor:
+
+  # Specify the full name of adaptor
+  fullname: rainbond-adaptor
+
+  # Adaptor is not installed by default
+  enable: false
+
+  # Specify the Adaptor image
+  # No mirroring is provided by default
+  image:
+    repository: ""
+    pullPolicy: IfNotPresent
+    tag: ""
+
+  podAnnotations: {}
+
+  # Set the Adaptor Labels
+  selectorLabels: 
+    rainbond: adaptor
+
+  # Set POD resource limits
+  resources:
+    limits:
+      cpu: 80m
+      memory: 64Mi
+    requests:
+      cpu: 30m
+      memory: 64Mi
+
+  nodeSelector: {}
+  affinity: {}
+
+# Separate versions of the front and back ends of RainBond-Console
+# Console back-end services
+# Deprecated, please refer to the official documentation to install the detached console from the Rainstore https://www.rainbond.com/docs/user-operations/ha-deploy/console-recover/
+console:
+
+  # Specify the full name of Console
+  fullname: rainbond-console
+
+  # Console is not installed by default
+  enable: false
+
+  # Set the number of copies
+  replicasCount: 1
+
+  # Set the Console version
+  RELEASE_DESC: "v5.3.1-release-20210703"
+
+  # Specify the Console image
+  # No mirroring is provided by default
+  image:
+    repository: ""
+    pullPolicy: IfNotPresent
+    tag: ""
+
+  podAnnotations: {}
+
+  # Set the Console Labels
+  selectorLabels: 
+    rainbond: console
+
+  # Set POD resource limits
+  resources:
+    limits:
+      cpu: 1280m
+      memory: 1Gi
+    requests:
+      cpu: 240m
+      memory: 1Gi
+
+  nodeSelector: {}
+  affinity: {}
+
+# Separate versions of the front and back ends of RainBond-Console
+# Console front-end services
+# Deprecated, please refer to the official documentation to install the detached console from the Rainstore https://www.rainbond.com/docs/user-operations/ha-deploy/console-recover/
+ui:
+
+  # Specify the full name of UI
+  fullname: rainbond-ui
+
+  # UI is not installed by default
+  enable: false
+
+  # Set the number of copies
+  replicasCount: 1
+
+  # Specify the Console image
+  # No mirroring is provided by default
+  image:
+    repository: ""
+    pullPolicy: IfNotPresent
+    tag: ""
+  
+  # The default service protocol is NodePort, which opens port 30606
+  svc:
+    type: NodePort
+    nodePort: 30600
+
+  podAnnotations: {}
+
+  # Set the UI Labels
+  selectorLabels: 
+    rainbond: ui
+
+  # Set POD resource limits
+  resources:
+    limits:
+      cpu: 120m
+      memory: 128Mi
+    requests:
+      cpu: 30m
+      memory: 128Mi
+
+  nodeSelector: {}
+  affinity: {}
+
+# A merged version of the front and back ends
+allinone:
+
+  # Specify the full name of allinone
+  fullname: rainbond-allinone
+
+  # allinone is installed by default
+  enable: true
+
+  # Set the number of copies
+  replicasCount: 1
+
+  # Specify the Allinone image
+  image:
+    repository: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond
+    pullPolicy: IfNotPresent
+    tag: "v5.3.1-release-allinone"
+
+  # The default service protocol is NodePort, which opens port 30707
+  svc:
+    type: NodePort
+    nodePort: 30707
+
+  podAnnotations: {}
+
+  # Set the Allinone Labels
+  selectorLabels: 
+    rainbond: allinone
+
+  # Set POD resource limits
+  resources: {}
+    # limits:
+    #   cpu: 640m
+    #   memory: 512Mi
+    # requests:
+    #   cpu: 120m
+    #   memory: 512Mi
+
+  nodeSelector: {}
+  affinity: {}
