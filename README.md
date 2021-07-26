@@ -27,7 +27,7 @@ Installing helm chart
 
 ```shell
 helm install --name my-console rainbond/rainbond-console \
---version 5.3.1 \
+--version 5.3.2 \
 --set pvc.storageClassName=my-storageclass \
 --set pvc.storageSize=5Gi
 ```
@@ -39,7 +39,7 @@ Nodeport 30707 is enabled by default, if you want to customize the port, please 
 
 ```shell
 helm install --name my-console rainbond/rainbond-console \
---version 5.3.1 \
+--version 5.3.2 \
 --set allinone.svc.nodePort=30707
 ```
 
@@ -73,7 +73,7 @@ If you want to customize The parameters,The chart can be customized using The fo
 | `allinone.replicasCount`                                     | Set the number of copies                                     | 1                                                   |
 | `allinone.image.repository`                                  | Allinone Console image repository                            | registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond |
 | `allinone.image.pullPolicy`                                  | Allinone Console image Pull strategy                         | IfNotPresent                                        |
-| `allinone.image.tag`                                         | Allinone Console image tag                                   | v5.3.1-release-allinone                             |
+| `allinone.image.tag`                                         | Allinone Console image tag                                   | v5.3.2-release-allinone                             |
 | `allinone.svc.type`                                          | Allinone Console Service Type                                | NodePort                                            |
 | `allinone.svc.nodePort`                                      | Allinone Console Service Port                                | 30707                                               |
 | `allinone.podAnnotations`                                    | Annotation to be added to Allinone Console pods              | {}                                                  |
