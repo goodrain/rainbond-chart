@@ -4,7 +4,7 @@ You can deploy the Rainbond Console in Kubernets using Helm Chart.
 
 ## Pre Requisites
 
-* The Kubernetes version should be between 1.13 and 1.19
+* Kubernetes version cannot be earlier than 1.19
 
 * StorageClass is required within the cluster
 
