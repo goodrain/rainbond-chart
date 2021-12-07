@@ -27,6 +27,9 @@ spec:
         - name: redis
           image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
           imagePullPolicy: {{ .Values.redis.image.pullPolicy }}
+          command:
+            - redis-server
+            - /redis/redis.conf
           env:
             - name: TZ
               value: "Asia/Shanghai"
@@ -52,9 +55,6 @@ spec:
               value: "300"
             - name: REDISC_TIMEOUT
               value: "0"
-          envFrom:
-            - secretRef:
-                name: rainbond-redis-secret
           ports:
             - name: tcp
               containerPort: 6379
@@ -72,12 +72,18 @@ spec:
           volumeMounts:
           - mountPath: /data
             name: redis-data
+          - mountPath: /redis/redis.conf
+            name: {{ .Values.redis.fullname }}-conf
+            subPath: redis.conf
           resources:
             {{- toYaml .Values.redis.resources | nindent 12 }}
       volumes:
       - name: redis-data
         persistentVolumeClaim:
           claimName: rainbond-redis-pvc
+      - name: {{ .Values.redis.fullname }}-conf
+        configMap:
+          name: {{ .Values.redis.fullname }}-cm
       {{- with .Values.redis.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
