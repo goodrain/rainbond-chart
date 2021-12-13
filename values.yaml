@@ -219,7 +219,7 @@ allinone:
   image:
     repository: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond
     pullPolicy: IfNotPresent
-    tag: "v5.4.1-release-allinone"
+    tag: "v5.5.0-release-allinone"
 
   # The default service protocol is NodePort, which opens port 30707
   svc:
