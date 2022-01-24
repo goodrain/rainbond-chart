@@ -1,0 +1,36 @@
+apiVersion: v1
+items:
+- apiVersion: rainbond.io/v1alpha1
+  kind: RainbondCluster
+  metadata:
+    name: rainbondcluster
+    namespace: rbd-system
+
+  spec:
+    cacheMode: hostpath
+    configCompleted: true
+    gatewayIngressIPs:
+    - 47.105.55.170
+{{- if .Values.Cluster.imageHub.enable  }}
+    imageHub:
+      domain: "goodrain.me“
+      password: "d0d"
+      username: "admin"
+{{- end }}
+    installMode: WithoutPackage
+    installVersion: v5.5.0-release
+    nodesForChaos:
+    - externalIP: 47.105.55.170
+      internalIP: 172.17.0.2
+      name: node
+    nodesForGateway: 
+    - externalIP: 47.105.55.170
+      internalIP: 172.17.0.2
+      name: node
+    rainbondImageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
+    suffixHTTPHost: grapps.cn
+
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

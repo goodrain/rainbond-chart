@@ -1,0 +1,16 @@
+apiVersion: v1
+items:
+- apiVersion: rainbond.io/v1alpha1
+  kind: RainbondPackage
+  metadata:
+    name: rainbondpackage
+    namespace: rbd-system
+  spec:
+    imageHubPass: ""
+    imageHubUser: ""
+    pkgPath: /opt/rainbond/pkg/tgz/rainbond.tgz
+
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
