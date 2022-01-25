@@ -71,5 +71,16 @@ Component:
     env:
       test: 5555
       test2: 6666
-    volume:
-      mountPath:
+    volumes:
+      testpv:
+        persistentVolumeClaim:
+          claimName: rbd-cpt-grdate
+      testsc:
+        secret:
+          defaultMode: 420
+          secretName: rbd-api-server-cert
+    volumeMounts:
+      testpv: /data
+      testsc: /test
+
+
