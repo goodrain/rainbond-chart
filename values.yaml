@@ -1,37 +1,58 @@
 Cluster:
+  enableHA:
+    enable: true
   imageHub:
     enable: false
     domain: registry.cn-hangzhou.aliyuncs.com
-    namespace: ddd
-    password: dd
-    username: dd
+    namespace: ddrainbond
+    password: admin
+    username: admin
   etcd:
     enable: false
     endpoints: 
     - 192.168.3.103:2379 
     - 192.168.3.103:2379
+    - 192.168.3.103:2379
     certificate_path:
     secretName: 
   RWX:
     enable: false
-    storageClassName:
+    storageClassName: glusterfs-simple
   RWO:
     enable: false
-    storageClassName:
+    storageClassName: glusterfs-simple
   regionDatabase:
     enable: false
-    host: 
-    name: 
-    password: pd
-    port: 330
-    username: ro
+    host: 88888
+    name: database name
+    password: admin
+    port: 3306
+    username: admin
+  uiDatabase:
+    enable: false
+    host: 172.36.22.10
+    name: database name
+    password: admin
+    port: 3306
+    username: admin 
   gatewayIngressIPs:
-    ip:
+    ip: 172.36.22.10
   HTTPHost:
-    suffixHTTPHost:   
+    suffixHTTPHost: www.rainbond.com  
     installMode: 
-    installVersion: 
-
+    installVersion:
+  nodesForChaos:
+    k8s_node_name:
+      - master1 
+      - node1
+      - node2
+  nodesForGateway:
+    k8s_node_name:
+      - master1
+      - node1
+      - node2
+  rainbondImageRepository:
+    ImageRepository:   
 
 
 
@@ -40,4 +61,15 @@ Cluster:
 
 Component:
   rainbondImageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
-  installVersion: v5.5.0-release     
+  installVersion: v5.5.0-release
+  imagePullPolicy: IfNotPresent
+  replicas: 2
+  rbd_api:
+    args:
+      - --etcd-ca=/r
+      - --etcd-ca=/r
+    env:
+      test: 5555
+      test2: 6666
+    volume:
+      mountPath:

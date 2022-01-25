@@ -6,12 +6,12 @@ items:
     name: rainbondcluster
     namespace: rbd-system
   spec:
-    enableHA: true
-{{- if .Values.Cluster.etcd.enable }}    
+    enableHA: {{- .Values.Cluster.enableHA.enable }}
+{{- if or .Values.Cluster.etcd.enable  .Values.Cluster.enableHA.enable }}    
     etcdConfig:
       endpoints: 
       {{- range .Values.Cluster.etcd.endpoints }}
-      - {{ . | title  }}
+      - {{ . | toString  }}
       {{- end }}    
       secretName: {{- .Values.Cluster.etcd.secretName }}
 {{- end }}  
@@ -32,26 +32,34 @@ items:
     rainbondVolumeSpecRWX:
       storageClassName: {{- .Values.Cluster.RWX.storageClassName }}         
 {{- end }}
-{{- if .Values.Cluster.regionDatabase.enable  }}
+{{- if or .Values.Cluster.regionDatabase.enable  .Values.Cluster.enableHA.enable }}
     regionDatabase:
-      host: {{- .Values.Cluster.regionDatabase.host }}
+      host: {{-  required ".Values.Cluster.regionDatabase.host cannot be empty!" .Values.Cluster.regionDatabase.host }}
       name: {{- .Values.Cluster.regionDatabase.name }}
       password: {{- .Values.Cluster.regionDatabase.password }}
       port: {{- .Values.Cluster.regionDatabase.port }}
       username: {{- .Values.Cluster.regionDatabase.username }}
 {{- end }}
+{{- if or .Values.Cluster.uiDatabase.enable .Values.Cluster.enableHA.enable }}
+    uiDatabase:
+      host: {{- .Values.Cluster.uiDatabase.host }}
+      name: {{- .Values.Cluster.uiDatabase.name }}
+      password: {{- .Values.Cluster.uiDatabase.password }}
+      port: {{- .Values.Cluster.uiDatabase.port }}
+      username: {{- .Values.Cluster.uiDatabase.username }}
+{{- end }}
     suffixHTTPHost: {{- .Values.Cluster.HTTPHost.suffixHTTPHost }}
       installMode: {{- .Values.Cluster.HTTPHost.installMode }}
       installVersion: {{- .Values.Cluster.HTTPHost.installVersion }}
     nodesForChaos:
-    - externalIP: 47.105.55.170
-      internalIP: 172.17.0.2
-      name: node
+    {{- range .Values.Cluster.nodesForChaos.k8s_node_name }}
+      - name: {{ . | toString  }}
+    {{- end }}    
     nodesForGateway: 
-    - externalIP: 47.105.55.170
-      internalIP: 172.17.0.2
-      name: node
-    rainbondImageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
+    {{- range .Values.Cluster.nodesForGateway.k8s_node_name }}
+      - name: {{ . | toString  }}
+    {{- end }}
+    rainbondImageRepository: {{- .Values.Cluster.rainbondImageRepository.ImageRepository }}
     suffixHTTPHost: grapps.cn
 
 kind: List
