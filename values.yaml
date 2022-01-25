@@ -10,7 +10,8 @@ Cluster:
     endpoints: 
     - 192.168.3.103:2379 
     - 192.168.3.103:2379
-    certificate_path: 
+    certificate_path:
+    secretName: 
   RWX:
     enable: true
     storageClassName:
@@ -24,7 +25,8 @@ Cluster:
     password: pd
     port: 330
     username: ro
-
+  atewayIngressIPs:
+    ip: 333333
     
 
 
