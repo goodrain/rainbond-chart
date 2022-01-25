@@ -319,6 +319,20 @@ items:
       value: {{ $value }}
     {{- end }}
     {{- end }}
+    {{- if .Values.Component.rbd_api.volumeMounts }}
+    volumeMounts:
+    {{- range $key,$value := .Values.Component.rbd_api.volumeMounts }}
+    - name: {{ $key }}
+      mountPath: {{ $value }}
+    {{- end }}  
+    {{- end }}
+    {{- if .Values.Component.rbd_api.volumes }}
+    volumeMounts:
+    {{- range $key,$value := .Values.Component.rbd_api.volumes }}
+    - name: {{ $key }}
+{{ $value | toYaml |indent 6}}
+    {{- end }}  
+    {{- end }}
     image: {{ .Values.Component.rainbondImageRepository }}/rbd-api:{{ .Values.Component.installVersion }}
     imagePullPolicy: IfNotPresent
     priorityComponent: false
