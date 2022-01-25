@@ -1,26 +1,31 @@
 Cluster:
+## 定义是否开启高可用，true为开，false为关  
   enableHA:
     enable: true
+## 定义是否使用外部镜像镜像仓库，true为开，false为关
   imageHub:
     enable: false
     domain: registry.cn-hangzhou.aliyuncs.com
     namespace: ddrainbond
     password: admin
     username: admin
+## 外部ETCD，对应填写IP，证书，true为开，false为关
   etcd:
     enable: false
     endpoints: 
     - 192.168.3.103:2379 
     - 192.168.3.103:2379
     - 192.168.3.103:2379
-    certificate_path:
     secretName: 
+## 外部存储，直接填写storageClassName，true为开，false为关
   RWX:
     enable: false
     storageClassName: glusterfs-simple
+## 外部存储，直接填写storageClassName，true为开，false为关
   RWO:
     enable: false
     storageClassName: glusterfs-simple
+## 数据库，true为开，false为关
   regionDatabase:
     enable: false
     host: 88888
@@ -28,6 +33,7 @@ Cluster:
     password: admin
     port: 3306
     username: admin
+## 数据库，true为开，false为关
   uiDatabase:
     enable: false
     host: 172.36.22.10
@@ -35,17 +41,21 @@ Cluster:
     password: admin
     port: 3306
     username: admin 
+## 对外网关，填写IP
   gatewayIngressIPs:
     ip: 172.36.22.10
+## 域名
   HTTPHost:
     suffixHTTPHost: www.rainbond.com  
     installMode: 
     installVersion:
+## chaos节点对应的k8s节点名字
   nodesForChaos:
     k8s_node_name:
       - master1 
       - node1
       - node2
+## 网关节点对应的k8s节点名字
   nodesForGateway:
     k8s_node_name:
       - master1
@@ -60,11 +70,53 @@ Cluster:
 
 
 Component:
+## 镜像仓库
   rainbondImageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
   installVersion: v5.5.0-release
+## 镜像拉取策略
   imagePullPolicy: IfNotPresent
+## 副本数
   replicas: 2
+## api自定义信息，环境变量，启动参数，存储挂载
   rbd_api:
+    args:
+      - --etcd-ca=/r
+      - --etcd-ca=/r
+## 环境变量test为key,5555为value
+    env:
+      test: 5555
+      test2: 6666
+    volumes:
+      testpv:
+        persistentVolumeClaim:
+          claimName: rbd-cpt-grdate
+      testsc:
+        secret:
+          defaultMode: 420
+          secretName: rbd-api-server-cert
+    volumeMounts:
+      testpv: /data
+      testsc: /test
+## gteway自定义信息，环境变量，启动参数，存储挂载
+  rbd_gteway:
+    args:
+      - --gteway-ca=/r
+      - --gteway-ca=/r
+    env:
+      test: 5555
+      test2: 6666
+    volumes:
+      testpv:
+        persistentVolumeClaim:
+          claimName: rbd-cpt-grdate
+      testsc:
+        secret:
+          defaultMode: 420
+          secretName: rbd-api-server-cert
+    volumeMounts:
+      testpv: /data
+      testsc: /test
+  rbd_node:
     args:
       - --etcd-ca=/r
       - --etcd-ca=/r
@@ -82,5 +134,129 @@ Component:
     volumeMounts:
       testpv: /data
       testsc: /test
-
-
+  rbd_hub:
+    args:
+      - --hub-ca=/r
+      - --hub-ca=/r
+    env:
+      test: 5555
+      test2: 6666
+    volumes:
+      testpv:
+        persistentVolumeClaim:
+          claimName: rbd-cpt-grdate
+      testsc:
+        secret:
+          defaultMode: 420
+          secretName: rbd-api-server-cert
+    volumeMounts:
+      testpv: /data
+      testsc: /test
+  rbd_mq:
+    args:
+      - --etcd-ca=/r
+      - --etcd-ca=/r
+    env:
+      test: 5555
+      test2: 6666
+    volumes:
+      testpv:
+        persistentVolumeClaim:
+          claimName: rbd-cpt-grdate
+      testsc:
+        secret:
+          defaultMode: 420
+          secretName: rbd-api-server-cert
+    volumeMounts:
+      testpv: /data
+      testsc: /test       
+  rbd_resource_proxy:
+    args:
+      - --etcd-ca=/r
+      - --etcd-ca=/r
+    env:
+      test: 5555
+      test2: 6666
+    volumes:
+      testpv:
+        persistentVolumeClaim:
+          claimName: rbd-cpt-grdate
+      testsc:
+        secret:
+          defaultMode: 420
+          secretName: rbd-api-server-cert
+    volumeMounts:
+      testpv: /data
+      testsc: /test
+  rbd_webcli:
+    args:
+      - --etcd-ca=/r
+      - --etcd-ca=/r
+    env:
+      test: 5555
+      test2: 6666
+    volumes:
+      testpv:
+        persistentVolumeClaim:
+          claimName: rbd-cpt-grdate
+      testsc:
+        secret:
+          defaultMode: 420
+          secretName: rbd-api-server-cert
+    volumeMounts:
+      testpv: /data
+      testsc: /test
+  rbd_monitor:
+    args:
+      - --etcd-ca=/r
+      - --etcd-ca=/r
+    env:
+      test: 5555
+      test2: 6666
+    volumes:
+      testpv:
+        persistentVolumeClaim:
+          claimName: rbd-cpt-grdate
+      testsc:
+        secret:
+          defaultMode: 420
+          secretName: rbd-api-server-cert
+    volumeMounts:
+      testpv: /data
+      testsc: /test
+  rbd_db:
+    args:
+      - --etcd-ca=/r
+      - --etcd-ca=/r
+    env:
+      test: 5555
+      test2: 6666
+    volumes:
+      testpv:
+        persistentVolumeClaim:
+          claimName: rbd-cpt-grdate
+      testsc:
+        secret:
+          defaultMode: 420
+          secretName: rbd-api-server-cert
+    volumeMounts:
+      testpv: /data
+      testsc: /test
+  rbd_chaos:
+    args:
+      - --etcd-ca=/r
+      - --etcd-ca=/r
+    env:
+      test: 5555
+      test2: 6666
+    volumes:
+      testpv:
+        persistentVolumeClaim:
+          claimName: rbd-cpt-grdate
+      testsc:
+        secret:
+          defaultMode: 420
+          secretName: rbd-api-server-cert
+    volumeMounts:
+      testpv: /data
+      testsc: /test      

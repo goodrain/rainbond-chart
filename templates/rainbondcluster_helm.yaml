@@ -60,7 +60,6 @@ items:
       - name: {{ . | toString  }}
     {{- end }}
     rainbondImageRepository: {{- .Values.Cluster.rainbondImageRepository.ImageRepository }}
-    suffixHTTPHost: grapps.cn
 
 kind: List
 metadata:
