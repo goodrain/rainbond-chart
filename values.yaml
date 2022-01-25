@@ -1,12 +1,31 @@
 Cluster:
   imageHub:
-    enable: true
+    enable: false
     domain: registry.cn-hangzhou.aliyuncs.com
-    namespace: goodrain
-    password: xxxxx!
-    username: root
-favorite:
+    namespace: ddd
+    password: dd
+    username: dd
+  etcd:
+    enable: false
+    endpoints: 
+    - 192.168.3.103:2379 
+    - 192.168.3.103:2379
+    certificate_path: 
+  RWX:
+    enable: true
+    storageClassName:
+  RWO:
+    enable: true
+    storageClassName:
+  regionDatabase:
+    enable: true
+    host: 
+    name: 
+    password: pd
+    port: 330
+    username: ro
 
+    
 
 
 
@@ -15,4 +34,5 @@ favorite:
 
 
 Component:
-   
+  rainbondImageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
+  installVersion: v5.5.0-release     

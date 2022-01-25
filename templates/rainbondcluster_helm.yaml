@@ -5,10 +5,16 @@ items:
   metadata:
     name: rainbondcluster
     namespace: rbd-system
-
   spec:
-    cacheMode: hostpath
-    configCompleted: true
+    enableHA: true
+{{- if .Values.Cluster.etcd.enable "true "  }}    
+    etcdConfig:
+      endpoints: 
+      {{- range .Values.Cluster.etcd.endpoints }}
+      - {{ . | title  }}
+      {{- end }}    
+      secretName: rbd-etcd-secret
+{{- end }}  
     gatewayIngressIPs:
     - 47.105.55.170
 {{- if .Values.Cluster.imageHub.enable  }}
@@ -17,6 +23,30 @@ items:
       password: "d0d"
       username: "admin"
 {{- end }}
+    rainbondVolumeSpecRWO:
+      csiPlugin: {}
+      imageRepository: ""
+      storageClassParameters: {}
+{{- if .Values.Cluster.RWX.enable  }} 
+    rainbondVolumeSpecRWX:
+      storageClassName: glusterfs-simple
+      csiPlugin: 
+    	    aliyunNas: {}
+{{- end }}          
+    storageClassParameters: 
+    	  parameters: 
+    	    volumeAs: subpath
+    	    server: xxx.nas.server.dddd.com
+    	    archiveOnDelete: true
+{{- if .Values.Cluster.regionDatabase.enable  }}
+  regionDatabase:
+    host: 172.20.251.91
+    name: rbdregion
+    password: password
+    port: 3306
+    username: root
+{{- end }}
+  suffixHTTPHost: 5-3-0.goodrain.org
     installMode: WithoutPackage
     installVersion: v5.5.0-release
     nodesForChaos:
