@@ -13,21 +13,24 @@ Cluster:
     certificate_path:
     secretName: 
   RWX:
-    enable: true
+    enable: false
     storageClassName:
   RWO:
-    enable: true
+    enable: false
     storageClassName:
   regionDatabase:
-    enable: true
+    enable: false
     host: 
     name: 
     password: pd
     port: 330
     username: ro
-  atewayIngressIPs:
-    ip: 333333
-    
+  gatewayIngressIPs:
+    ip:
+  HTTPHost:
+    suffixHTTPHost:   
+    installMode: 
+    installVersion: 
 
 
 

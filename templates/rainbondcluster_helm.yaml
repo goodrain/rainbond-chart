@@ -16,8 +16,7 @@ items:
       secretName: {{- .Values.Cluster.etcd.secretName }}
 {{- end }}  
     gatewayIngressIPs:
-    {{- range .Values.Cluster.atewayIngressIPs.ip }}
-      - {{ . | title  }}
+    - {{- .Values.Cluster.gatewayIngressIPs.ip }}
 {{- if .Values.Cluster.imageHub.enable  }}
     imageHub:
       domain: {{- .Values.Cluster.imageHub.domain }}
@@ -27,18 +26,11 @@ items:
 {{- end }}
 {{- if .Values.Cluster.RWO.enable  }} 
     rainbondVolumeSpecRWO:
-      csiPlugin: {}
-      imageRepository: ""
-      storageClassParameters: {{- .Values.Cluster.RWO.storageClassName }}
+      storageClassName: {{- .Values.Cluster.RWO.storageClassName }}
 {{- end }}
 {{- if .Values.Cluster.RWX.enable  }} 
     rainbondVolumeSpecRWX:
       storageClassName: {{- .Values.Cluster.RWX.storageClassName }}         
-    storageClassParameters: 
-    	  parameters: 
-    	    volumeAs: subpath
-    	    server: xxx.nas.server.dddd.com
-    	    archiveOnDelete: true
 {{- end }}
 {{- if .Values.Cluster.regionDatabase.enable  }}
     regionDatabase:
@@ -48,9 +40,9 @@ items:
       port: {{- .Values.Cluster.regionDatabase.port }}
       username: {{- .Values.Cluster.regionDatabase.username }}
 {{- end }}
-    suffixHTTPHost: 5-3-0.goodrain.org
-      installMode: WithoutPackage
-      installVersion: v5.5.0-release
+    suffixHTTPHost: {{- .Values.Cluster.HTTPHost.suffixHTTPHost }}
+      installMode: {{- .Values.Cluster.HTTPHost.installMode }}
+      installVersion: {{- .Values.Cluster.HTTPHost.installVersion }}
     nodesForChaos:
     - externalIP: 47.105.55.170
       internalIP: 172.17.0.2
