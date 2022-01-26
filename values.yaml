@@ -259,4 +259,18 @@ Component:
           secretName: rbd-api-server-cert
     volumeMounts:
       testpv: /data
-      testsc: /test      
+      testsc: /test
+  rbd_worker:
+    args:
+      - --etcd-ca=/r
+      - --etcd-ca=/r
+    env:
+      test: 5555
+      test2: 6666
+    volumes:
+      testpv:
+        persistentVolumeClaim:
+          claimName: rbd-cpt-grdate
+      testsc:
+      testpv: /data
+      testsc: /test        

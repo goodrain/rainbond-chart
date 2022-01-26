@@ -16,7 +16,7 @@ items:
     image: {{ .Values.Component.rainbondImageRepository }}/etcd:v3.3.18
     imagePullPolicy: {{ .Values.Component.imagePullPolicy }}
     priorityComponent: true
-      replicas: 1
+    replicas: 1
  {{- end }}
 
 - apiVersion: rainbond.io/v1alpha1
@@ -61,9 +61,9 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: true
       {{- if .Values.Cluster.enableHA.enable  }} 
-      replicas: {{- .Values.Component.replicas }}
+    replicas: {{- .Values.Component.replicas }}
       {{ else }}
-      replicas: 1
+    replicas: 1
       {{- end }}
 
 
@@ -110,9 +110,9 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: true
       {{- if .Values.Cluster.enableHA.enable  }} 
-      replicas: {{- .Values.Component.replicas }}
+    replicas: {{- .Values.Component.replicas }}
       {{ else }}
-      replicas: 1
+    replicas: 1
       {{- end }}
 
 - apiVersion: rainbond.io/v1alpha1
@@ -158,9 +158,9 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: true
       {{- if .Values.Cluster.enableHA.enable  }} 
-      replicas: {{- .Values.Component.replicas }}
+    replicas: {{- .Values.Component.replicas }}
       {{ else }}
-      replicas: 1
+    replicas: 1
       {{- end }}
 
 
@@ -180,9 +180,9 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-      replicas: {{- .Values.Component.replicas }}
+    replicas: {{- .Values.Component.replicas }}
       {{ else }}
-      replicas: 1
+    replicas: 1
       {{- end }}
 
 
@@ -227,9 +227,9 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-      replicas: {{- .Values.Component.replicas }}
+    replicas: {{- .Values.Component.replicas }}
       {{ else }}
-      replicas: 1
+    replicas: 1
       {{- end }}
 
 
@@ -316,9 +316,9 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-      replicas: {{- .Values.Component.replicas }}
+    replicas: {{- .Values.Component.replicas }}
       {{ else }}
-      replicas: 1
+    replicas: 1
       {{- end }}
 
 
@@ -336,9 +336,9 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-      replicas: {{- .Values.Component.replicas }}
+    replicas: {{- .Values.Component.replicas }}
       {{ else }}
-      replicas: 1
+    replicas: 1
       {{- end }}
 
 
@@ -426,7 +426,7 @@ items:
     image: {{ .Values.Component.rainbondImageRepository }}/rbd-db:8.0.19
     imagePullPolicy: IfNotPresent
     priorityComponent: false
-      replicas: 1
+    replicas: 1
 {{- end }}
 
 
@@ -472,9 +472,9 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-      replicas: {{- .Values.Component.replicas }}
+    replicas: {{- .Values.Component.replicas }}
       {{ else }}
-      replicas: 1
+    replicas: 1
       {{- end }}
 
 
@@ -492,29 +492,29 @@ items:
     env:
     - name: ALLINONE_MODE
       value: "true"
-    {{- if .Values.Component.rbd_hub.args }}
+    {{- if .Values.Component.rbd_worker.args }}
     args:
-    {{- range .Values.Component.rbd_hub.args }}
+    {{- range .Values.Component.rbd_worker.args }}
     - {{ . | toString  }}
     {{- end }} 
     {{- end }}
-    {{- if .Values.Component.rbd_hub.env }}
+    {{- if .Values.Component.rbd_worker.env }}
     env:
-    {{- range $key,$value := .Values.Component.rbd_hub.env }}
+    {{- range $key,$value := .Values.Component.rbd_worker.env }}
     - name: {{ $key }}
       value: {{ $value }}
     {{- end }}
     {{- end }}
-    {{- if .Values.Component.rbd_hub.volumeMounts }}
+    {{- if .Values.Component.rbd_worker.volumeMounts }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_hub.volumeMounts }}
+    {{- range $key,$value := .Values.Component.rbd_worker.volumeMounts }}
     - name: {{ $key }}
       mountPath: {{ $value }}
     {{- end }}  
     {{- end }}
-    {{- if .Values.Component.rbd_hub.volumes }}
+    {{- if .Values.Component.rbd_worker.volumes }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_hub.volumes }}
+    {{- range $key,$value := .Values.Component.rbd_worker.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
     {{- end }}  
@@ -523,9 +523,9 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-      replicas: {{- .Values.Component.replicas }}
+    replicas: {{- .Values.Component.replicas }}
       {{ else }}
-      replicas: 1
+    replicas: 1
       {{- end }}
 
 
@@ -614,11 +614,103 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-      replicas: {{- .Values.Component.replicas }}
+    replicas: {{- .Values.Component.replicas }}
       {{ else }}
-      replicas: 1
+    replicas: 1
+      {{- end }}
+- apiVersion: rainbond.io/v1alpha1
+  kind: RbdComponent
+  metadata:
+    labels:
+      belongTo: rainbond-operator
+      creator: Rainbond
+      name: rbd-chaos
+      persistentVolumeClaimAccessModes: ReadWriteOnce
+    name: rbd-chaos
+    namespace: rbd-system
+  spec:
+    {{- if .Values.Component.rbd_chaos.args }}
+    args:
+    {{- range .Values.Component.rbd_chaos.args }}
+    - {{ . | toString  }}
+    {{- end }} 
+    {{- end }}
+    {{- if .Values.Component.rbd_chaos.env }}
+    env:
+    {{- range $key,$value := .Values.Component.rbd_chaos.env }}
+    - name: {{ $key }}
+      value: {{ $value }}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.Component.rbd_chaos.volumeMounts }}
+    volumeMounts:
+    {{- range $key,$value := .Values.Component.rbd_chaos.volumeMounts }}
+    - name: {{ $key }}
+      mountPath: {{ $value }}
+    {{- end }}  
+    {{- end }}
+    {{- if .Values.Component.rbd_chaos.volumes }}
+    volumeMounts:
+    {{- range $key,$value := .Values.Component.rbd_chaos.volumes }}
+    - name: {{ $key }}
+{{ $value | toYaml |indent 6}}
+    {{- end }}  
+    {{- end }}
+    image: {{ .Values.Component.rainbondImageRepository }}/rbd-chaos:{{ .Values.Component.installVersion }}
+    imagePullPolicy: IfNotPresent
+    priorityComponent: false
+      {{- if .Values.Cluster.enableHA.enable  }} 
+    replicas: {{- .Values.Component.replicas }}
+      {{ else }}
+    replicas: 1
       {{- end }}
 
+
+- apiVersion: rainbond.io/v1alpha1
+  kind: RbdComponent
+  metadata:
+    labels:
+      belongTo: rainbond-operator
+      creator: Rainbond
+      name: rbd-app-ui
+      persistentVolumeClaimAccessModes: ReadWriteOnce
+    name: rbd-app-ui
+    namespace: rbd-system
+  spec:
+    {{- if .Values.Component.rbd_app_ui.args }}
+    args:
+    {{- range .Values.Component.rbd_app_ui.args }}
+    - {{ . | toString  }}
+    {{- end }} 
+    {{- end }}
+    env:
+    - name: DB_TYPE
+      value: mysql
+    {{- if .Values.Component.rbd_app_ui.env }}
+    {{- range $key,$value := .Values.Component.rbd_app_ui.env }}
+    - name: {{ $key }}
+      value: {{ $value }}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.Component.rbd_app_ui.volumeMounts }}
+    volumeMounts:
+    {{- range $key,$value := .Values.Component.rbd_app_ui.volumeMounts }}
+    - name: {{ $key }}
+      mountPath: {{ $value }}
+    {{- end }}  
+    {{- end }}
+    {{- if .Values.Component.rbd_app_ui.volumes }}
+    volumeMounts:
+    {{- range $key,$value := .Values.Component.rbd_app_ui.volumes }}
+    - name: {{ $key }}
+{{ $value | toYaml |indent 6}}
+    {{- end }}  
+    {{- end }}
+    image: {{ .Values.Component.rainbondImageRepository }}/rainbond:{{ .Values.Component.installVersion }}-allinone
+    imagePullPolicy: IfNotPresent
+    priorityComponent: false      
+    replicas: 1
+      
 
 kind: List
 metadata:
