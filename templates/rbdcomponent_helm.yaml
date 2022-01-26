@@ -618,53 +618,6 @@ items:
       {{ else }}
     replicas: 1
       {{- end }}
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: rbd-chaos
-      persistentVolumeClaimAccessModes: ReadWriteOnce
-    name: rbd-chaos
-    namespace: rbd-system
-  spec:
-    {{- if .Values.Component.rbd_chaos.args }}
-    args:
-    {{- range .Values.Component.rbd_chaos.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_chaos.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_chaos.env }}
-    - name: {{ $key }}
-      value: {{ $value }}
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_chaos.volumeMounts }}
-    volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_chaos.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
-    {{- end }}
-    {{- if .Values.Component.rbd_chaos.volumes }}
-    volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_chaos.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
-    {{- end }}
-    image: {{ .Values.Component.rainbondImageRepository }}/rbd-chaos:{{ .Values.Component.installVersion }}
-    imagePullPolicy: IfNotPresent
-    priorityComponent: false
-      {{- if .Values.Cluster.enableHA.enable  }} 
-    replicas: {{ .Values.Component.replicas }}
-      {{ else }}
-    replicas: 1
-      {{- end }}
-
 
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
@@ -710,7 +663,23 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false      
     replicas: 1
-      
+
+- apiVersion: rainbond.io/v1alpha1
+  kind: RbdComponent
+  metadata:
+    labels:
+      belongTo: rainbond-operator
+      creator: Rainbond
+      name: nfs-provisioner
+      priorityComponent: "true"
+    name: nfs-provisioner
+    namespace: rbd-system
+  spec:
+    image: {{ .Values.Component.rainbondImageRepository }}/nfs-provisioner:{{ .Values.Component.installVersion }}
+    imagePullPolicy: IfNotPresent
+    priorityComponent: true
+    replicas: 1
+
 
 kind: List
 metadata:
