@@ -6,7 +6,7 @@ items:
     name: rainbondcluster
     namespace: rbd-system
   spec:
-    enableHA: {{- .Values.Cluster.enableHA.enable }}
+    enableHA: {{ .Values.Cluster.enableHA.enable }}
 {{- if or .Values.Cluster.etcd.enable  .Values.Cluster.enableHA.enable }}    
     etcdConfig:
       endpoints: 
@@ -16,42 +16,42 @@ items:
       secretName: {{- .Values.Cluster.etcd.secretName }}
 {{- end }}  
     gatewayIngressIPs:
-    - {{- .Values.Cluster.gatewayIngressIPs.ip }}
+    - {{ .Values.Cluster.gatewayIngressIPs.ip }}
 {{- if .Values.Cluster.imageHub.enable  }}
     imageHub:
-      domain: {{- .Values.Cluster.imageHub.domain }}
-      password: {{- .Values.Cluster.imageHub.password }}
-      username: {{- .Values.Cluster.imageHub.username }}
-      namespace: {{- .Values.Cluster.imageHub.namespace }} 
+      domain: {{ .Values.Cluster.imageHub.domain }}
+      password: {{ .Values.Cluster.imageHub.password }}
+      username: {{ .Values.Cluster.imageHub.username }}
+      namespace: {{ .Values.Cluster.imageHub.namespace }} 
 {{- end }}
 {{- if .Values.Cluster.RWO.enable  }} 
     rainbondVolumeSpecRWO:
-      storageClassName: {{- .Values.Cluster.RWO.storageClassName }}
+      storageClassName: {{ .Values.Cluster.RWO.storageClassName }}
 {{- end }}
 {{- if .Values.Cluster.RWX.enable  }} 
     rainbondVolumeSpecRWX:
-      storageClassName: {{- .Values.Cluster.RWX.storageClassName }}         
+      storageClassName: {{ .Values.Cluster.RWX.storageClassName }}         
 {{- end }}
 {{- if or .Values.Cluster.regionDatabase.enable  .Values.Cluster.enableHA.enable }}
     regionDatabase:
-      host: {{-  required ".Values.Cluster.regionDatabase.host cannot be empty!" .Values.Cluster.regionDatabase.host }}
-      name: {{- .Values.Cluster.regionDatabase.name }}
-      password: {{- .Values.Cluster.regionDatabase.password }}
-      port: {{- .Values.Cluster.regionDatabase.port }}
-      username: {{- .Values.Cluster.regionDatabase.username }}
+      host: {{  required ".Values.Cluster.regionDatabase.host cannot be empty!" .Values.Cluster.regionDatabase.host }}
+      name: {{ .Values.Cluster.regionDatabase.name }}
+      password: {{ .Values.Cluster.regionDatabase.password }}
+      port: {{ .Values.Cluster.regionDatabase.port }}
+      username: {{ .Values.Cluster.regionDatabase.username }}
 {{- end }}
 {{- if or .Values.Cluster.uiDatabase.enable .Values.Cluster.enableHA.enable }}
     uiDatabase:
-      host: {{- .Values.Cluster.uiDatabase.host }}
-      name: {{- .Values.Cluster.uiDatabase.name }}
-      password: {{- .Values.Cluster.uiDatabase.password }}
-      port: {{- .Values.Cluster.uiDatabase.port }}
-      username: {{- .Values.Cluster.uiDatabase.username }}
+      host: {{ .Values.Cluster.uiDatabase.host }}
+      name: {{ .Values.Cluster.uiDatabase.name }}
+      password: {{ .Values.Cluster.uiDatabase.password }}
+      port: {{ .Values.Cluster.uiDatabase.port }}
+      username: {{ .Values.Cluster.uiDatabase.username }}
 {{- end }}
 {{- if .Values.Cluster.HTTPHost }}
-    suffixHTTPHost: {{- .Values.Cluster.HTTPHost.suffixHTTPHost }}
-      installMode: {{- .Values.Cluster.HTTPHost.installMode }}
-      installVersion: {{- .Values.Cluster.HTTPHost.installVersion }}
+    suffixHTTPHost: {{ .Values.Cluster.HTTPHost.suffixHTTPHost }}
+      installMode: {{ .Values.Cluster.HTTPHost.installMode }}
+      installVersion: {{ .Values.Cluster.HTTPHost.installVersion }}
 {{- end }}     
     nodesForChaos:
     {{- range .Values.Cluster.nodesForChaos.k8s_node_name }}
@@ -61,7 +61,7 @@ items:
     {{- range .Values.Cluster.nodesForGateway.k8s_node_name }}
       - name: {{ . | toString  }}
     {{- end }}
-    rainbondImageRepository: {{- .Values.Cluster.rainbondImageRepository.ImageRepository }}
+    rainbondImageRepository: {{ .Values.Cluster.rainbondImageRepository.ImageRepository }}
 
 kind: List
 metadata:

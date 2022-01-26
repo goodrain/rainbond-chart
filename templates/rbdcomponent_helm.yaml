@@ -61,7 +61,7 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: true
       {{- if .Values.Cluster.enableHA.enable  }} 
-    replicas: {{- .Values.Component.replicas }}
+    replicas: {{ .Values.Component.replicas }}
       {{ else }}
     replicas: 1
       {{- end }}
@@ -110,7 +110,7 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: true
       {{- if .Values.Cluster.enableHA.enable  }} 
-    replicas: {{- .Values.Component.replicas }}
+    replicas: {{ .Values.Component.replicas }}
       {{ else }}
     replicas: 1
       {{- end }}
@@ -158,7 +158,7 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: true
       {{- if .Values.Cluster.enableHA.enable  }} 
-    replicas: {{- .Values.Component.replicas }}
+    replicas: {{ .Values.Component.replicas }}
       {{ else }}
     replicas: 1
       {{- end }}
@@ -180,7 +180,7 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-    replicas: {{- .Values.Component.replicas }}
+    replicas: {{ .Values.Component.replicas }}
       {{ else }}
     replicas: 1
       {{- end }}
@@ -227,7 +227,7 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-    replicas: {{- .Values.Component.replicas }}
+    replicas: {{ .Values.Component.replicas }}
       {{ else }}
     replicas: 1
       {{- end }}
@@ -316,7 +316,7 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-    replicas: {{- .Values.Component.replicas }}
+    replicas: {{ .Values.Component.replicas }}
       {{ else }}
     replicas: 1
       {{- end }}
@@ -336,7 +336,7 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-    replicas: {{- .Values.Component.replicas }}
+    replicas: {{ .Values.Component.replicas }}
       {{ else }}
     replicas: 1
       {{- end }}
@@ -472,7 +472,7 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-    replicas: {{- .Values.Component.replicas }}
+    replicas: {{ .Values.Component.replicas }}
       {{ else }}
     replicas: 1
       {{- end }}
@@ -523,7 +523,7 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-    replicas: {{- .Values.Component.replicas }}
+    replicas: {{ .Values.Component.replicas }}
       {{ else }}
     replicas: 1
       {{- end }}
@@ -614,7 +614,7 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-    replicas: {{- .Values.Component.replicas }}
+    replicas: {{ .Values.Component.replicas }}
       {{ else }}
     replicas: 1
       {{- end }}
@@ -660,7 +660,7 @@ items:
     imagePullPolicy: IfNotPresent
     priorityComponent: false
       {{- if .Values.Cluster.enableHA.enable  }} 
-    replicas: {{- .Values.Component.replicas }}
+    replicas: {{ .Values.Component.replicas }}
       {{ else }}
     replicas: 1
       {{- end }}

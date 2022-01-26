@@ -4,7 +4,7 @@ Cluster:
     enable: false
 ## 定义是否使用外部镜像镜像仓库，true为开，false为关
   imageHub:
-    enable: false
+    enable: true
     domain: registry.cn-hangzhou.aliyuncs.com
     namespace: ddrainbond
     password: admin
