@@ -45,10 +45,8 @@ Cluster:
   gatewayIngressIPs:
     ip: 172.36.22.10
 ## 域名
-##  HTTPHost:
-##    suffixHTTPHost: www.rainbond.com  
-##    installMode: 
-##    installVersion:
+  HTTPHost:
+    suffixHTTPHost: .grapp.cn  
 ## chaos节点对应的k8s节点名字
   nodesForChaos:
     k8s_node_name:
@@ -61,7 +59,7 @@ Cluster:
       - master1
       - node1
       - node2
-
+ 
     
 
 
