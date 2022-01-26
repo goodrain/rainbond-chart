@@ -61,7 +61,7 @@ items:
     {{- range .Values.Cluster.nodesForGateway.k8s_node_name }}
       - name: {{ . | toString  }}
     {{- end }}
-    rainbondImageRepository: {{ .Values.Cluster.rainbondImageRepository.ImageRepository }}
+    rainbondImageRepository: {{ .Values.Component.rainbondImageRepository }}
 
 kind: List
 metadata:
