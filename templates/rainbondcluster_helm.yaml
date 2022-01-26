@@ -48,9 +48,11 @@ items:
       port: {{- .Values.Cluster.uiDatabase.port }}
       username: {{- .Values.Cluster.uiDatabase.username }}
 {{- end }}
+{{- if .Values.Cluster.HTTPHost }}
     suffixHTTPHost: {{- .Values.Cluster.HTTPHost.suffixHTTPHost }}
       installMode: {{- .Values.Cluster.HTTPHost.installMode }}
       installVersion: {{- .Values.Cluster.HTTPHost.installVersion }}
+{{- end }}     
     nodesForChaos:
     {{- range .Values.Cluster.nodesForChaos.k8s_node_name }}
       - name: {{ . | toString  }}
