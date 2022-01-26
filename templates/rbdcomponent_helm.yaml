@@ -73,8 +73,7 @@ items:
     labels:
       belongTo: rainbond-operator
       creator: Rainbond
-      name: rbd-node
-      persistentVolumeClaimAccessModes: ReadWriteOnce
+      name: rbd-node      
       priorityComponent: "true"
     name: rbd-node
     namespace: rbd-system
@@ -121,8 +120,7 @@ items:
     labels:
       belongTo: rainbond-operator
       creator: Rainbond
-      name: rbd-hub
-      persistentVolumeClaimAccessModes: ReadWriteOnce
+      name: rbd-hub      
       priorityComponent: "true"
     name: rbd-hub
     namespace: rbd-system
@@ -436,8 +434,7 @@ items:
     labels:
       belongTo: rainbond-operator
       creator: Rainbond
-      name: rbd-chaos
-      persistentVolumeClaimAccessModes: ReadWriteOnce
+      name: rbd-chaos      
     name: rbd-chaos
     namespace: rbd-system
   spec:
@@ -484,8 +481,7 @@ items:
     labels:
       belongTo: rainbond-operator
       creator: Rainbond
-      name: rbd-worker
-      persistentVolumeClaimAccessModes: ReadWriteOnce
+      name: rbd-worker      
     name: rbd-worker
     namespace: rbd-system
   spec:
@@ -535,8 +531,7 @@ items:
     labels:
       belongTo: rainbond-operator
       creator: Rainbond
-      name: rbd-eventlog
-      persistentVolumeClaimAccessModes: ReadWriteOnce
+      name: rbd-eventlog      
     name: rbd-eventlog
     namespace: rbd-system
   spec:
@@ -579,7 +574,6 @@ items:
       belongTo: rainbond-operator
       creator: Rainbond
       name: rbd-api
-      persistentVolumeClaimAccessModes: ReadWriteOnce
     name: rbd-api
     namespace: rbd-system
   spec:  
@@ -626,7 +620,6 @@ items:
       belongTo: rainbond-operator
       creator: Rainbond
       name: rbd-app-ui
-      persistentVolumeClaimAccessModes: ReadWriteOnce
     name: rbd-app-ui
     namespace: rbd-system
   spec:
