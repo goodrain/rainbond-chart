@@ -14,7 +14,8 @@ items:
       - {{ . | toString  }}
       {{- end }}    
       secretName: {{- .Values.Cluster.etcd.secretName }}
-{{- end }}  
+{{- end }}
+    configCompleted: true
     gatewayIngressIPs:
     - {{ .Values.Cluster.gatewayIngressIPs.ip }}
 {{- if .Values.Cluster.imageHub.enable  }}
