@@ -53,13 +53,9 @@ items:
     installMode: WithoutPackage
     installVersion: {{ .Values.Component.installVersion }}     
     nodesForChaos:
-    {{- range .Values.Cluster.nodesForChaos.k8s_node_name }}
-      - name: {{ . | toString  }}
-    {{- end }}    
+{{ .Values.Cluster.nodesForChaos | toYaml | indent 4 }}   
     nodesForGateway: 
-    {{- range .Values.Cluster.nodesForGateway.k8s_node_name }}
-      - name: {{ . | toString  }}
-    {{- end }}
+{{ .Values.Cluster.nodesForGateway | toYaml | indent 4 }}
     rainbondImageRepository: {{ .Values.Component.rainbondImageRepository }}
 
 kind: List

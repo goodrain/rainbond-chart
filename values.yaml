@@ -47,18 +47,23 @@ Cluster:
 ## 域名
   HTTPHost:
     suffixHTTPHost: .grapp.cn  
-## chaos节点对应的k8s节点名字
+## 网关节点对应配置，externalIP为Chaos节点外部IP，internalIP为Chaos节点内部IP，name为Chaos节点node名称
   nodesForChaos:
-    k8s_node_name:
-      - master1 
-      - node1
-      - node2
-## 网关节点对应的k8s节点名字
+  - externalIP: 47.105.55.170
+    internalIP: 172.31.112.134
+    name: 47.105.55.170
+  - externalIP: 47.105.55.171
+    internalIP: 172.31.112.135
+    name: 47.105.55.175
+
+## 网关节点对应配置，externalIP为网关节点外部IP，internalIP为网关节点内部IP，name为网关节点node名称
   nodesForGateway:
-    k8s_node_name:
-      - master1
-      - node1
-      - node2
+  - externalIP: 47.105.55.170
+    internalIP: 172.31.112.134
+    name: 47.105.55.170
+  - externalIP: 47.105.55.171
+    internalIP: 172.31.112.135
+    name: 47.105.55.175
  
     
 
