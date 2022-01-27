@@ -7,12 +7,12 @@ items:
       accessModes: rwx
       belongTo: rainbond-operator
       creator: Rainbond
+    name: rainbondvolumerwx
     namespace: rbd-system
   spec:
     csiPlugin:
       nfs: {}
     imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
-    storageClassName: rainbondvolumerwx
     storageClassParameters:
       provisioner: rainbond.io/nfs
     storageRequest: 1
