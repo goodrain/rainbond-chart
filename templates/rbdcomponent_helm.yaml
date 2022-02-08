@@ -330,6 +330,26 @@ items:
     name: dashboard-metrics-scraper
     namespace: rbd-system
   spec:
+    image: {{ .Values.Component.rainbondImageRepository }}/metrics-scraper:v1.0.4
+    imagePullPolicy: IfNotPresent
+    priorityComponent: false
+      {{- if .Values.Cluster.enableHA.enable  }} 
+    replicas: {{ .Values.Component.replicas }}
+      {{ else }}
+    replicas: 1
+      {{- end }}
+
+- apiVersion: rainbond.io/v1alpha1
+  kind: RbdComponent
+  metadata:
+    labels:
+      app.kubernetes.io/managed-by: Helm
+      belongTo: rainbond-operator
+      creator: Rainbond
+      name: kubernetes-dashboard
+    name: kubernetes-dashboard
+    namespace: rbd-system
+  spec:
     image: {{ .Values.Component.rainbondImageRepository }}/kubernetes-dashboard:v2.0.1-3
     imagePullPolicy: IfNotPresent
     priorityComponent: false
