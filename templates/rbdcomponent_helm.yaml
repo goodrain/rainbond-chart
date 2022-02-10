@@ -44,7 +44,7 @@ items:
     env:
     {{- range $key,$value := .Values.Component.rbd_gteway.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_gteway.volumeMounts }}
@@ -96,7 +96,7 @@ items:
     env:
     {{- range $key,$value := .Values.Component.rbd_node.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_node.volumeMounts }}
@@ -147,7 +147,7 @@ items:
     env:
     {{- range $key,$value := .Values.Component.rbd_hub.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_hub.volumeMounts }}
@@ -224,7 +224,7 @@ items:
     env:
     {{- range $key,$value := .Values.Component.rbd_mq.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_mq.volumeMounts }}
@@ -275,7 +275,7 @@ items:
     env:
     {{- range $key,$value := .Values.Component.rbd_resource_proxy.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_resource_proxy.volumeMounts }}
@@ -321,7 +321,7 @@ items:
     env:
     {{- range $key,$value := .Values.Component.rbd_webcli.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_webcli.volumeMounts }}
@@ -420,7 +420,7 @@ items:
     env:
     {{- range $key,$value := .Values.Component.rbd_monitor.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_monitor.volumeMounts }}
@@ -468,7 +468,7 @@ items:
     env:
     {{- range $key,$value := .Values.Component.rbd_db.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_db.volumeMounts }}
@@ -516,7 +516,7 @@ items:
     env:
     {{- range $key,$value := .Values.Component.rbd_chaos.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_chaos.volumeMounts }}
@@ -561,7 +561,7 @@ items:
     env:
     {{- range $key,$value := .Values.Component.rbd_worker.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_worker.args }}
@@ -574,7 +574,7 @@ items:
     env:
     {{- range $key,$value := .Values.Component.rbd_worker.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_worker.volumeMounts }}
@@ -625,7 +625,7 @@ items:
     env:
     {{- range $key,$value := .Values.Component.rbd_eventlog.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_eventlog.volumeMounts }}
@@ -671,7 +671,7 @@ items:
     env:
     {{- range $key,$value := .Values.Component.rbd_api.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_api.volumeMounts }}
@@ -724,7 +724,7 @@ items:
     {{- if .Values.Component.rbd_app_ui.env }}
     {{- range $key,$value := .Values.Component.rbd_app_ui.env }}
     - name: {{ $key }}
-      value: {{ $value }}
+      value: "{{ $value }}"
     {{- end }}
     {{- end }}
     {{- if .Values.Component.rbd_app_ui.volumeMounts }}
