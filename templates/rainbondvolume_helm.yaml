@@ -9,7 +9,11 @@ metadata:
   name: rainbondvolumerwx
   namespace: rbd-system
 spec:
+{{- if .Values.Cluster.RWX.enable  }}
+  storageClassName: {{ .Values.Cluster.RWX.storageClassName }}
+{{ else }}
   csiPlugin:
     nfs: {}
-  imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
   storageRequest: 1
+{{- end }}
+  imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
