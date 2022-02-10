@@ -1,7 +1,7 @@
-{{- if or .Values.Cluster.etcd.enable  .Values.Cluster.enableHA.enable  }}
-{{ else }}
 apiVersion: v1
 items:
+{{- if or .Values.Cluster.etcd.enable  .Values.Cluster.enableHA.enable  }}
+{{ else }}
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
   metadata:
