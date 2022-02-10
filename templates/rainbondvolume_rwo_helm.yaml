@@ -7,7 +7,7 @@ metadata:
     accessModes: rwo
     belongTo: rainbond-operator
     creator: Rainbond
-  name: rainbondvolumerwx
+  name: rainbondvolumerwo
   namespace: rbd-system
 spec:
   storageClassName: {{ .Values.Cluster.RWO.storageClassName }}
