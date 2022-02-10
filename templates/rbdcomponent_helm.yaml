@@ -556,7 +556,7 @@ items:
       name: rbd-worker      
     name: rbd-worker
     namespace: rbd-system
-  spec:worker
+  spec:
     {{- if .Values.Component.rbd_worker.env }}
     env:
     {{- range $key,$value := .Values.Component.rbd_worker.env }}
