@@ -43,18 +43,11 @@ Cluster:
     username: admin 
 ## 对外网关，填写IP
   gatewayIngressIPs:
-    ip: 172.36.22.10
-## 域名
-  HTTPHost:
-    suffixHTTPHost: .grapp.cn  
-## 网关节点对应配置，externalIP为Chaos节点外部IP，internalIP为Chaos节点内部IP，name为Chaos节点node名称
+    ip: 172.36.22.10 
+## chaos对应配置，name为Chaos节点node名称
   nodesForChaos:
-  - externalIP: 47.105.55.170
-    internalIP: 172.31.112.134
-    name: 47.105.55.170
-  - externalIP: 47.105.55.171
-    internalIP: 172.31.112.135
-    name: 47.105.55.175
+  - name: 47.105.55.170
+  - name: 47.105.55.175
 
 ## 网关节点对应配置，externalIP为网关节点外部IP，internalIP为网关节点内部IP，name为网关节点node名称
   nodesForGateway:

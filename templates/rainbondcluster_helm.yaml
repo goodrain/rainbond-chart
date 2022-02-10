@@ -13,7 +13,7 @@ items:
       {{- range .Values.Cluster.etcd.endpoints }}
       - {{ . | toString  }}
       {{- end }}    
-      secretName: {{- .Values.Cluster.etcd.secretName }}
+      secretName: {{ .Values.Cluster.etcd.secretName }}
 {{- end }}
     configCompleted: true
     gatewayIngressIPs:
@@ -49,7 +49,7 @@ items:
       port: {{ .Values.Cluster.uiDatabase.port }}
       username: {{ .Values.Cluster.uiDatabase.username }}
 {{- end }}
-    suffixHTTPHost: {{ .Values.Cluster.HTTPHost.suffixHTTPHost }}
+    suffixHTTPHost: ""
     installMode: WithoutPackage
     installVersion: {{ .Values.Component.installVersion }}     
     nodesForChaos:
