@@ -556,10 +556,14 @@ items:
       name: rbd-worker      
     name: rbd-worker
     namespace: rbd-system
-  spec:
+  spec:worker
+    {{- if .Values.Component.rbd_worker.env }}
     env:
-    - name: ALLINONE_MODE
-      value: "true"
+    {{- range $key,$value := .Values.Component.rbd_worker.env }}
+    - name: {{ $key }}
+      value: {{ $value }}
+    {{- end }}
+    {{- end }}
     {{- if .Values.Component.rbd_worker.args }}
     args:
     {{- range .Values.Component.rbd_worker.args }}
