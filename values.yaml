@@ -6,7 +6,7 @@ Cluster:
   imageHub:
     enable: false
     domain: registry.cn-hangzhou.aliyuncs.com
-    namespace: ddrainbond
+    namespace: rainbond
     password: admin
     username: admin
 ## 外部ETCD，对应填写IP，证书，true为开，false为关
@@ -25,19 +25,19 @@ Cluster:
   RWO:
     enable: false
     storageClassName: glusterfs-simple
-## 数据库，true为开，false为关
+## region数据库，true为开，false为关
   regionDatabase:
     enable: false
-    host: 88888
-    name: database name
+    host: 47.105.55.170
+    name: library name 
     password: admin
     port: 3306
     username: admin
-## 数据库，true为开，false为关
+## ui数据库，true为开，false为关
   uiDatabase:
     enable: false
-    host: 172.36.22.10
-    name: database name
+    host: 47.105.55.170
+    name: library name
     password: admin
     port: 3306
     username: admin 
@@ -47,7 +47,7 @@ Cluster:
 ## chaos对应配置，name为Chaos节点node名称
   nodesForChaos:
   - name: 47.105.55.170
-  - name: 47.105.55.175
+  - name: 47.105.55.171
 
 ## 网关节点对应配置，externalIP为网关节点外部IP，internalIP为网关节点内部IP，name为网关节点node名称
   nodesForGateway:
@@ -56,14 +56,9 @@ Cluster:
     name: 47.105.55.170
   - externalIP: 47.105.55.171
     internalIP: 172.31.112.135
-    name: 47.105.55.175
+    name: 47.105.55.171
  
     
-
-
-
-
-
 
 Component:
 ## 系统组件统一镜像仓库拉取地址及名称空间
@@ -77,12 +72,20 @@ Component:
 ## rbd-api 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载
   rbd_api:
     args:
-  ##    - --etcd-ca=/r
-  ##    - --etcd-ca=/r
-#### 环境变量test为key,5555为value
+  ##    - --api-addr          api服务器侦听地址（默认为“127.0.0.1:8888”）
+  ##    - --enable-feature    支持的特殊功能列表
+  ##    - --log-level         日志级别（默认“info”）
+  ##    - --mysql             mysql数据库连接信息
+  ##    - --etcd              etcd服务器或代理地址
+  ##    - --api-ssl-enable    是否启用websocket SSL
+  ##    - --api-addr-ssl      api服务器侦听地址（默认为“0.0.0.0:8443”）
+  ##    - --api-ssl-certfile  websocket和文件服务器ssl证书文件
+  ##    - --api-ssl-keyfile   websocket和文件服务器ssl密钥文件
+  ##    - --client-ca-file    api ssl ca文件
+## 环境变量variable_name为变量名,variable为变量值
+  ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    test: 5555
-  ##    test2: 6666
+  ##    variable_name：variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -98,11 +101,13 @@ Component:
 ## rbd-gteway 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载
   rbd_gteway:
     args:
-  ##    - --gteway-ca=/r
-  ##    - --gteway-ca=/r
+  ##    - --log-level        日志级别
+  ##    - --error-log        记录错误日志路径
+  ##    - --enable-kubeapi   是否启用kube apiserver的负载平衡
+  ##    - --etcd-endpoints   etcd集群连接地址
+## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    test: 5555
-  ##    test2: 6666
+  ##      variable_name：variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -118,11 +123,17 @@ Component:
 ## rbd-node 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载
   rbd_node:
     args:
-  ##    - --etcd-ca=/r
-  ##    - --etcd-ca=/r
+  ##    - --log-level   日志级别，默认info
+  ##    - --etcd        etcd地址,默认 [http://127.0.0.1:2379]
+  ##    - --hostIP      当前节点ip,未指定时获取eth0 ip
+  ##    - --run-mode    node属性,默认是manage
+  ##    - --noderule    节点属性，默认是compute 
+  ##    - --nodeid      此节点的唯一ID，只需指定，不要修改
+  ##    - --image-repo-host  镜像仓库主机
+  ##    - --hostsfile   /etc/hosts映射容器中的路径
+  ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    test: 5555
-  ##    test2: 6666
+  ##      variable_name：variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -140,9 +151,9 @@ Component:
     args:
   ##    - --hub-ca=/r
   ##    - --hub-ca=/r
+  ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    test: 5555
-  ##    test2: 6666
+  ##      variable_name：variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -158,11 +169,12 @@ Component:
 ## rbd-mq 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载
   rbd_mq:
     args:
-  ##    - --etcd-ca=/r
-  ##    - --etcd-ca=/r
+  ##    - --log-level        日志级别
+  ##    - --etcd-endpoints   集群etcd连接地址
+  ##    - --hostIP           本机ip
+## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    test: 5555
-  ##    test2: 6666
+  ##      variable_name：variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -178,11 +190,9 @@ Component:
 ## rbd-resource-proxy 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
   rbd_resource_proxy:
     args:
-  ##    - --etcd-ca=/r
-  ##    - --etcd-ca=/r
+  ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    test: 5555
-  ##    test2: 6666
+  ##      variable_name：variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -198,11 +208,12 @@ Component:
 ## rbd-webcli 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
   rbd_webcli:
     args:
-  ##    - --etcd-ca=/r
-  ##    - --etcd-ca=/r
+  ##    - --hostIP            本机ip
+  ##    - --log-level         日志级别
+  ##    - --etcd-endpoints    etcd连接地址
+## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    test: 5555
-  ##    test2: 6666
+  ##      variable_name：variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -218,11 +229,14 @@ Component:
 ## rbd-monitor 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
   rbd_monitor:
     args:
-  ##    - --etcd-ca=/r
-  ##    - --etcd-ca=/r
+  ##    --alertmanager-address AlertManager地址
+  ##    --cadvisor-listen-port kubelet cadvisor监听端口
+  ##    --config.file Prometheus 配置文件路径
+  ##    --rules-config.file Prometheus alerting rules文件路径
+  ##    --storage.tsdb.retention 数据保留时间，默认7天
+## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    test: 5555
-  ##    test2: 6666
+  ##      variable_name：variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -238,11 +252,9 @@ Component:
 ## rbd-db 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
   rbd_db:
     args:
-  ##    - --etcd-ca=/r
-  ##    - --etcd-ca=/r
+## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    test: 5555
-  ##    test2: 6666
+  ##      variable_name：variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -258,11 +270,13 @@ Component:
 ## rbd-chaos 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
   rbd_chaos:
     args:
-  ##    - --etcd-ca=/r
-  ##    - --etcd-ca=/r
+  ##    - --hostIP    当前节点内网IP
+  ##    - --log-level 日志级别（默认“info”)
+  ##    - --mysql     数据库连接信息
+  ##    - --etcd-endpoints  etcd v3集群连接信息。
+## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    test: 5555
-  ##    test2: 6666
+  ##      variable_name：variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -278,11 +292,14 @@ Component:
 ## rbd-worker 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
   rbd_worker:
     args:
-  ##    - --etcd-ca=/r
-  ##    - --etcd-ca=/r
+  ##    - --log-level   日志级别
+  ##    - --host-ip     此工作进程的ip，必须是全局连接的ip
+  ##    - --node-name   此工作进程的名称，必须是全局唯一名称
+  ##    - --mysql       数据库连接信息
+  ##    - --etcd-endpoints  etcd v3集群连接信息
+## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    test: 5555
-  ##    test2: 6666
+  ##      variable_name：variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -298,11 +315,14 @@ Component:
 ## rbd-eventlog 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
   rbd_eventlog:
     args:
-  ##    - --etcd-ca=/r
-  ##    - --etcd-ca=/r
+  ##    - --cluster.bind.ip    集群通信监听IP
+  ##    - --cluster.instance   群集中的当前实例通信IP
+  ##    - --websocket.bind.ip  推送事件消息的websocket绑定ip
+  ##    - --db.url             数据库连接信息
+  ##    - --discover.etcd.addr 为消息提示自动发现群集中的etcd服务器地址
+## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    test: 5555
-  ##    test2: 6666
+  ##      variable_name：variable  
   ##  image:
   ##  volumes:
   ##    testpv:
@@ -319,11 +339,9 @@ Component:
   rbd_app_ui:
     enable: true
     args:
-  ##    - --etcd-ca=/r
-  ##    - --etcd-ca=/r
+## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    test: 5555
-  ##    test2: 6666
+  ##      variable_name：variable  
     image: registry.cn-hangzhou.aliyuncs.com/yangkaa/rainbond:helm-allinone
   ##  volumes:
   ##    testpv:
