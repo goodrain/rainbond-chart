@@ -45,7 +45,7 @@ items:
 {{- end }}
 {{- if or .Values.Cluster.uiDatabase.enable .Values.Cluster.enableHA.enable }}
     uiDatabase:
-      host: {{ .Values.Cluster.uiDatabase.host }}
+      host: {{ required ".Values.Cluster.uiDatabase.host cannot be empty!" .Values.Cluster.uiDatabase.host }}
       name: {{ .Values.Cluster.uiDatabase.name }}
       password: {{ .Values.Cluster.uiDatabase.password }}
       port: {{ .Values.Cluster.uiDatabase.port }}
