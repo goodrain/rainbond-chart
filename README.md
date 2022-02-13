@@ -10,11 +10,17 @@ You can deploy the Rainbond Console in Kubernets using Helm Chart.
 
 ## Installation
 
-Add `rainbond-console` helm charts repo
+Add `rainbond-operator` helm charts repo
 
 ```
-helm repo add rainbond https://openchart.goodrain.com/goodrain/rainbond
+kubectl create namespace rbd-system
+helm repo add rainbond-operator https://openchart.goodrain.com/goodrain/rainbond
 helm repo update
 ```
+Installing helm chart
 
+Install the controller first,then install the console
 
+```
+helm install rainbond-operator ./operator-chart2 -n rbd-system --set operator.image.name=registry.cn-hangzhou.aliyuncs.com/yangkaa/rainbond-operator --set operator.image.tag=v2.2.0-dev
+```
