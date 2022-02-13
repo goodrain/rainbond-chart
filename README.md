@@ -4,11 +4,9 @@ You can deploy the Rainbond Console in Kubernets using Helm Chart.
 
 ## Pre Requisites
 
-* Kubernetes version cannot be earlier than 1.19
+* Recommended kubernetes version: 1.19+
 
-* StorageClass is required within the cluster
-
-  > ref: https://artifacthub.io/packages/helm/kvaps/nfs-server-provisioner
+* helm version: 3.0+
 
 ## Installation
 
