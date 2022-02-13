@@ -22,5 +22,10 @@ Installing helm chart
 Install the controller first,then install the console
 
 ```
-helm install rainbond-operator ./operator-chart2 -n rbd-system --set operator.image.name=registry.cn-hangzhou.aliyuncs.com/yangkaa/rainbond-operator --set operator.image.tag=v2.2.0-dev
+helm install rainbond-operator rainbond/rainbond-operator -n rbd-system --set operator.image.name=registry.cn-hangzhou.aliyuncs.com/yangkaa/rainbond-operator --set operator.image.tag=v2.2.0-dev
+```
+
+Enable the console to connect to the kubernetes cluster
+```
+helm install rainbond-cluster rainbond/rainbond-cluster -n rbd-system
 ```
