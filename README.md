@@ -29,3 +29,6 @@ Enable the console to connect to the kubernetes cluster
 ```
 helm install rainbond-cluster rainbond/rainbond-cluster -n rbd-system
 ```
+## License
+
+Rainbond follow LGPL-3.0 license，Details see[LICENSE](https://github.com/goodrain/rainbond/blob/master/LICENSE) and [Licensing](https://github.com/goodrain/rainbond/blob/master/Licensing.md)
