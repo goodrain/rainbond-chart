@@ -446,8 +446,11 @@ items:
     priorityComponent: false
     replicas: 1
 
-{{- if or .Values.Cluster.regionDatabase.enable  .Values.Cluster.enableHA  }}
-{{ else }}
+{{- if and .Values.Cluster.uiDatabase.enable .Values.Cluster.regionDatabase.enable }}
+{{- else }}
+  {{- if .Values.Cluster.enableHA }}
+    {{ fail "External Region and UI database must be set in high availability mode!" }}
+  {{- else }}
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
   metadata:
@@ -493,6 +496,7 @@ items:
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     priorityComponent: false
     replicas: 1
+  {{- end}}
 {{- end }}
 
 
