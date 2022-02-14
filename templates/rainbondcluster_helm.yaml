@@ -6,8 +6,8 @@ items:
     name: rainbondcluster
     namespace: rbd-system
   spec:
-    enableHA: {{ .Values.Cluster.enableHA.enable }}
-{{- if or .Values.Cluster.etcd.enable  .Values.Cluster.enableHA.enable }}    
+    enableHA: {{ .Values.Cluster.enableHA }}
+{{- if or .Values.Cluster.etcd.enable  .Values.Cluster.enableHA }}    
     etcdConfig:
       endpoints: 
       {{- range .Values.Cluster.etcd.endpoints }}
@@ -35,7 +35,7 @@ items:
       storageClassName: {{ .Values.Cluster.RWX.storageClassName }}         
       imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
 {{- end }}
-{{- if or .Values.Cluster.regionDatabase.enable  .Values.Cluster.enableHA.enable }}
+{{- if or .Values.Cluster.regionDatabase.enable  .Values.Cluster.enableHA }}
     regionDatabase:
       host: {{  required ".Values.Cluster.regionDatabase.host cannot be empty!" .Values.Cluster.regionDatabase.host }}
       name: {{ .Values.Cluster.regionDatabase.name }}
@@ -43,7 +43,7 @@ items:
       port: {{ .Values.Cluster.regionDatabase.port }}
       username: {{ .Values.Cluster.regionDatabase.username }}
 {{- end }}
-{{- if or .Values.Cluster.uiDatabase.enable .Values.Cluster.enableHA.enable }}
+{{- if or .Values.Cluster.uiDatabase.enable .Values.Cluster.enableHA }}
     uiDatabase:
       host: {{ required ".Values.Cluster.uiDatabase.host cannot be empty!" .Values.Cluster.uiDatabase.host }}
       name: {{ .Values.Cluster.uiDatabase.name }}
@@ -53,12 +53,12 @@ items:
 {{- end }}
     suffixHTTPHost: ""
     installMode: WithoutPackage
-    installVersion: {{ .Values.Component.installVersion }}     
+    installVersion: {{ .Values.Cluster.installVersion }}     
     nodesForChaos:
 {{ .Values.Cluster.nodesForChaos | toYaml | indent 4 }}   
     nodesForGateway: 
 {{ .Values.Cluster.nodesForGateway | toYaml | indent 4 }}
-    rainbondImageRepository: {{ .Values.Component.rainbondImageRepository }}
+    rainbondImageRepository: {{ .Values.Cluster.rainbondImageRepository }}
 
 kind: List
 metadata:

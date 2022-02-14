@@ -1,7 +1,30 @@
+# Default values for mychart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## Install Default RBAC roles and bindings
+rbac:
+  create: true
+  apiVersion: v1
+
+## Service account name and whether to create it
+serviceAccount:
+  create: true
+  name: rainbond-operator
+
+# rainbondOperator
+operator:
+  name: rainbond-operator
+  image:
+    name: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond-operator
+    tag: v2.0.0
+    pullPolicy: IfNotPresent
+  logLevel: 4
+
+#Rainbondcluster
 Cluster:
 ## 定义是否开启高可用，true为开，false为关  
-  enableHA:
-    enable: false
+  enableHA: false
 
 ## 定义是否使用外部镜像镜像仓库，true为开，false为关
   imageHub:
@@ -18,7 +41,7 @@ Cluster:
     - 192.168.3.103:2379 
     - 192.168.3.103:2379
     - 192.168.3.103:2379
-    secretName: 
+    secretName: ""
 
 ## 外部存储，直接填写storageClassName，true为开，false为关
   RWX:
@@ -65,10 +88,7 @@ Cluster:
   - externalIP: 47.105.55.171
     internalIP: 172.31.112.135
     name: 47.105.55.171
- 
-    
 
-Component:
 ## 系统组件统一镜像仓库拉取地址及名称空间
   rainbondImageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
 ## 系统组件统一镜像版本
@@ -77,7 +97,10 @@ Component:
   imagePullPolicy: IfNotPresent
 ## 高可用安装模式下，系统组件副本数
   replicas: 2
+ 
+    
 
+Component:
 
 ## rbd-api 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载
   rbd_api:
