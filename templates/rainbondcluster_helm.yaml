@@ -17,7 +17,7 @@ items:
 {{- end }}
     configCompleted: true
     gatewayIngressIPs:
-    - {{ .Values.Cluster.gatewayIngressIPs.ip }}
+    - {{ .Values.Cluster.gatewayIngressIPs }}
 {{- if .Values.Cluster.imageHub.enable  }}
     imageHub:
       domain: {{ .Values.Cluster.imageHub.domain }}

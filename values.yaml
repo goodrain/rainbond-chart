@@ -72,8 +72,7 @@ Cluster:
     username: admin 
 
 ## 对外网关，填写IP
-  gatewayIngressIPs:
-    ip: 172.36.22.10 
+  gatewayIngressIPs: 172.36.22.10
 
 ## chaos对应配置，name为Chaos节点node名称
   nodesForChaos:
