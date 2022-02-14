@@ -19,7 +19,6 @@ operator:
     name: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond-operator
     tag: v2.0.0
     pullPolicy: IfNotPresent
-  regionDBName: region
   logLevel: 4
 
 #Rainbondcluster
