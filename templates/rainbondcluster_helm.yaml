@@ -7,17 +7,21 @@ items:
     namespace: rbd-system
   spec:
     enableHA: {{ .Values.Cluster.enableHA }}
-{{- if or .Values.Cluster.etcd.enable  .Values.Cluster.enableHA }}    
+{{- if .Values.Cluster.etcd.enable }}   
     etcdConfig:
       endpoints: 
       {{- range .Values.Cluster.etcd.endpoints }}
       - {{ . | toString  }}
       {{- end }}    
       secretName: {{ .Values.Cluster.etcd.secretName }}
+{{- else}}
+  {{- if .Values.Cluster.enableHA }}
+    {{- fail "An external Etcd cluster must be set up in high availability mode!" }}
+  {{- end }}
 {{- end }}
     configCompleted: true
     gatewayIngressIPs:
-    - {{ .Values.Cluster.gatewayIngressIPs.ip }}
+    - {{ required ".Values.Cluster.gatewayIngressIPs cannot be empty!" .Values.Cluster.gatewayIngressIPs }}
 {{- if .Values.Cluster.imageHub.enable  }}
     imageHub:
       domain: {{ .Values.Cluster.imageHub.domain }}
@@ -34,6 +38,10 @@ items:
     rainbondVolumeSpecRWX:
       storageClassName: {{ .Values.Cluster.RWX.storageClassName }}         
       imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
+{{- else }}
+  {{- if .Values.Cluster.enableHA }}
+    {{- fail "External shared storage must be set in high availability mode!"}}
+  {{- end}}
 {{- end }}
 {{- if or .Values.Cluster.regionDatabase.enable  .Values.Cluster.enableHA }}
     regionDatabase:

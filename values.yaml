@@ -38,10 +38,10 @@ Cluster:
   etcd:
     enable: false
     endpoints: 
-    - 192.168.3.103:2379 
-    - 192.168.3.103:2379
-    - 192.168.3.103:2379
-    secretName: ""
+    - 192.168.0.1:2379 
+    - 192.168.0.2:2379
+    - 192.168.0.3:2379
+    secretName: "rbd-etcd-secret"
 
 ## 外部存储，直接填写storageClassName，true为开，false为关
   RWX:
@@ -56,38 +56,37 @@ Cluster:
 ## region数据库，true为开，false为关
   regionDatabase:
     enable: false
-    host: 47.105.55.170
-    name: library name 
-    password: admin
+    host: 192.168.0.1
+    name: region
+    password: password
     port: 3306
     username: admin
 
 ## ui数据库，true为开，false为关
   uiDatabase:
     enable: false
-    host: 47.105.55.170
-    name: library name
-    password: admin
+    host: 192.168.0.1
+    name: console
+    password: password
     port: 3306
     username: admin 
 
 ## 对外网关，填写IP
-  gatewayIngressIPs:
-    ip: 172.36.22.10 
+  gatewayIngressIPs: 192.168.0.1
 
 ## chaos对应配置，name为Chaos节点node名称
   nodesForChaos:
-  - name: 47.105.55.170
-  - name: 47.105.55.171
+  - name: node1
+  - name: node2
 
 ## 网关节点对应配置，externalIP为网关节点外部IP，internalIP为网关节点内部IP，name为网关节点node名称
   nodesForGateway:
-  - externalIP: 47.105.55.170
-    internalIP: 172.31.112.134
-    name: 47.105.55.170
-  - externalIP: 47.105.55.171
-    internalIP: 172.31.112.135
-    name: 47.105.55.171
+  - externalIP: 192.168.0.1
+    internalIP: 192.168.0.1
+    name: node1
+  - externalIP: 192.168.0.2
+    internalIP: 192.168.0.2
+    name: node2
 
 ## 系统组件统一镜像仓库拉取地址及名称空间
   rainbondImageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
