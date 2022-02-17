@@ -15,6 +15,8 @@ serviceAccount:
 # rainbondOperator
 operator:
   name: rainbond-operator
+##    env:
+##      variable_name: variable
   image:
     name: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond-operator
     tag: v2.2.0
