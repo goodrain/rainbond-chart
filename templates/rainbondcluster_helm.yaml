@@ -20,8 +20,11 @@ items:
   {{- end }}
 {{- end }}
     configCompleted: true
+{{- if .Values.Cluster.gatewayIngressIPs }}
     gatewayIngressIPs:
-    - {{ required ".Values.Cluster.gatewayIngressIPs cannot be empty!" .Values.Cluster.gatewayIngressIPs }}
+    - {{ .Values.Cluster.gatewayIngressIPs }}
+{{- else }}
+{{ end }}
 {{- if .Values.Cluster.imageHub.enable  }}
     imageHub:
       domain: {{ .Values.Cluster.imageHub.domain }}
@@ -62,10 +65,16 @@ items:
     suffixHTTPHost: ""
     installMode: WithoutPackage
     installVersion: {{ .Values.Cluster.installVersion }}     
+{{- if .Values.Cluster.nodesForChaos }}
     nodesForChaos:
-{{ .Values.Cluster.nodesForChaos | toYaml | indent 4 }}   
-    nodesForGateway: 
+{{ .Values.Cluster.nodesForChaos | toYaml | indent 4 }}
+{{- else }}
+{{ end }}
+{{- if .Values.Cluster.nodesForGateway }}
+    nodesForGateway:
 {{ .Values.Cluster.nodesForGateway | toYaml | indent 4 }}
+{{- else }}
+{{ end }}
     rainbondImageRepository: {{ .Values.Cluster.rainbondImageRepository }}
 
 kind: List

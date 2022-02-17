@@ -72,21 +72,21 @@ Cluster:
     username: admin 
 
 ## 对外网关，填写IP
-  gatewayIngressIPs: 192.168.0.1
+#  gatewayIngressIPs: 192.168.0.1
 
 ## chaos对应配置，name为Chaos节点node名称
-  nodesForChaos:
-  - name: node1
-  - name: node2
+#  nodesForChaos:
+#  - name: node1
+#  - name: node2
 
 ## 网关节点对应配置，externalIP为网关节点外部IP，internalIP为网关节点内部IP，name为网关节点node名称
-  nodesForGateway:
-  - externalIP: 192.168.0.1
-    internalIP: 192.168.0.1
-    name: node1
-  - externalIP: 192.168.0.2
-    internalIP: 192.168.0.2
-    name: node2
+#  nodesForGateway:
+#  - externalIP: 192.168.0.1
+#    internalIP: 192.168.0.1
+#    name: node1
+#  - externalIP: 192.168.0.2
+#    internalIP: 192.168.0.2
+#    name: node2
 
 ## 系统组件统一镜像仓库拉取地址及名称空间
   rainbondImageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
@@ -101,7 +101,7 @@ Cluster:
 
 Component:
 
-## rbd-api 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载
+## rbd-api 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
   rbd_api:
     args:
   ##    - --api-addr          api服务器侦听地址（默认为“127.0.0.1:8888”）
@@ -117,7 +117,7 @@ Component:
 ## 环境变量variable_name为变量名,variable为变量值
   ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##    variable_name：variable  
+  ##    variable_name: variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -132,7 +132,7 @@ Component:
   ##    testsc: /test
 
 
-## rbd-gteway 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载
+## rbd-gteway 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
   rbd_gteway:
     args:
   ##    - --log-level        日志级别
@@ -141,7 +141,7 @@ Component:
   ##    - --etcd-endpoints   etcd集群连接地址
 ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##      variable_name：variable  
+  ##      variable_name: variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -156,7 +156,7 @@ Component:
   ##    testsc: /test
 
 
-## rbd-node 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载
+## rbd-node 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
   rbd_node:
     args:
   ##    - --log-level   日志级别，默认info
@@ -169,7 +169,7 @@ Component:
   ##    - --hostsfile   /etc/hosts映射容器中的路径
   ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##      variable_name：variable  
+  ##      variable_name: variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -184,14 +184,14 @@ Component:
   ##    testsc: /test
 
 
-## rbd-hub 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载
+## rbd-hub 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
   rbd_hub:
     args:
   ##    - --hub-ca=/r
   ##    - --hub-ca=/r
   ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##      variable_name：variable  
+  ##      variable_name: variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -206,7 +206,7 @@ Component:
   ##    testsc: /test
 
 
-## rbd-mq 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载
+## rbd-mq 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
   rbd_mq:
     args:
   ##    - --log-level        日志级别
@@ -214,7 +214,7 @@ Component:
   ##    - --hostIP           本机ip
 ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##      variable_name：variable  
+  ##      variable_name: variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -229,12 +229,12 @@ Component:
   ##    testsc: /test
 
 
-## rbd-resource-proxy 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
+## rbd-resource-proxy 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
   rbd_resource_proxy:
     args:
   ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##      variable_name：variable  
+  ##      variable_name: variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -249,7 +249,7 @@ Component:
   ##    testsc: /test
 
 
-## rbd-webcli 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
+## rbd-webcli 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
   rbd_webcli:
     args:
   ##    - --hostIP            本机ip
@@ -257,7 +257,7 @@ Component:
   ##    - --etcd-endpoints    etcd连接地址
 ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##      variable_name：variable  
+  ##      variable_name: variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -272,7 +272,7 @@ Component:
   ##    testsc: /test
 
 
-## rbd-monitor 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
+## rbd-monitor 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
   rbd_monitor:
     args:
   ##    --alertmanager-address AlertManager地址
@@ -282,7 +282,7 @@ Component:
   ##    --storage.tsdb.retention 数据保留时间，默认7天
 ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##      variable_name：variable  
+  ##      variable_name: variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -297,12 +297,12 @@ Component:
   ##    testsc: /test
 
 
-## rbd-db 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
+## rbd-db 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
   rbd_db:
     args:
 ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##      variable_name：variable  
+  ##      variable_name: variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -317,7 +317,7 @@ Component:
   ##    testsc: /test
 
 
-## rbd-chaos 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
+## rbd-chaos 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
   rbd_chaos:
     args:
   ##    - --hostIP    当前节点内网IP
@@ -326,7 +326,7 @@ Component:
   ##    - --etcd-endpoints  etcd v3集群连接信息。
 ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##      variable_name：variable  
+  ##      variable_name: variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -341,7 +341,7 @@ Component:
   ##    testsc: /test
 
 
-## rbd-worker 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
+## rbd-worker 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
   rbd_worker:
     args:
   ##    - --log-level   日志级别
@@ -351,7 +351,7 @@ Component:
   ##    - --etcd-endpoints  etcd v3集群连接信息
 ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##      variable_name：variable  
+  ##      variable_name: variable  
   ##  image: 
   ##  volumes:
   ##    testpv:
@@ -366,7 +366,7 @@ Component:
   ##    testsc: /test
 
 
-## rbd-eventlog 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载      
+## rbd-eventlog 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
   rbd_eventlog:
     args:
   ##    - --cluster.bind.ip    集群通信监听IP
@@ -376,7 +376,7 @@ Component:
   ##    - --discover.etcd.addr 为消息提示自动发现群集中的etcd服务器地址
 ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##      variable_name：variable  
+  ##      variable_name: variable  
   ##  image:
   ##  volumes:
   ##    testpv:
@@ -391,13 +391,13 @@ Component:
   ##    testsc: /test
 
 
-## rbd-app-ui 组件自定义信息：启动参数，环境变量，镜像地址，存储挂载
+## rbd-app-ui 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
   rbd_app_ui:
     enable: true
     args:
 ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
-  ##      variable_name：variable  
+  ##      variable_name: variable  
     image: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond:v5.5.0-helm-allinone
   ##  volumes:
   ##    testpv:
@@ -412,24 +412,24 @@ Component:
   ##    testsc: /test
 
 
-## nfs-provisioner 组件自定义信息：镜像地址
+## nfs-provisioner 组件自定义信息: 镜像地址
   nfs_provisioner:
     image:
 
 
-## rbd-etcd 组件自定义信息：镜像地址
+## rbd-etcd 组件自定义信息: 镜像地址
   rbd_etcd:
     image:
 
-## metrics-server 组件自定义信息：镜像地址
+## metrics-server 组件自定义信息: 镜像地址
   metrics_server:
     image:
 
-## dashboard-metrics-scraper 组件自定义信息：镜像地址
+## dashboard-metrics-scraper 组件自定义信息: 镜像地址
   dashboard_metrics_scraper:
     image:
 
 
-## kubernetes-dashboard 组件自定义信息：镜像地址
+## kubernetes-dashboard 组件自定义信息: 镜像地址
   kubernetes_dashboard:
     image:
