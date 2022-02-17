@@ -5,30 +5,31 @@ You can deploy the Rainbond Console in Kubernets using Helm Chart.
 ## Pre Requisites
 
 * Recommended kubernetes version: 1.19+
-
+* Root partition disk guarantee 50G+
 * helm version: 3.0+
+* Make sure the server `80, 443, 6060, 6443, 7070, 8443` ports are not in use
 
 ## Installation
 
-Add `rainbond-operator` helm charts repo
+Add `rainbond` helm charts repo
 
 ```
 kubectl create namespace rbd-system
-helm repo add rainbond-operator https://openchart.goodrain.com/goodrain/rainbond
+helm repo add rainbond https://openchart.goodrain.com/goodrain/rainbond
 helm repo update
 ```
 Installing helm chart
 
-Install the controller first,then install the console
-
 ```
-helm install rainbond-operator rainbond/rainbond-operator -n rbd-system --set operator.image.name=registry.cn-hangzhou.aliyuncs.com/yangkaa/rainbond-operator --set operator.image.tag=v2.2.0-dev
+helm install rainbond rainbond/rainbond-cluster -n rbd-system
 ```
 
-Enable the console to connect to the kubernetes cluster
-```
-helm install rainbond-cluster rainbond/rainbond-cluster -n rbd-system
-```
-## License
 
-Rainbond follow LGPL-3.0 license，Details see[LICENSE](https://github.com/goodrain/rainbond/blob/master/LICENSE) and [Licensing](https://github.com/goodrain/rainbond/blob/master/Licensing.md)
+## Verify installation
+
+* View pod status
+```
+kubectl get po -n rbd-system | grep rbd-app-ui
+```
+* Wait for the ``` rbd-app-ui ``` pod to be Running and the installation is successful.
+* After successful installation, you can access the rainbond console through `` $gatewayIngressIPs:7070 ``.
