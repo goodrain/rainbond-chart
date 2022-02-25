@@ -1,0 +1,19 @@
+
+apiVersion: rainbond.io/v1alpha1
+kind: RainbondVolume
+metadata:
+  labels:
+    accessModes: rwx
+    belongTo: rainbond-operator
+    creator: Rainbond
+  name: rainbondvolumerwx
+  namespace: rbd-system
+spec:
+{{- if .Values.Cluster.RWX.enable  }}
+  storageClassName: {{ .Values.Cluster.RWX.storageClassName }}
+{{ else }}
+  csiPlugin:
+    nfs: {}
+  storageRequest: 1
+{{- end }}
+  imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain

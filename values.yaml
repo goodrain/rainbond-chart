@@ -1,245 +1,437 @@
-# -------------------------------------------
-# Rainbond-Console:
-# -------------------------------------------
+# Default values for mychart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
 
-# Refer to README for configuration details
-# Please refer to the official documentation for installation https://www.rainbond.com/docs/install/other-methods/install-from-rancher/
+## Install Default RBAC roles and bindings
+rbac:
+  create: true
+  apiVersion: v1
 
+## Service account name and whether to create it
+serviceAccount:
+  create: true
+  name: rainbond-operator
 
-# Specify up the dynamic storage used by the RainBond component
-# If not, please refer https://artifacthub.io/packages/helm/kvaps/nfs-server-provisioner
-pvc:
-  storageClassName: ""
-  # 5Gi
-  storageSize: 5Gi
-
-# Redis configuration,Refer to README for configuration details
-redis:
-  # Specify the full name of Redis
-  fullname: rainbond-redis
-
-  # Specify the Redis image
+# rainbondOperator
+operator:
+  name: rainbond-operator
+##    env:
+##      variable_name: variable
   image:
-    repository: redis
+    name: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond-operator
+    tag: v2.2.0
     pullPolicy: IfNotPresent
-    tag: 4.0.12
+  logLevel: 4
 
-  # Specify the Redis Password 
-  password: "123456"
-  podAnnotations: {}
+#Rainbondcluster
+Cluster:
+## 定义是否开启高可用，true为开，false为关  
+  enableHA: false
 
-  # Set the Redis Labels
-  selectorLabels: 
-    rainbond: redis
-
-  # Set POD resource limits
-  resources:
-    limits:
-      cpu: 80m
-      memory: 64Mi
-    requests:
-      cpu: 30m
-      memory: 64Mi
-
-  nodeSelector: {}
-  affinity: {}
-
-# Mysql configuration,Refer to README for configuration details
-mysql:
-
-  # Specify the full name of Mysql
-  fullname: rainbond-mysql
-
-  # Specify the Mysql image
-  image:
-    repository: mysql
-    pullPolicy: IfNotPresent
-    tag: 5.7.23
-
-  # Specify your MySQL account password and database
-  secret:
-    user: admin
+## 定义是否使用外部镜像镜像仓库，true为开，false为关
+  imageHub:
+    enable: false
+    domain: registry.cn-hangzhou.aliyuncs.com
+    namespace: rainbond
     password: admin
-    rootpassword: root
-    database: console
+    username: admin
 
-  podAnnotations: {}
+## 外部ETCD，对应填写IP，证书，true为开，false为关
+  etcd:
+    enable: false
+    endpoints: 
+    - 192.168.0.1:2379 
+    - 192.168.0.2:2379
+    - 192.168.0.3:2379
+    secretName: "rbd-etcd-secret"
 
-  # Set the MySQL Labels
-  selectorLabels: 
-    rainbond: mysql
+## 外部存储，直接填写storageClassName，true为开，false为关
+  RWX:
+    enable: false
+    storageClassName: glusterfs-simple
 
-  # Set POD resource limits
-  resources:
-    limits:
-      cpu: 640m
-      memory: 512Mi
-    requests:
-      cpu: 120m
-      memory: 512Mi
+## 外部存储，直接填写storageClassName，true为开，false为关
+  RWO:
+    enable: false
+    storageClassName: glusterfs-simple
 
-  nodeSelector: {}
-  affinity: {}
+## region数据库，true为开，false为关
+  regionDatabase:
+    enable: false
+    host: 192.168.0.1
+    name: region
+    password: password
+    port: 3306
+    username: admin
 
-# Separate versions of the front and back ends of RainBond-Console
-# Cluster installation controller configuration
-# Deprecated, please refer to the official documentation to install the detached console from the Rainstore https://www.rainbond.com/docs/user-operations/ha-deploy/console-recover/
-adaptor:
+## ui数据库，true为开，false为关
+  uiDatabase:
+    enable: false
+    host: 192.168.0.1
+    name: console
+    password: password
+    port: 3306
+    username: admin 
 
-  # Specify the full name of adaptor
-  fullname: rainbond-adaptor
+## 对外网关，填写IP
+#  gatewayIngressIPs: 192.168.0.1
 
-  # Adaptor is not installed by default
-  enable: false
+## chaos对应配置，name为Chaos节点node名称
+#  nodesForChaos:
+#  - name: node1
+#  - name: node2
 
-  # Specify the Adaptor image
-  # No mirroring is provided by default
-  image:
-    repository: ""
-    pullPolicy: IfNotPresent
-    tag: ""
+## 网关节点对应配置，externalIP为网关节点外部IP，internalIP为网关节点内部IP，name为网关节点node名称
+#  nodesForGateway:
+#  - externalIP: 192.168.0.1
+#    internalIP: 192.168.0.1
+#    name: node1
+#  - externalIP: 192.168.0.2
+#    internalIP: 192.168.0.2
+#    name: node2
 
-  podAnnotations: {}
+## 系统组件统一镜像仓库拉取地址及名称空间
+  rainbondImageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
+## 系统组件统一镜像版本
+  installVersion: v5.5.0-release
+## 系统组件统一镜像拉取策略
+  imagePullPolicy: IfNotPresent
+## 高可用安装模式下，系统组件副本数
+  replicas: 2
+ 
+    
 
-  # Set the Adaptor Labels
-  selectorLabels: 
-    rainbond: adaptor
+Component:
 
-  # Set POD resource limits
-  resources:
-    limits:
-      cpu: 80m
-      memory: 64Mi
-    requests:
-      cpu: 30m
-      memory: 64Mi
+## rbd-api 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
+  rbd_api:
+    args:
+  ##    - --api-addr          api服务器侦听地址（默认为“127.0.0.1:8888”）
+  ##    - --enable-feature    支持的特殊功能列表
+  ##    - --log-level         日志级别（默认“info”）
+  ##    - --mysql             mysql数据库连接信息
+  ##    - --etcd              etcd服务器或代理地址
+  ##    - --api-ssl-enable    是否启用websocket SSL
+  ##    - --api-addr-ssl      api服务器侦听地址（默认为“0.0.0.0:8443”）
+  ##    - --api-ssl-certfile  websocket和文件服务器ssl证书文件
+  ##    - --api-ssl-keyfile   websocket和文件服务器ssl密钥文件
+  ##    - --client-ca-file    api ssl ca文件
+## 环境变量variable_name为变量名,variable为变量值
+  ## 环境变量variable_name为变量名,variable为变量值
+  ##  env:
+  ##    variable_name: variable  
+  ##  image: 
+  ##  volumes:
+  ##    testpv:
+  ##      persistentVolumeClaim:
+  ##        claimName: rbd-cpt-grdate
+  ##    testsc:
+  ##      secret:
+  ##        defaultMode: 420
+  ##        secretName: rbd-api-server-cert
+  ##  volumeMounts:
+  ##    testpv: /data
+  ##    testsc: /test
 
-  nodeSelector: {}
-  affinity: {}
 
-# Separate versions of the front and back ends of RainBond-Console
-# Console back-end services
-# Deprecated, please refer to the official documentation to install the detached console from the Rainstore https://www.rainbond.com/docs/user-operations/ha-deploy/console-recover/
-console:
+## rbd-gteway 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
+  rbd_gteway:
+    args:
+  ##    - --log-level        日志级别
+  ##    - --error-log        记录错误日志路径
+  ##    - --enable-kubeapi   是否启用kube apiserver的负载平衡
+  ##    - --etcd-endpoints   etcd集群连接地址
+## 环境变量variable_name为变量名,variable为变量值
+  ##  env:
+  ##      variable_name: variable  
+  ##  image: 
+  ##  volumes:
+  ##    testpv:
+  ##      persistentVolumeClaim:
+  ##        claimName: rbd-cpt-grdate
+  ##    testsc:
+  ##      secret:
+  ##        defaultMode: 420
+  ##        secretName: rbd-api-server-cert
+  ##  volumeMounts:
+  ##    testpv: /data
+  ##    testsc: /test
 
-  # Specify the full name of Console
-  fullname: rainbond-console
 
-  # Console is not installed by default
-  enable: false
+## rbd-node 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
+  rbd_node:
+    args:
+  ##    - --log-level   日志级别，默认info
+  ##    - --etcd        etcd地址,默认 [http://127.0.0.1:2379]
+  ##    - --hostIP      当前节点ip,未指定时获取eth0 ip
+  ##    - --run-mode    node属性,默认是manage
+  ##    - --noderule    节点属性，默认是compute 
+  ##    - --nodeid      此节点的唯一ID，只需指定，不要修改
+  ##    - --image-repo-host  镜像仓库主机
+  ##    - --hostsfile   /etc/hosts映射容器中的路径
+  ## 环境变量variable_name为变量名,variable为变量值
+  ##  env:
+  ##      variable_name: variable  
+  ##  image: 
+  ##  volumes:
+  ##    testpv:
+  ##      persistentVolumeClaim:
+  ##        claimName: rbd-cpt-grdate
+  ##    testsc:
+  ##      secret:
+  ##        defaultMode: 420
+  ##        secretName: rbd-api-server-cert
+  ##  volumeMounts:
+  ##    testpv: /data
+  ##    testsc: /test
 
-  # Set the number of copies
-  replicasCount: 1
 
-  # Set the Console version
-  RELEASE_DESC: "v5.3.1-release-20210703"
+## rbd-hub 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
+  rbd_hub:
+    args:
+  ##    - --hub-ca=/r
+  ##    - --hub-ca=/r
+  ## 环境变量variable_name为变量名,variable为变量值
+  ##  env:
+  ##      variable_name: variable  
+  ##  image: 
+  ##  volumes:
+  ##    testpv:
+  ##      persistentVolumeClaim:
+  ##        claimName: rbd-cpt-grdate
+  ##    testsc:
+  ##      secret:
+  ##        defaultMode: 420
+  ##        secretName: rbd-api-server-cert
+  ##  volumeMounts:
+  ##    testpv: /data
+  ##    testsc: /test
 
-  # Specify the Console image
-  # No mirroring is provided by default
-  image:
-    repository: ""
-    pullPolicy: IfNotPresent
-    tag: ""
 
-  podAnnotations: {}
+## rbd-mq 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
+  rbd_mq:
+    args:
+  ##    - --log-level        日志级别
+  ##    - --etcd-endpoints   集群etcd连接地址
+  ##    - --hostIP           本机ip
+## 环境变量variable_name为变量名,variable为变量值
+  ##  env:
+  ##      variable_name: variable  
+  ##  image: 
+  ##  volumes:
+  ##    testpv:
+  ##      persistentVolumeClaim:
+  ##        claimName: rbd-cpt-grdate
+  ##    testsc:
+  ##      secret:
+  ##        defaultMode: 420
+  ##        secretName: rbd-api-server-cert
+  ##  volumeMounts:
+  ##    testpv: /data
+  ##    testsc: /test
 
-  # Set the Console Labels
-  selectorLabels: 
-    rainbond: console
 
-  # Set POD resource limits
-  resources:
-    limits:
-      cpu: 1280m
-      memory: 1Gi
-    requests:
-      cpu: 240m
-      memory: 1Gi
+## rbd-resource-proxy 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
+  rbd_resource_proxy:
+    args:
+  ## 环境变量variable_name为变量名,variable为变量值
+  ##  env:
+  ##      variable_name: variable  
+  ##  image: 
+  ##  volumes:
+  ##    testpv:
+  ##      persistentVolumeClaim:
+  ##        claimName: rbd-cpt-grdate
+  ##    testsc:
+  ##      secret:
+  ##        defaultMode: 420
+  ##        secretName: rbd-api-server-cert
+  ##  volumeMounts:
+  ##    testpv: /data
+  ##    testsc: /test
 
-  nodeSelector: {}
-  affinity: {}
 
-# Separate versions of the front and back ends of RainBond-Console
-# Console front-end services
-# Deprecated, please refer to the official documentation to install the detached console from the Rainstore https://www.rainbond.com/docs/user-operations/ha-deploy/console-recover/
-ui:
+## rbd-webcli 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
+  rbd_webcli:
+    args:
+  ##    - --hostIP            本机ip
+  ##    - --log-level         日志级别
+  ##    - --etcd-endpoints    etcd连接地址
+## 环境变量variable_name为变量名,variable为变量值
+  ##  env:
+  ##      variable_name: variable  
+  ##  image: 
+  ##  volumes:
+  ##    testpv:
+  ##      persistentVolumeClaim:
+  ##        claimName: rbd-cpt-grdate
+  ##    testsc:
+  ##      secret:
+  ##        defaultMode: 420
+  ##        secretName: rbd-api-server-cert
+  ##  volumeMounts:
+  ##    testpv: /data
+  ##    testsc: /test
 
-  # Specify the full name of UI
-  fullname: rainbond-ui
 
-  # UI is not installed by default
-  enable: false
+## rbd-monitor 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
+  rbd_monitor:
+    args:
+  ##    --alertmanager-address AlertManager地址
+  ##    --cadvisor-listen-port kubelet cadvisor监听端口
+  ##    --config.file Prometheus 配置文件路径
+  ##    --rules-config.file Prometheus alerting rules文件路径
+  ##    --storage.tsdb.retention 数据保留时间，默认7天
+## 环境变量variable_name为变量名,variable为变量值
+  ##  env:
+  ##      variable_name: variable  
+  ##  image: 
+  ##  volumes:
+  ##    testpv:
+  ##      persistentVolumeClaim:
+  ##        claimName: rbd-cpt-grdate
+  ##    testsc:
+  ##      secret:
+  ##        defaultMode: 420
+  ##        secretName: rbd-api-server-cert
+  ##  volumeMounts:
+  ##    testpv: /data
+  ##    testsc: /test
 
-  # Set the number of copies
-  replicasCount: 1
 
-  # Specify the Console image
-  # No mirroring is provided by default
-  image:
-    repository: ""
-    pullPolicy: IfNotPresent
-    tag: ""
-  
-  # The default service protocol is NodePort, which opens port 30606
-  svc:
-    type: NodePort
-    nodePort: 30600
+## rbd-db 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
+  rbd_db:
+    args:
+## 环境变量variable_name为变量名,variable为变量值
+  ##  env:
+  ##      variable_name: variable  
+  ##  image: 
+  ##  volumes:
+  ##    testpv:
+  ##      persistentVolumeClaim:
+  ##        claimName: rbd-cpt-grdate
+  ##    testsc:
+  ##      secret:
+  ##        defaultMode: 420
+  ##        secretName: rbd-api-server-cert
+  ##  volumeMounts:
+  ##    testpv: /data
+  ##    testsc: /test
 
-  podAnnotations: {}
 
-  # Set the UI Labels
-  selectorLabels: 
-    rainbond: ui
+## rbd-chaos 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
+  rbd_chaos:
+    args:
+  ##    - --hostIP    当前节点内网IP
+  ##    - --log-level 日志级别（默认“info”)
+  ##    - --mysql     数据库连接信息
+  ##    - --etcd-endpoints  etcd v3集群连接信息。
+## 环境变量variable_name为变量名,variable为变量值
+  ##  env:
+  ##      variable_name: variable  
+  ##  image: 
+  ##  volumes:
+  ##    testpv:
+  ##      persistentVolumeClaim:
+  ##        claimName: rbd-cpt-grdate
+  ##    testsc:
+  ##      secret:
+  ##        defaultMode: 420
+  ##        secretName: rbd-api-server-cert
+  ##  volumeMounts:
+  ##    testpv: /data
+  ##    testsc: /test
 
-  # Set POD resource limits
-  resources:
-    limits:
-      cpu: 120m
-      memory: 128Mi
-    requests:
-      cpu: 30m
-      memory: 128Mi
 
-  nodeSelector: {}
-  affinity: {}
+## rbd-worker 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
+  rbd_worker:
+    args:
+  ##    - --log-level   日志级别
+  ##    - --host-ip     此工作进程的ip，必须是全局连接的ip
+  ##    - --node-name   此工作进程的名称，必须是全局唯一名称
+  ##    - --mysql       数据库连接信息
+  ##    - --etcd-endpoints  etcd v3集群连接信息
+## 环境变量variable_name为变量名,variable为变量值
+  ##  env:
+  ##      variable_name: variable  
+  ##  image: 
+  ##  volumes:
+  ##    testpv:
+  ##      persistentVolumeClaim:
+  ##        claimName: rbd-cpt-grdate
+  ##    testsc:
+  ##      secret:
+  ##        defaultMode: 420
+  ##        secretName: rbd-api-server-cert
+  ##  volumeMounts:
+  ##    testpv: /data
+  ##    testsc: /test
 
-# A merged version of the front and back ends
-allinone:
 
-  # Specify the full name of allinone
-  fullname: rainbond-allinone
+## rbd-eventlog 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载      
+  rbd_eventlog:
+    args:
+  ##    - --cluster.bind.ip    集群通信监听IP
+  ##    - --cluster.instance   群集中的当前实例通信IP
+  ##    - --websocket.bind.ip  推送事件消息的websocket绑定ip
+  ##    - --db.url             数据库连接信息
+  ##    - --discover.etcd.addr 为消息提示自动发现群集中的etcd服务器地址
+## 环境变量variable_name为变量名,variable为变量值
+  ##  env:
+  ##      variable_name: variable  
+  ##  image:
+  ##  volumes:
+  ##    testpv:
+  ##      persistentVolumeClaim:
+  ##        claimName: rbd-cpt-grdate
+  ##    testsc:
+  ##      secret:
+  ##        defaultMode: 420
+  ##        secretName: rbd-api-server-cert
+  ##  volumeMounts:
+  ##    testpv: /data
+  ##    testsc: /test
 
-  # allinone is installed by default
-  enable: true
 
-  # Set the number of copies
-  replicasCount: 1
+## rbd-app-ui 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
+  rbd_app_ui:
+    enable: true
+    args:
+## 环境变量variable_name为变量名,variable为变量值
+  ##  env:
+  ##      variable_name: variable  
+    image: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond:v5.5.0-helm-allinone
+  ##  volumes:
+  ##    testpv:
+  ##      persistentVolumeClaim:
+  ##        claimName: rbd-cpt-grdate
+  ##    testsc:
+  ##      secret:
+  ##        defaultMode: 420
+  ##        secretName: rbd-api-server-cert
+  ##  volumeMounts:
+  ##    testpv: /data
+  ##    testsc: /test
 
-  # Specify the Allinone image
-  image:
-    repository: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond
-    pullPolicy: IfNotPresent
-    tag: "v5.5.0-release-allinone"
 
-  # The default service protocol is NodePort, which opens port 30707
-  svc:
-    type: NodePort
-    nodePort: 30707
+## nfs-provisioner 组件自定义信息: 镜像地址
+  nfs_provisioner:
+    image:
 
-  podAnnotations: {}
 
-  # Set the Allinone Labels
-  selectorLabels: 
-    rainbond: allinone
+## rbd-etcd 组件自定义信息: 镜像地址
+  rbd_etcd:
+    image:
 
-  # Set POD resource limits
-  resources: {}
-    # limits:
-    #   cpu: 640m
-    #   memory: 512Mi
-    # requests:
-    #   cpu: 120m
-    #   memory: 512Mi
+## metrics-server 组件自定义信息: 镜像地址
+  metrics_server:
+    image:
 
-  nodeSelector: {}
-  affinity: {}
+## dashboard-metrics-scraper 组件自定义信息: 镜像地址
+  dashboard_metrics_scraper:
+    image:
+
+
+## kubernetes-dashboard 组件自定义信息: 镜像地址
+  kubernetes_dashboard:
+    image:

@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Values.redis.fullname }}-cm
-  labels:
-    rainbond: redis
-data:
-  redis.conf: |
-    requirepass {{ .Values.redis.password }}

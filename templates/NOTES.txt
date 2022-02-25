@@ -1,1 +1,6 @@
-Rainbond UI can be accessed via port 30707 on your gateway ips.
+Installation successful detection:
+
+watch kubectl get po -n rbd-system
+
+Check that the pod is started, and the installation is successful until the  rbd-app-ui pod is in the Running state.
+After successful installation, you can access the rainbond console through  gatewayIngressIPs:7070 

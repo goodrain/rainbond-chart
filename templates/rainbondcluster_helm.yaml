@@ -1,0 +1,83 @@
+apiVersion: v1
+items:
+- apiVersion: rainbond.io/v1alpha1
+  kind: RainbondCluster
+  metadata:
+    name: rainbondcluster
+    namespace: rbd-system
+  spec:
+    enableHA: {{ .Values.Cluster.enableHA }}
+{{- if .Values.Cluster.etcd.enable }}   
+    etcdConfig:
+      endpoints: 
+      {{- range .Values.Cluster.etcd.endpoints }}
+      - {{ . | toString  }}
+      {{- end }}    
+      secretName: {{ .Values.Cluster.etcd.secretName }}
+{{- else}}
+  {{- if .Values.Cluster.enableHA }}
+    {{- fail "An external Etcd cluster must be set up in high availability mode!" }}
+  {{- end }}
+{{- end }}
+    configCompleted: true
+{{- if .Values.Cluster.gatewayIngressIPs }}
+    gatewayIngressIPs:
+    - {{ .Values.Cluster.gatewayIngressIPs }}
+{{- else }}
+{{ end }}
+{{- if .Values.Cluster.imageHub.enable  }}
+    imageHub:
+      domain: {{ .Values.Cluster.imageHub.domain }}
+      password: {{ .Values.Cluster.imageHub.password }}
+      username: {{ .Values.Cluster.imageHub.username }}
+      namespace: {{ .Values.Cluster.imageHub.namespace }} 
+{{- end }}
+{{- if .Values.Cluster.RWO.enable  }} 
+    rainbondVolumeSpecRWO:
+      storageClassName: {{ .Values.Cluster.RWO.storageClassName }}
+      imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
+{{- end }}
+{{- if .Values.Cluster.RWX.enable  }} 
+    rainbondVolumeSpecRWX:
+      storageClassName: {{ .Values.Cluster.RWX.storageClassName }}         
+      imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
+{{- else }}
+  {{- if .Values.Cluster.enableHA }}
+    {{- fail "External shared storage must be set in high availability mode!"}}
+  {{- end}}
+{{- end }}
+{{- if or .Values.Cluster.regionDatabase.enable  .Values.Cluster.enableHA }}
+    regionDatabase:
+      host: {{  required ".Values.Cluster.regionDatabase.host cannot be empty!" .Values.Cluster.regionDatabase.host }}
+      name: {{ .Values.Cluster.regionDatabase.name }}
+      password: {{ .Values.Cluster.regionDatabase.password }}
+      port: {{ .Values.Cluster.regionDatabase.port }}
+      username: {{ .Values.Cluster.regionDatabase.username }}
+{{- end }}
+{{- if or .Values.Cluster.uiDatabase.enable .Values.Cluster.enableHA }}
+    uiDatabase:
+      host: {{ required ".Values.Cluster.uiDatabase.host cannot be empty!" .Values.Cluster.uiDatabase.host }}
+      name: {{ .Values.Cluster.uiDatabase.name }}
+      password: {{ .Values.Cluster.uiDatabase.password }}
+      port: {{ .Values.Cluster.uiDatabase.port }}
+      username: {{ .Values.Cluster.uiDatabase.username }}
+{{- end }}
+    suffixHTTPHost: ""
+    installMode: WithoutPackage
+    installVersion: {{ .Values.Cluster.installVersion }}     
+{{- if .Values.Cluster.nodesForChaos }}
+    nodesForChaos:
+{{ .Values.Cluster.nodesForChaos | toYaml | indent 4 }}
+{{- else }}
+{{ end }}
+{{- if .Values.Cluster.nodesForGateway }}
+    nodesForGateway:
+{{ .Values.Cluster.nodesForGateway | toYaml | indent 4 }}
+{{- else }}
+{{ end }}
+    rainbondImageRepository: {{ .Values.Cluster.rainbondImageRepository }}
+
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
