@@ -1,3 +1,6 @@
+For problems during installation, please refer to:
+https://www.rainbond.com/docs/user-operations/deploy/install-troubleshoot/helm-install-troubleshoot
+
 Installation successful detection:
 
 watch kubectl get po -n rbd-system
