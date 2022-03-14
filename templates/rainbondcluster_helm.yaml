@@ -39,7 +39,7 @@ items:
 {{- end }}
 {{- if .Values.Cluster.RWX.enable  }} 
     rainbondVolumeSpecRWX:
-      storageClassName: {{ .Values.Cluster.RWX.storageClassName }}         
+{{ .Values.Cluster.RWX.config  | toYaml | indent 6 }}
       imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
 {{- else }}
   {{- if .Values.Cluster.enableHA }}
