@@ -23,26 +23,31 @@ questions:
       default: true
       description: Open mirror repository
       label: Rainbond imageHub enable
+      group: Rainbond imageHub
       required: true 
     - variable: Cluster.imageHub.domain
       default: ""
       description: Warehouse Address
       label: Rainbond imageHub domain
+      group: Rainbond imageHub
       required: true
     - variable: Cluster.imageHub.namespace
       default: ""
       description: repository namespace
       label: Rainbond imageHub namespace
+      group: Rainbond imageHub
       required: true
     - variable: Cluster.imageHub.username
       default: ""
       description: Warehouse login username
       label: Rainbond imageHub username
+      group: Rainbond imageHub
       required: true
     - variable: Cluster.imageHub.password
       default: ""
       description: Warehouse login password
       label: Rainbond imageHub password
+      group: Rainbond imageHub
       required: true
       type: password
 
@@ -60,6 +65,7 @@ questions:
       type: multiline
       default: ""
       required: true
+      group: Rainbond etcd
       description: etcd ip address
       label: Rainbond etcd
     
@@ -76,6 +82,7 @@ questions:
     - variable: Cluster.RWX.config.storageClassName
       default: ""
       required: true
+      group: Rainbond RWX
       description: external storage storageClassName
       label: Rainbond ClassName
 
@@ -92,6 +99,7 @@ questions:
     - variable: Cluster.RWO.storageClassName
       default: ""
       required: true
+      group: Rainbond RWO
       description: external storage storageClassName
       label: Rainbond ClassName
 
@@ -109,29 +117,36 @@ questions:
       default: true
       description: Start the cluster database
       label: Rainbond cluster database
+      group: Rainbond cluster database
       required: true 
     - variable: Cluster.regionDatabase.host
       default: ""
       description: Database IP
       label: Rainbond regionDatabase host
+      group: Rainbond cluster database
       required: true
     - variable: Cluster.regionDatabase.name
       default: ""
       description: library name
       label: Rainbond regionDatabase name
+      group: Rainbond cluster database
       required: true
     - variable: Cluster.regionDatabase.port
       default: "3306"
       description: regionDatabase port
       label: Rainbond regionDatabase port
+      group: Rainbond cluster database
       required: true
     - variable: Cluster.regionDatabase.password
       default: ""
       description: regionDatabase password
       label: Rainbond regionDatabase password
+      group: Rainbond cluster database
       type: password
     - variable: Cluster.regionDatabase.username
       default: ""
       description: regionDatabase username
       label: Rainbond regionDatabase username
+      group: Rainbond cluster database
       type: string
+      
