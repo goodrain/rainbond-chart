@@ -3,11 +3,51 @@ questions:
 
   - variable: Cluster.enableHA
     default: "false"
+    options: 
+    - false
+    - true
     description: "Whether to enable Rainbond high availability"
-    type: string
+    type: enum
     label: Rainbond
     group: Cluster enableHA
     show_subquestion_if: true 
+    - variable: Cluster.imageHub.enable
+      default: true
+      description: Open mirror repository
+      label: imageHub enable
+      group: Cluster enableHA
+      required: true 
+      type: string
+    - variable: Cluster.imageHub.domain
+      default: ""
+      description: Warehouse Address
+      label: imageHub domain
+      group: Cluster enableHA
+      required: true
+      type: string
+    - variable: Cluster.imageHub.namespace
+      default: ""
+      description: repository namespace
+      label: imageHub namespace
+      group: Cluster enableHA
+      required: true
+      type: string
+    - variable: Cluster.imageHub.username
+      default: ""
+      description: Warehouse login username
+      label: imageHub username
+      group: Cluster enableHA
+      required: true
+      type: string
+    - variable: Cluster.imageHub.password
+      default: ""
+      description: Warehouse login password
+      label: imageHub password
+      group: Cluster enableHA
+      required: true
+      type: password
+
+
 
 ## mirror repository information
 
@@ -15,43 +55,43 @@ questions:
     default: "false"
     description: "Whether to use an external mirror repository"
     type: string
-    group: Rainbond imageHub
-    label: Rainbond imageHub
+    group: imageHub
+    label: imageHub
     show_subquestion_if: true
     subquestions:
     - variable: Cluster.imageHub.enable
       default: true
       description: Open mirror repository
-      label: Rainbond imageHub enable
-      group: Rainbond imageHub
+      label: imageHub enable
+      group: imageHub
       required: true 
       type: string
     - variable: Cluster.imageHub.domain
       default: ""
       description: Warehouse Address
-      label: Rainbond imageHub domain
-      group: Rainbond imageHub
+      label: imageHub domain
+      group: imageHub
       required: true
       type: string
     - variable: Cluster.imageHub.namespace
       default: ""
       description: repository namespace
-      label: Rainbond imageHub namespace
-      group: Rainbond imageHub
+      label: imageHub namespace
+      group: imageHub
       required: true
       type: string
     - variable: Cluster.imageHub.username
       default: ""
       description: Warehouse login username
-      label: Rainbond imageHub username
-      group: Rainbond imageHub
+      label: imageHub username
+      group: imageHub
       required: true
       type: string
     - variable: Cluster.imageHub.password
       default: ""
       description: Warehouse login password
-      label: Rainbond imageHub password
-      group: Rainbond imageHub
+      label: imageHub password
+      group: imageHub
       required: true
       type: password
 
@@ -65,8 +105,22 @@ questions:
     label: Rainbond etcd
     show_subquestion_if: true
     subquestions: 
-    - variable: Cluster.imageHub.endpoints
+    - variable: Cluster.etcd.enable
+      type: string
+      default: "true"
+      required: true
+      group: Rainbond etcd
+      description: Enable external etcd
+      label: Rainbond etcd    
+    - variable: Cluster.etcd.endpoints
       type: multiline
+      default: ""
+      required: true
+      group: Rainbond etcd
+      description: etcd IP and port
+      label: Rainbond etcd
+    - variable: Cluster.etcd.secretName
+      type: string
       default: ""
       required: true
       group: Rainbond etcd
@@ -152,12 +206,14 @@ questions:
       label: Rainbond regionDatabase password
       group: Rainbond cluster database
       type: password
+      required: true
     - variable: Cluster.regionDatabase.username
       default: ""
       description: regionDatabase username
       label: Rainbond regionDatabase username
       group: Rainbond cluster database
       type: string
+      required: true
 
 ## ui database
   - variable: Cluster.uiDatabase
@@ -202,9 +258,11 @@ questions:
       label: Rainbond uiDatabase password
       group: Rainbond console database
       type: password
+      required: true
     - variable: Cluster.uiDatabase.username
       default: ""
       description: uiDatabase username
       label: Rainbond uiDatabase username
       group: Rainbond console database
       type: string
+      required: true
