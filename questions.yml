@@ -6,6 +6,7 @@ questions:
     description: "Whether to enable Rainbond high availability"
     type: string
     label: Rainbond
+    group: Cluster enableHA
     show_subquestion_if: true
 
 ## mirror repository information
@@ -14,6 +15,7 @@ questions:
     default: "false"
     description: "Whether to use an external mirror repository"
     type: string
+    group: Rainbond imageHub
     label: Rainbond imageHub
     show_subquestion_if: true
     subquestions:
@@ -50,6 +52,7 @@ questions:
     default: "false"
     description: "Whether to use external etcd "
     type: string
+    group: Rainbond etcd
     label: Rainbond etcd
     show_subquestion_if: true
     subquestions: 
@@ -66,6 +69,7 @@ questions:
     default: "false"
     description: "Whether to use external storage"
     type: storageclass
+    group: Rainbond RWX
     label: Rainbond storageclass
     show_subquestion_if: true
     subquestions: 
@@ -81,6 +85,7 @@ questions:
     default: "false"
     description: "Whether to use external storage"
     type: storageclass
+    group: Rainbond RWO
     label: Rainbond storageclass
     show_subquestion_if: true
     subquestions: 
@@ -96,6 +101,7 @@ questions:
     default: "false"
     description: "Whether to enable external cluster database"
     type: string
+    group: Rainbond cluster database
     label: Rainbond cluster database
     show_subquestion_if: true
     subquestions:
@@ -129,4 +135,3 @@ questions:
       description: regionDatabase username
       label: Rainbond regionDatabase username
       type: string
-      
