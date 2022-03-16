@@ -7,7 +7,7 @@ questions:
     type: string
     label: Rainbond
     group: Cluster enableHA
-    show_subquestion_if: true
+    show_subquestion_if: true 
 
 ## mirror repository information
 
@@ -25,24 +25,28 @@ questions:
       label: Rainbond imageHub enable
       group: Rainbond imageHub
       required: true 
+      type: string
     - variable: Cluster.imageHub.domain
       default: ""
       description: Warehouse Address
       label: Rainbond imageHub domain
       group: Rainbond imageHub
       required: true
+      type: string
     - variable: Cluster.imageHub.namespace
       default: ""
       description: repository namespace
       label: Rainbond imageHub namespace
       group: Rainbond imageHub
       required: true
+      type: string
     - variable: Cluster.imageHub.username
       default: ""
       description: Warehouse login username
       label: Rainbond imageHub username
       group: Rainbond imageHub
       required: true
+      type: string
     - variable: Cluster.imageHub.password
       default: ""
       description: Warehouse login password
@@ -74,7 +78,7 @@ questions:
   - variable: Cluster.RWX
     default: "false"
     description: "Whether to use external storage"
-    type: storageclass
+    type: string
     group: Rainbond RWX
     label: Rainbond storageclass
     show_subquestion_if: true
@@ -91,7 +95,7 @@ questions:
   - variable: Cluster.RWO
     default: "false"
     description: "Whether to use external storage"
-    type: storageclass
+    type: string
     group: Rainbond RWO
     label: Rainbond storageclass
     show_subquestion_if: true
@@ -102,6 +106,7 @@ questions:
       group: Rainbond RWO
       description: external storage storageClassName
       label: Rainbond ClassName
+      type: string
 
 ## region database
 
@@ -119,24 +124,28 @@ questions:
       label: Rainbond cluster database
       group: Rainbond cluster database
       required: true 
+      type: string
     - variable: Cluster.regionDatabase.host
       default: ""
       description: Database IP
       label: Rainbond regionDatabase host
       group: Rainbond cluster database
       required: true
+      type: string
     - variable: Cluster.regionDatabase.name
       default: ""
       description: library name
       label: Rainbond regionDatabase name
       group: Rainbond cluster database
       required: true
+      type: string
     - variable: Cluster.regionDatabase.port
       default: "3306"
       description: regionDatabase port
       label: Rainbond regionDatabase port
       group: Rainbond cluster database
       required: true
+      type: string
     - variable: Cluster.regionDatabase.password
       default: ""
       description: regionDatabase password
