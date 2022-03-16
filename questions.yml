@@ -158,4 +158,53 @@ questions:
       label: Rainbond regionDatabase username
       group: Rainbond cluster database
       type: string
-      
+
+## ui database
+  - variable: Cluster.uiDatabase
+    default: "false"
+    description: "Whether to open the console database"
+    type: string
+    group: Rainbond console database
+    label: Rainbond console database
+    show_subquestion_if: true
+    subquestions:
+    - variable: Cluster.uiDatabase.enable
+      default: true
+      description: Start the console database
+      label: Rainbond console database
+      group: Rainbond console database
+      required: true 
+      type: string
+    - variable: Cluster.uiDatabase.host
+      default: ""
+      description: Database IP
+      label: Rainbond uiDatabase host
+      group: Rainbond console database
+      required: true
+      type: string
+    - variable: Cluster.uiDatabase.name
+      default: ""
+      description: library name
+      label: Rainbond uiDatabase name
+      group: Rainbond console database
+      required: true
+      type: string
+    - variable: Cluster.uiDatabase.port
+      default: "3306"
+      description: uiDatabase port
+      label: Rainbond uiDatabase port
+      group: Rainbond console database
+      required: true
+      type: string
+    - variable: Cluster.uiDatabase.password
+      default: ""
+      description: uiDatabase password
+      label: Rainbond uiDatabase password
+      group: Rainbond console database
+      type: password
+    - variable: Cluster.uiDatabase.username
+      default: ""
+      description: uiDatabase username
+      label: Rainbond uiDatabase username
+      group: Rainbond console database
+      type: string
