@@ -1,136 +1,132 @@
 questions:
-# Rainbond Container Images
-- variable: defaultImage
-  default: true
-  description: "Use Rainbond default Docker image"
-  label: Use Rainbond Default Image
-  type: boolean
-  show_subquestion_if: false
-  group: "Rainbond Container Images"
-  subquestions:
-  # allinone
-  - variable: allinone.image.repository
-    default: ""
-    description: "Rainbond Allinone Docker image"
+## Cluster information
+
+  - variable: Cluster.enableHA
+    default: "false"
+    description: "Whether to enable Rainbond high availability"
     type: string
-    label: Rainbond Allinone Docker Name
-  - variable: allinone.image.tag
-    default: ""
-    description: "Rainbond Allinone Docker tag"
+    label: Rainbond
+    show_subquestion_if: true
+
+## mirror repository information
+
+  - variable: Cluster.imageHub
+    default: "false"
+    description: "Whether to use an external mirror repository"
     type: string
-    label: Rainbond Allinone Image Tag
-  # ui 
-  # - variable: ui.image.repository
-  #   default: ""
-  #   description: "Rainbond UI Docker image"
-  #   type: string
-  #   label: Rainbond UI Docker Name
-  # - variable: ui.image.tag
-  #   default: ""
-  #   description: "Rainbond UI Docker tag"
-  #   type: string
-  #   label: Rainbond UI Image Tag
-  # # console
-  # - variable: console.image.repository
-  #   default: ""
-  #   description: "Rainbond Console Docker image"
-  #   type: string
-  #   label: Rainbond Console Image Name
-  # - variable: console.image.tag
-  #   default: ""
-  #   description: "Rainbond Console Docker tag"
-  #   type: string
-  #   label: Rainbond Console Image Tag
-  # # adaptor
-  # - variable: adaptor.image.repository
-  #   default: ""
-  #   description: "Rainbond adaptor Docker image"
-  #   type: string
-  #   label: Rainbond adaptor Image Name
-  # - variable: adaptor.image.tag
-  #   default: ""
-  #   description: "Rainbond adaptor Docker tag"
-  #   type: string
-  #   label: Rainbond adaptor Image Tag
-# Set Mysql Redis Password
-- variable: mysql.secret.user
-  description: "Set Mysql User Name"
-  required: true
-  label: Set Mysql User Name
-  type: string
-  group: "rainbond-secret"
-- variable: mysql.secret.password
-  description: "Set Mysql User Password"
-  required: true
-  label: Set Mysql User Password
-  type: password
-  group: "rainbond-secret"
-- variable: mysql.secret.rootpassword
-  description: "Set Mysql Root Password"
-  required: true
-  label: Set Mysql Root Password
-  type: password
-  group: "rainbond-secret"
-- variable: redis.password
-  description: "Set Redis Password"
-  required: true
-  label: Set Redis Password
-  type: password
-  group: "rainbond-secret"
-# Volume Setting
-- variable: pvc.storageClassName
-  description: "Set Rainbond Component Persistent Volume,Please enter the Storage Name"
-  required: true
-  default: ""
-  label: Set Rainbond Component Persistent Volume
-  type: storageclass
-  group: "Persistent Volume"
-- variable: pvc.storageSize
-  description: "Set Rainbond Component Persistent Volume Size,Please enter the Storage Size,for example 5Gi"
-  required: true
-  default: "5Gi"
-  label: Set Rainbond Component Persistent Volume Size
-  type: string
-  group: "Persistent Volume"
-# ui Service
-# - variable: ui.svc.type
-#   default: "NodePort"
-#   description: "Rainbond UI Service type"
-#   type: enum
-#   options:
-#     - "ClusterIP"
-#     - "NodePort"
-#   required: true
-#   label: Rainbond UI Service Type
-#   show_subquestion_if: "NodePort"
-#   group: "Rainbond UI Services"
-#   subquestions:
-#   - variable: ui.svc.nodePort
-#     default: "30600"
-#     description: "NodePort http port(to set explicitly, choose port between 30000-32767)"
-#     type: int
-#     min: 30000
-#     max: 32767
-#     show_if: "ui.svc.type=NodePort"
-#     label: NodePort Http Port
-# allinone service
-- variable: allinone.svc.type
-  default: "NodePort"
-  description: "Rainbond Allinone Service type"
-  type: enum
-  options:
-    - "ClusterIP"
-    - "NodePort"
-  required: true
-  label: Rainbond Allinone Service Type
-  show_subquestion_if: "NodePort"
-  group: "Rainbond Allinone Services"
-  subquestions:
-  - variable: allinone.svc.nodePort
-    default: "30707"
-    description: "NodePort http port(to set explicitly, choose port between 30000-32767)"
-    type: int
-    min: 30000
-    max: 32767
-    show_if: "allinone.svc.type=NodePort"
-    label: NodePort Http Port
+    label: Rainbond imageHub
+    show_subquestion_if: true
+    subquestions:
+    - variable: Cluster.imageHub.enable
+      default: true
+      description: Open mirror repository
+      label: Rainbond imageHub enable
+      required: true 
+    - variable: Cluster.imageHub.domain
+      default: ""
+      description: Warehouse Address
+      label: Rainbond imageHub domain
+      required: true
+    - variable: Cluster.imageHub.namespace
+      default: ""
+      description: repository namespace
+      label: Rainbond imageHub namespace
+      required: true
+    - variable: Cluster.imageHub.username
+      default: ""
+      description: Warehouse login username
+      label: Rainbond imageHub username
+      required: true
+    - variable: Cluster.imageHub.password
+      default: ""
+      description: Warehouse login password
+      label: Rainbond imageHub password
+      required: true
+      type: password
+
+## etcd information
+
+  - variable: Cluster.etcd
+    default: "false"
+    description: "Whether to use external etcd "
+    type: string
+    label: Rainbond etcd
+    show_subquestion_if: true
+    subquestions: 
+    - variable: Cluster.imageHub.endpoints
+      type: multiline
+      default: ""
+      required: true
+      description: etcd ip address
+      label: Rainbond etcd
+    
+## External storage RWX
+
+  - variable: Cluster.RWX
+    default: "false"
+    description: "Whether to use external storage"
+    type: storageclass
+    label: Rainbond storageclass
+    show_subquestion_if: true
+    subquestions: 
+    - variable: Cluster.RWX.config.storageClassName
+      default: ""
+      required: true
+      description: external storage storageClassName
+      label: Rainbond ClassName
+
+## External storage RWO
+
+  - variable: Cluster.RWO
+    default: "false"
+    description: "Whether to use external storage"
+    type: storageclass
+    label: Rainbond storageclass
+    show_subquestion_if: true
+    subquestions: 
+    - variable: Cluster.RWO.storageClassName
+      default: ""
+      required: true
+      description: external storage storageClassName
+      label: Rainbond ClassName
+
+## region database
+
+  - variable: Cluster.regionDatabase
+    default: "false"
+    description: "Whether to enable external cluster database"
+    type: string
+    label: Rainbond cluster database
+    show_subquestion_if: true
+    subquestions:
+    - variable: Cluster.regionDatabase.enable
+      default: true
+      description: Start the cluster database
+      label: Rainbond cluster database
+      required: true 
+    - variable: Cluster.regionDatabase.host
+      default: ""
+      description: Database IP
+      label: Rainbond regionDatabase host
+      required: true
+    - variable: Cluster.regionDatabase.name
+      default: ""
+      description: library name
+      label: Rainbond regionDatabase name
+      required: true
+    - variable: Cluster.regionDatabase.port
+      default: "3306"
+      description: regionDatabase port
+      label: Rainbond regionDatabase port
+      required: true
+    - variable: Cluster.regionDatabase.password
+      default: ""
+      description: regionDatabase password
+      label: Rainbond regionDatabase password
+      type: password
+    - variable: Cluster.regionDatabase.username
+      default: ""
+      description: regionDatabase username
+      label: Rainbond regionDatabase username
+      type: string
+      
