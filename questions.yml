@@ -3,11 +3,8 @@ questions:
 
   - variable: Cluster.enableHA
     default: "false"
-    options: 
-    - false
-    - true
     description: "Whether to enable Rainbond high availability"
-    type: enum
+    type: boolean
     label: Rainbond
     group: Cluster enableHA
     show_subquestion_if: true 
@@ -46,7 +43,6 @@ questions:
       group: Cluster enableHA
       required: true
       type: password
-
 
 
 ## mirror repository information
