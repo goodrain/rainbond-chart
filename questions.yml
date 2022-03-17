@@ -1,48 +1,5 @@
 questions:
 ## Cluster information
-  - variable: Cluster.enableHA
-    default: "false"
-    description: "Whether to enable Rainbond high availability"
-    type: boolean
-    label: Rainbond
-    group: Cluster enableHA
-    show_subquestion_if: true 
-    - variable: Cluster.imageHub.enable
-      default: true
-      description: Open mirror repository
-      label: imageHub enable
-      group: Cluster enableHA
-      required: true 
-      type: string
-    - variable: Cluster.imageHub.domain
-      default: ""
-      description: Warehouse Address
-      label: imageHub domain
-      group: Cluster enableHA
-      required: true
-      type: string
-    - variable: Cluster.imageHub.namespace
-      default: ""
-      description: repository namespace
-      label: imageHub namespace
-      group: Cluster enableHA
-      required: true
-      type: string
-    - variable: Cluster.imageHub.username
-      default: ""
-      description: Warehouse login username
-      label: imageHub username
-      group: Cluster enableHA
-      required: true
-      type: string
-    - variable: Cluster.imageHub.password
-      default: ""
-      description: Warehouse login password
-      label: imageHub password
-      group: Cluster enableHA
-      required: true
-      type: password
-
 ## mirror repository information
 
   - variable: Cluster.imageHub
