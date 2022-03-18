@@ -1,6 +1,6 @@
-## Rainbond Console
+## Rainbond
 
-* Use helm install Rainbond-Console in kubernetes
+* Use helm install Rainbond in kubernetes
 
 ## Installing the Chart
 
