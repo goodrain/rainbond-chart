@@ -1,6 +1,6 @@
-# Rainbond Console Helm Charts
+# Rainbond Helm Charts
 
-You can deploy the Rainbond Console in Kubernets using Helm Chart.
+You can deploy the Rainbond in Kubernetes using Helm Chart.
 
 ## Pre Requisites
 
