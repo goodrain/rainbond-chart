@@ -55,7 +55,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_gteway.volumes }}
-    volumeMounts:
+    volumes:
     {{- range $key,$value := .Values.Component.rbd_gteway.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
@@ -107,7 +107,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_node.volumes }}
-    volumeMounts:
+    volumes:
     {{- range $key,$value := .Values.Component.rbd_node.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
@@ -158,7 +158,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_hub.volumes }}
-    volumeMounts:
+    volumes:
     {{- range $key,$value := .Values.Component.rbd_hub.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
@@ -235,7 +235,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_mq.volumes }}
-    volumeMounts:
+    volumes:
     {{- range $key,$value := .Values.Component.rbd_mq.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
@@ -286,7 +286,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_resource_proxy.volumes }}
-    volumeMounts:
+    volumes:
     {{- range $key,$value := .Values.Component.rbd_resource_proxy.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
@@ -332,7 +332,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_webcli.volumes }}
-    volumeMounts:
+    volumes:
     {{- range $key,$value := .Values.Component.rbd_webcli.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
@@ -431,7 +431,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_monitor.volumes }}
-    volumeMounts:
+    volumes:
     {{- range $key,$value := .Values.Component.rbd_monitor.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
@@ -482,7 +482,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_db.volumes }}
-    volumeMounts:
+    volumes:
     {{- range $key,$value := .Values.Component.rbd_db.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
@@ -531,7 +531,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_chaos.volumes }}
-    volumeMounts:
+    volumes:
     {{- range $key,$value := .Values.Component.rbd_chaos.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
@@ -589,7 +589,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_worker.volumes }}
-    volumeMounts:
+    volumes:
     {{- range $key,$value := .Values.Component.rbd_worker.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
@@ -640,7 +640,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_eventlog.volumes }}
-    volumeMounts:
+    volumes:
     {{- range $key,$value := .Values.Component.rbd_eventlog.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
@@ -686,7 +686,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_api.volumes }}
-    volumeMounts:
+    volumes:
     {{- range $key,$value := .Values.Component.rbd_api.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
@@ -739,7 +739,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_app_ui.volumes }}
-    volumeMounts:
+    volumes:
     {{- range $key,$value := .Values.Component.rbd_app_ui.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
@@ -780,3 +780,4 @@ kind: List
 metadata:
   resourceVersion: ""
   selfLink: ""
+
