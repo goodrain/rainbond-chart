@@ -10,7 +10,7 @@ metadata:
   namespace: rbd-system
 spec:
 {{- if .Values.Cluster.RWX.enable  }}
-  storageClassName: {{ .Values.Cluster.RWX.storageClassName }}
+{{ .Values.Cluster.RWX.config  | toYaml | indent 2 }}
 {{ else }}
   csiPlugin:
     nfs: {}
