@@ -1,0 +1,154 @@
+{{- if .Values.Cluster.enableEnvCheck }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "env-checker-gateway"
+  labels:
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    name: "env-checker"
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  ttlSecondsAfterFinished: 600
+  backoffLimit: 0
+  template:
+    metadata:
+      name: "env-checker-gateway"
+      labels:
+        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        name: "env-checker"
+    spec:
+      restartPolicy: Never
+      hostNetwork: true
+      containers:
+      - name: gateway-checker
+        image: "registry.cn-hangzhou.aliyuncs.com/goodrain/helm-env-checker"
+        env:
+        {{ if $.Values.Cluster.nodesForGateway }}
+        - name: GATEWAY_IP
+          value: {{- range $.Values.Cluster.nodesForGateway }}
+                 {{ get . "internalIP" | toString }}
+                 {{- end }}
+        {{- else }}
+            {{- range $index, $node := (lookup "v1" "Node" "" "").items }}
+            {{- $nodeStatusAddr := index $node.status.addresses | first }}
+        - name: GATEWAY_AUTO_{{ $index }}
+          value: {{ $nodeStatusAddr.address }}
+            {{- end }}
+        {{- end}}
+        args: ["check_gateway"]
+      tolerations:
+      - operator: Exists
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/disk-pressure
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/memory-pressure
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/pid-pressure
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/unschedulable
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/network-unavailable
+        operator: Exists
+
+{{- if not .Values.Cluster.RWX.enable }}
+  {{- range $index, $node := (lookup "v1" "Node" "" "").items }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "env-checker-{{ index $node.metadata.labels "kubernetes.io/hostname" }}"
+  labels:
+    app.kubernetes.io/managed-by: {{ $.Release.Service | quote }}
+    app.kubernetes.io/instance: {{ $.Release.Name | quote }}
+    app.kubernetes.io/version: {{ $.Chart.AppVersion }}
+    helm.sh/chart: "{{ $.Chart.Name }}-{{ $.Chart.Version }}"
+    name: "env-checker"
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-4"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  ttlSecondsAfterFinished: 600
+  backoffLimit: 0
+  template:
+    metadata:
+      name: "env-checker-{{ index $node.metadata.labels "kubernetes.io/hostname" }}"
+      labels:
+        app.kubernetes.io/managed-by: {{ $.Release.Service | quote }}
+        app.kubernetes.io/instance: {{ $.Release.Name | quote }}
+        helm.sh/chart: "{{ $.Chart.Name }}-{{ $.Chart.Version }}"
+        name: env-checker
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - {{ index $node.metadata.labels "kubernetes.io/hostname" }}
+      restartPolicy: Never
+      containers:
+      - name: nfs-client-checker
+        image: "registry.cn-hangzhou.aliyuncs.com/goodrain/helm-env-checker"
+        env:
+        - name: NODE
+          value: {{ index $node.metadata.labels "kubernetes.io/hostname" }}
+        volumeMounts:
+        - mountPath: /usr/sbin
+          name: usr-sbin
+        - mountPath: /sbin
+          name: sbin
+        args:  ["check_nfsclient"]
+      tolerations:
+      - operator: Exists
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/disk-pressure
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/memory-pressure
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/pid-pressure
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/unschedulable
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/network-unavailable
+        operator: Exists
+      volumes:
+      - name: usr-sbin
+        hostPath:
+          path: /usr/sbin
+      - name: sbin
+        hostPath:
+          path: /sbin
+    {{- end }}
+  {{- end }}
+{{- end }}

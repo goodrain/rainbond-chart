@@ -27,6 +27,9 @@ operator:
 Cluster:
 ## 定义是否开启高可用，true为开，false为关  
   enableHA: false
+  
+## 定义是否开启环境检测，true为开，false为关，默认开启
+  enableEnvCheck: true
 
 ## 定义是否使用外部镜像镜像仓库，true为开，false为关
   imageHub:
