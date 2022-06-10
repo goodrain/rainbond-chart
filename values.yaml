@@ -116,7 +116,7 @@ Cluster:
 ## 系统组件统一镜像仓库拉取地址及名称空间
   rainbondImageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
 ## 系统组件统一镜像版本
-  installVersion: v5.6.0-release
+  installVersion: v5.7.0-release
 ## 系统组件统一镜像拉取策略
   imagePullPolicy: IfNotPresent
 ## 高可用安装模式下，系统组件副本数
@@ -423,7 +423,7 @@ Component:
 ## 环境变量variable_name为变量名,variable为变量值
   ##  env:
   ##      variable_name: variable  
-  ##  image: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond:v5.6.0-release-allinone
+  ##  image: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond:v5.7.0-release-allinone
   ##  volumes:
   ##    testpv:
   ##      persistentVolumeClaim:
