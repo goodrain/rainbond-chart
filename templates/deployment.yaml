@@ -32,9 +32,9 @@ spec:
             - --zap-log-level={{ .Values.operator.logLevel }}
           {{- if .Values.operator.env }}
           env:
-          {{- range $key,$value := .Values.operator.env }}
-          - name: {{ $key }}
-            value: "{{ $value }}"
+          {{- range .Values.operator.env }}
+          - name: {{ .name }}
+            value: "{{ .value }}"
           {{- end }}
           {{- end }}
           image: {{ .Values.operator.image.name }}:{{ .Values.operator.image.tag }}
