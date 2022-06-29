@@ -14,10 +14,6 @@ items:
       - {{ . | toString  }}
       {{- end }}    
       secretName: {{ .Values.Cluster.etcd.secretName }}
-{{- else}}
-  {{- if .Values.Cluster.enableHA }}
-    {{- fail "An external Etcd cluster must be set up in high availability mode!" }}
-  {{- end }}
 {{- end }}
     configCompleted: true
 {{- if .Values.Cluster.gatewayIngressIPs }}
@@ -39,14 +35,28 @@ items:
 {{- end }}
 {{- if .Values.Cluster.RWX.enable  }} 
     rainbondVolumeSpecRWX:
-{{ .Values.Cluster.RWX.config  | toYaml | indent 6 }}
+      {{- if eq .Values.Cluster.RWX.type "aliyun" }}
+      storageClassParameters:
+        mountOptions:
+        - "nolock,tcp,noresvport"
+        - "vers=4"
+        - "minorversion=0"
+        - "rsize=1048576"
+        - "wsize=1048576"
+        - "timeo=600"
+        - "retrans=2"
+        - "hard"
+        parameters:
+          volumeAs: subpath
+          archiveOnDelete: "true"
+          server: {{ .Values.Cluster.RWX.config.server}}
+        provisioner: nasplugin.csi.alibabacloud.com
+      {{- else }}
+      storageClassName: {{ .Values.Cluster.RWX.config.storageClassName }}
+      {{- end }}
       imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
-{{- else }}
-  {{- if .Values.Cluster.enableHA }}
-    {{- fail "External shared storage must be set in high availability mode!"}}
-  {{- end}}
 {{- end }}
-{{- if or .Values.Cluster.regionDatabase.enable  .Values.Cluster.enableHA }}
+{{- if .Values.Cluster.regionDatabase.enable }}
     regionDatabase:
       host: {{  required ".Values.Cluster.regionDatabase.host cannot be empty!" .Values.Cluster.regionDatabase.host }}
       name: {{ .Values.Cluster.regionDatabase.name }}
@@ -54,7 +64,7 @@ items:
       port: {{ .Values.Cluster.regionDatabase.port }}
       username: {{ .Values.Cluster.regionDatabase.username }}
 {{- end }}
-{{- if or .Values.Cluster.uiDatabase.enable .Values.Cluster.enableHA }}
+{{- if .Values.Cluster.uiDatabase.enable }}
     uiDatabase:
       host: {{ required ".Values.Cluster.uiDatabase.host cannot be empty!" .Values.Cluster.uiDatabase.host }}
       name: {{ .Values.Cluster.uiDatabase.name }}
