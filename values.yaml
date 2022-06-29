@@ -18,8 +18,8 @@ operator:
 ##    env:
 ##      variable_name: variable
   image:
-    name: rainbond-operator
-    tag: v1.1
+    name: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond-operator
+    tag: v2.3.0
     pullPolicy: IfNotPresent
   logLevel: 4
 
@@ -449,5 +449,5 @@ nfs-client-provisioner:
   childChart:
     enable: false
   nfs:
-    server: 10.0.8.3
-    path: /u01
+    server:
+    path:
