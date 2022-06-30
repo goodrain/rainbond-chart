@@ -1,6 +1,6 @@
 apiVersion: v1
 items:
-{{- if or .Values.Cluster.etcd.enable  .Values.Cluster.enableHA  }}
+{{- if .Values.Cluster.etcd.enable }}
 {{ else }}
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
@@ -448,9 +448,6 @@ items:
 
 {{- if and .Values.Cluster.uiDatabase.enable .Values.Cluster.regionDatabase.enable }}
 {{- else }}
-  {{- if .Values.Cluster.enableHA }}
-    {{ fail "External Region and UI database must be set in high availability mode!" }}
-  {{- else }}
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
   metadata:
@@ -496,7 +493,6 @@ items:
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     priorityComponent: false
     replicas: 1
-  {{- end}}
 {{- end }}
 
 
