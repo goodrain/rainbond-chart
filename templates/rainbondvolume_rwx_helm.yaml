@@ -25,7 +25,7 @@ spec:
       archiveOnDelete: "true"
       server: {{ .Values.Cluster.RWX.config.server}}
   {{- else }}
-  storageClassName: {{ .Values.Cluster.RWX.config.storageClassName }}
+  storageClassName: {{ .Values.Cluster.RWX.config.storageClassName | quote }}
   {{- end }}
 {{- else }}
   csiPlugin:
