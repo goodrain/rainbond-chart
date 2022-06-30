@@ -10,7 +10,6 @@ metadata:
   name: rainbondvolumerwo
   namespace: rbd-system
 spec:
-  storageClassName: {{ .Values.Cluster.RWO.storageClassName }}
+  storageClassName: {{ .Values.Cluster.RWO.storageClassName | quote }}
   imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
 {{- end }}
-  

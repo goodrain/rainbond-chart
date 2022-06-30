@@ -13,7 +13,7 @@ items:
       {{- range .Values.Cluster.etcd.endpoints }}
       - {{ . | toString  }}
       {{- end }}    
-      secretName: {{ .Values.Cluster.etcd.secretName }}
+      secretName: {{ .Values.Cluster.etcd.secretName | quote }}
 {{- end }}
     configCompleted: true
 {{- if .Values.Cluster.gatewayIngressIPs }}
@@ -23,14 +23,14 @@ items:
 {{ end }}
 {{- if .Values.Cluster.imageHub.enable  }}
     imageHub:
-      domain: {{ .Values.Cluster.imageHub.domain }}
-      password: {{ .Values.Cluster.imageHub.password }}
-      username: {{ .Values.Cluster.imageHub.username }}
-      namespace: {{ .Values.Cluster.imageHub.namespace }} 
+      domain: {{ .Values.Cluster.imageHub.domain | quote }}
+      password: {{ .Values.Cluster.imageHub.password | quote }}
+      username: {{ .Values.Cluster.imageHub.username | quote }}
+      namespace: {{ .Values.Cluster.imageHub.namespace | quote }} 
 {{- end }}
 {{- if .Values.Cluster.RWO.enable  }} 
     rainbondVolumeSpecRWO:
-      storageClassName: {{ .Values.Cluster.RWO.storageClassName }}
+      storageClassName: {{ .Values.Cluster.RWO.storageClassName | quote }}
       imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
 {{- end }}
 {{- if .Values.Cluster.RWX.enable  }} 
@@ -49,28 +49,28 @@ items:
         parameters:
           volumeAs: subpath
           archiveOnDelete: "true"
-          server: {{ .Values.Cluster.RWX.config.server}}
+          server: {{ .Values.Cluster.RWX.config.server }}
         provisioner: nasplugin.csi.alibabacloud.com
       {{- else }}
-      storageClassName: {{ .Values.Cluster.RWX.config.storageClassName }}
+      storageClassName: {{ .Values.Cluster.RWX.config.storageClassName | quote }}
       {{- end }}
       imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
 {{- end }}
 {{- if .Values.Cluster.regionDatabase.enable }}
     regionDatabase:
       host: {{  required ".Values.Cluster.regionDatabase.host cannot be empty!" .Values.Cluster.regionDatabase.host }}
-      name: {{ .Values.Cluster.regionDatabase.name }}
-      password: {{ .Values.Cluster.regionDatabase.password }}
+      name: {{ .Values.Cluster.regionDatabase.name | quote }}
+      password: {{ .Values.Cluster.regionDatabase.password | quote }}
       port: {{ .Values.Cluster.regionDatabase.port }}
-      username: {{ .Values.Cluster.regionDatabase.username }}
+      username: {{ .Values.Cluster.regionDatabase.username | quote }}
 {{- end }}
 {{- if .Values.Cluster.uiDatabase.enable }}
     uiDatabase:
       host: {{ required ".Values.Cluster.uiDatabase.host cannot be empty!" .Values.Cluster.uiDatabase.host }}
-      name: {{ .Values.Cluster.uiDatabase.name }}
-      password: {{ .Values.Cluster.uiDatabase.password }}
+      name: {{ .Values.Cluster.uiDatabase.name | quote }}
+      password: {{ .Values.Cluster.uiDatabase.password | quote }}
       port: {{ .Values.Cluster.uiDatabase.port }}
-      username: {{ .Values.Cluster.uiDatabase.username }}
+      username: {{ .Values.Cluster.uiDatabase.username | quote }}
 {{- end }}
     suffixHTTPHost: ""
     installMode: WithoutPackage
