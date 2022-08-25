@@ -31,7 +31,7 @@ spec:
       - name: gateway-checker
         image: "registry.cn-hangzhou.aliyuncs.com/goodrain/helm-env-checker"
         env:
-        {{ if $.Values.Cluster.nodesForGateway }}
+        {{- if $.Values.Cluster.nodesForGateway }}
         - name: GATEWAY_IP
           value: {{- range $.Values.Cluster.nodesForGateway }}
                  {{ get . "internalIP" | toString }}
@@ -42,7 +42,11 @@ spec:
         - name: GATEWAY_AUTO_{{ $index }}
           value: {{ $nodeStatusAddr.address }}
             {{- end }}
-        {{- end}}
+        {{- end }}
+        {{- if not .Values.Component.rbd_app_ui.enable }}
+        - name: NOT_CHECK_7070
+          value: OK
+        {{- end }}
         args: ["check_gateway"]
       tolerations:
       - operator: Exists
