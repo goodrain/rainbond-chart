@@ -24,6 +24,7 @@ spec:
       volumeAs: subpath
       archiveOnDelete: "true"
       server: {{ .Values.Cluster.RWX.config.server}}
+    provisioner: nasplugin.csi.alibabacloud.com
   {{- else }}
   storageClassName: {{ .Values.Cluster.RWX.config.storageClassName | quote }}
   {{- end }}
