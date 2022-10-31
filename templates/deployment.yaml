@@ -20,10 +20,14 @@ spec:
     spec:
       serviceAccountName: {{ .Values.serviceAccount.name }}
       volumes:
-        - name: dockersock
-          hostPath:
-            path: /var/run
+        - hostPath:
+            path: /run
             type: Directory
+          name: rundir
+        - hostPath:
+            path: /var
+            type: Directory
+          name: vardir
       containers:
         - command:
             - /manager
@@ -59,7 +63,9 @@ spec:
               cpu: 100m
               memory: 64Mi
           volumeMounts:
-            - mountPath: /var/run
-              name: dockersock
+            - mountPath: /var
+              name: vardir
+            - mountPath: /run
+              name: rundir
       terminationGracePeriodSeconds: 10
 {{- end }}
