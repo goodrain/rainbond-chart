@@ -389,7 +389,7 @@ items:
     {{- if .Values.Component.kubernetes_dashboard.image }}
     image: {{ .Values.Component.kubernetes_dashboard.image }}
     {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/kubernetes-dashboard:v2.0.1-3
+    image: {{ .Values.Cluster.rainbondImageRepository }}/kubernetes-dashboard:v2.6.1
     {{- end }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     priorityComponent: false
