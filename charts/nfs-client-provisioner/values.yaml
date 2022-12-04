@@ -10,7 +10,7 @@ childChart:
 
 image:
 # Reference: https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner
-  repository: registry.cn-hangzhou.aliyuncs.com/goodrain/nfs-client-provisioner
+  repository: rainbond/nfs-client-provisioner
   tag: v4.0.2
   pullPolicy: IfNotPresent
 
