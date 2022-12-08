@@ -12,6 +12,9 @@ serviceAccount:
   create: true
   name: rainbond-operator
 
+# Use K3s Containerd
+useK3sContainerd: false
+
 # rainbondOperator
 operator:
   name: rainbond-operator
@@ -141,8 +144,8 @@ Component:
   ##    testsc: /test
 
 
-## rbd-gteway 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
-  rbd_gteway:
+## rbd-gateway 组件自定义信息: 启动参数，环境变量，镜像地址，存储挂载
+  rbd_gateway:
     args:
   ##    - --log-level        日志级别
   ##    - --error-log        记录错误日志路径

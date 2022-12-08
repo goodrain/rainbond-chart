@@ -34,35 +34,35 @@ items:
     name: rbd-gateway
     namespace: rbd-system
   spec:
-    {{- if .Values.Component.rbd_gteway.args }}
+    {{- if .Values.Component.rbd_gateway.args }}
     args:
-    {{- range .Values.Component.rbd_gteway.args }}
+    {{- range .Values.Component.rbd_gateway.args }}
     - {{ . | toString  }}
     {{- end }} 
     {{- end }}
-    {{- if .Values.Component.rbd_gteway.env }}
+    {{- if .Values.Component.rbd_gateway.env }}
     env:
-    {{- range $key,$value := .Values.Component.rbd_gteway.env }}
+    {{- range $key,$value := .Values.Component.rbd_gateway.env }}
     - name: {{ $key }}
       value: "{{ $value }}"
     {{- end }}
     {{- end }}
-    {{- if .Values.Component.rbd_gteway.volumeMounts }}
+    {{- if .Values.Component.rbd_gateway.volumeMounts }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_gteway.volumeMounts }}
+    {{- range $key,$value := .Values.Component.rbd_gateway.volumeMounts }}
     - name: {{ $key }}
       mountPath: {{ $value }}
     {{- end }}  
     {{- end }}
-    {{- if .Values.Component.rbd_gteway.volumes }}
+    {{- if .Values.Component.rbd_gateway.volumes }}
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_gteway.volumes }}
+    {{- range $key,$value := .Values.Component.rbd_gateway.volumes }}
     - name: {{ $key }}
 {{ $value | toYaml |indent 6}}
     {{- end }}  
     {{- end }}
-    {{- if .Values.Component.rbd_gteway.image }}
-    image: {{ .Values.Component.rbd_gteway.image }}
+    {{- if .Values.Component.rbd_gateway.image }}
+    image: {{ .Values.Component.rbd_gateway.image }}
     {{- else }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-gateway:{{ .Values.Cluster.installVersion }}
     {{- end }}
@@ -99,19 +99,15 @@ items:
       value: "{{ $value }}"
     {{- end }}
     {{- end }}
-    {{- if .Values.Component.rbd_node.volumeMounts }}
+    {{- if .Values.useK3sContainerd }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_node.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
-    {{- end }}
-    {{- if .Values.Component.rbd_node.volumes }}
+    - name: containerdsock
+      mountPath: /run/containerd
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_node.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
+    - name: containerdsock
+      hostPath:
+        path: /var/run/k3s/containerd
+        type: Directory
     {{- end }}
     {{- if .Values.Component.rbd_node.image }}
     image: {{ .Values.Component.rbd_node.image }}
@@ -519,19 +515,15 @@ items:
       value: "{{ $value }}"
     {{- end }}
     {{- end }}
-    {{- if .Values.Component.rbd_chaos.volumeMounts }}
+    {{- if .Values.useK3sContainerd }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_chaos.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
-    {{- end }}
-    {{- if .Values.Component.rbd_chaos.volumes }}
+    - name: containerdsock
+      mountPath: /run/containerd
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_chaos.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
+    - name: containerdsock
+      hostPath:
+        path: /var/run/k3s/containerd
+        type: Directory
     {{- end }}
     {{- if .Values.Component.rbd_chaos.image }}
     image: {{ .Values.Component.rbd_chaos.image }}
