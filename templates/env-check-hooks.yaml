@@ -30,6 +30,7 @@ spec:
       containers:
       - name: gateway-checker
         image: "registry.cn-hangzhou.aliyuncs.com/goodrain/helm-env-checker"
+        imagePullPolicy: IfNotPresent
         env:
         {{- if $.Values.Cluster.nodesForGateway }}
         - name: GATEWAY_IP
@@ -114,6 +115,7 @@ spec:
       containers:
       - name: nfs-client-checker
         image: "registry.cn-hangzhou.aliyuncs.com/goodrain/helm-env-checker"
+        imagePullPolicy: IfNotPresent
         env:
         - name: NODE
           value: {{ index $node.metadata.labels "kubernetes.io/hostname" }}
