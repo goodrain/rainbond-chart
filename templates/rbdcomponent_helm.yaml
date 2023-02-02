@@ -189,7 +189,7 @@ items:
     {{- if .Values.Component.metrics_server.image }}
     image: {{ .Values.Component.metrics_server.image }}
     {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/metrics-server:v0.3.6
+    image: {{ .Values.Cluster.rainbondImageRepository }}/metrics-server:v0.4.1
     {{- end }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     priorityComponent: false
