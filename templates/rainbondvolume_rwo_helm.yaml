@@ -11,5 +11,5 @@ metadata:
   namespace: rbd-system
 spec:
   storageClassName: {{ .Values.Cluster.RWO.storageClassName | quote }}
-  imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
+  imageRepository: {{ .Values.Cluster.rainbondImageRepository }}
 {{- end }}
