@@ -33,4 +33,4 @@ spec:
     nfs: {}
   storageRequest: 1
 {{- end }}
-  imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
+  imageRepository: {{ .Values.Cluster.rainbondImageRepository }}

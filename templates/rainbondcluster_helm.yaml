@@ -31,7 +31,7 @@ items:
 {{- if .Values.Cluster.RWO.enable  }} 
     rainbondVolumeSpecRWO:
       storageClassName: {{ .Values.Cluster.RWO.storageClassName | quote }}
-      imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
+      imageRepository: {{ .Values.Cluster.rainbondImageRepository }}
 {{- end }}
 {{- if .Values.Cluster.RWX.enable  }} 
     rainbondVolumeSpecRWX:
@@ -54,7 +54,7 @@ items:
       {{- else }}
       storageClassName: {{ .Values.Cluster.RWX.config.storageClassName | quote }}
       {{- end }}
-      imageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
+      imageRepository: {{ .Values.Cluster.rainbondImageRepository }}
 {{- end }}
 {{- if .Values.Cluster.regionDatabase.enable }}
     regionDatabase:
