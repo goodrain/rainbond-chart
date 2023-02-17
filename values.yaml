@@ -22,7 +22,7 @@ operator:
 ##      variable_name: variable
   image:
     name: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond-operator
-    tag: v5.11.0-release
+    tag: v5.11.1-release
     pullPolicy: IfNotPresent
   logLevel: 4
 
@@ -103,7 +103,7 @@ Cluster:
 ## 系统组件统一镜像仓库拉取地址及名称空间
   rainbondImageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
 ## 系统组件统一镜像版本
-  installVersion: v5.11.0-release
+  installVersion: v5.11.1-release
 ## 系统组件统一镜像拉取策略
   imagePullPolicy: IfNotPresent
 ## 高可用安装模式下，系统组件副本数
