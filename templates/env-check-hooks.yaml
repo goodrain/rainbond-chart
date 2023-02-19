@@ -29,7 +29,7 @@ spec:
       hostNetwork: true
       containers:
       - name: gateway-checker
-        image: "{{ .Values.Cluster.rainbondImageRepository }}/helm-env-checker"
+        image: "registry.cn-hangzhou.aliyuncs.com/goodrain/helm-env-checker:latest"
         imagePullPolicy: IfNotPresent
         env:
         {{- if $.Values.Cluster.nodesForGateway }}
@@ -114,7 +114,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: nfs-client-checker
-        image: "{{ .Values.Cluster.rainbondImageRepository }}/helm-env-checker"
+        image: "registry.cn-hangzhou.aliyuncs.com/goodrain/helm-env-checker:latest"
         imagePullPolicy: IfNotPresent
         env:
         - name: NODE
