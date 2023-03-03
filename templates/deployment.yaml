@@ -41,12 +41,14 @@ spec:
           args:
             - --leader-elect
             - --zap-log-level={{ .Values.operator.logLevel }}
-          {{- if .Values.operator.env }}
           env:
           {{- range .Values.operator.env }}
           - name: {{ .name }}
             value: "{{ .value }}"
           {{- end }}
+          {{- if .Values.Cluster.enableEnvCheck }}
+          - name: CHECK_PORT_OCCUPIED
+            value: {{ .Values.Cluster.enableEnvCheck }}
           {{- end }}
           image: {{ .Values.operator.image.name }}:{{ .Values.operator.image.tag }}
           imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
