@@ -28,8 +28,12 @@ useK3sContainerd: false
 # rainbondOperator
 operator:
   name: rainbond-operator
-##    env:
-##      variable_name: variable
+  # operator environment variable, ref: https://www.rainbond.com/docs/ops-guide/management/change-ports
+  # env:
+  # - name: API_PORT
+  #   value: "7443"
+  # - name: API_WS_PORT
+  #   value: "6066"
   image:
     name: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond-operator
     tag: v5.12.0-release
@@ -131,13 +135,17 @@ Cluster:
 ############################################
 Component:
 
-  # rbd-api component configuration, ref: https://www.rainbond.com/docs/installation/install-with-helm/vaules-config#%E9%85%8D%E7%BD%AE-rbd-api-%E5%8F%82%E6%95%B0
+  # rbd-api component configuration
+  # ref: https://www.rainbond.com/docs/installation/install-with-helm/vaules-config#%E9%85%8D%E7%BD%AE-rbd-api-%E5%8F%82%E6%95%B0
+  # ref: ref: https://www.rainbond.com/docs/ops-guide/management/change-ports
   rbd_api:
     args:
     # - --api-addr-ssl 0.0.0.0:8443
     # - --ws-addr 0.0.0.0:6060
     
-  # rbd-gateway component configuration, ref: https://www.rainbond.com/docs/installation/install-with-helm/vaules-config#%E9%85%8D%E7%BD%AE-rbd-gateway-%E5%8F%82%E6%95%B0
+  # rbd-gateway component configuration
+  # ref: https://www.rainbond.com/docs/installation/install-with-helm/vaules-config#%E9%85%8D%E7%BD%AE-rbd-gateway-%E5%8F%82%E6%95%B0
+  # ref: ref: https://www.rainbond.com/docs/ops-guide/management/change-ports
   rbd_gateway:
     args:
     # - --service-http-port 80
