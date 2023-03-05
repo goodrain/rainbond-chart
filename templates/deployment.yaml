@@ -1,3 +1,12 @@
+#############################################
+# 
+# Copyright 2023 Goodrain Co., Ltd.
+# 
+# This version of the GNU Lesser General Public License incorporates
+# the terms and conditions of version 3 of the GNU General Public License.
+# 
+#############################################
+
 {{- if .Values.operator }}
 apiVersion: apps/v1
 kind: Deployment
