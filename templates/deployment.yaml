@@ -57,7 +57,7 @@ spec:
           {{- end }}
           {{- if .Values.Cluster.enableEnvCheck }}
           - name: CHECK_PORT_OCCUPIED
-            value: {{ .Values.Cluster.enableEnvCheck }}
+            value: "{{ .Values.Cluster.enableEnvCheck }}"
           {{- end }}
           image: {{ .Values.operator.image.name }}:{{ .Values.operator.image.tag }}
           imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
