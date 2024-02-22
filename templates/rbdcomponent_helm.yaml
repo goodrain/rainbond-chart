@@ -8,30 +8,30 @@
 #############################################
 
 
-apiVersion: v1
-items:
-{{- if .Values.Cluster.etcd.enable }}
-{{ else }}
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: rbd-etcd
-      priorityComponent: "true"
-    name: rbd-etcd
-    namespace: rbd-system
-  spec:
-    {{- if .Values.Component.rbd_etcd.image }}
-    image: {{ .Values.Component.rbd_etcd.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/etcd:v3.3.18
-    {{- end }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: true
-    replicas: 1
- {{- end }}
+#apiVersion: v1
+#items:
+#{{- if .Values.Cluster.etcd.enable }}
+#{{ else }}
+#- apiVersion: rainbond.io/v1alpha1
+#  kind: RbdComponent
+#  metadata:
+#    labels:
+#      belongTo: rainbond-operator
+#      creator: Rainbond
+#      name: rbd-etcd
+#      priorityComponent: "true"
+#    name: rbd-etcd
+#    namespace: rbd-system
+#  spec:
+#    {{- if .Values.Component.rbd_etcd.image }}
+#    image: {{ .Values.Component.rbd_etcd.image }}
+#    {{- else }}
+#    image: {{ .Values.Cluster.rainbondImageRepository }}/etcd:v3.3.18
+#    {{- end }}
+#    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
+#    priorityComponent: true
+#    replicas: 1
+# {{- end }}
 
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
@@ -84,53 +84,53 @@ items:
     replicas: 1
     {{- end }}
 
-
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: rbd-node      
-      priorityComponent: "true"
-    name: rbd-node
-    namespace: rbd-system
-  spec:
-    {{- if .Values.Component.rbd_node.args }}
-    args:
-    {{- range .Values.Component.rbd_node.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_node.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_node.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.useK3sContainerd }}
-    volumeMounts:
-    - name: containerdsock
-      mountPath: /run/containerd
-    volumes:
-    - name: containerdsock
-      hostPath:
-        path: /var/run/k3s/containerd
-        type: Directory
-    {{- end }}
-    {{- if .Values.Component.rbd_node.image }}
-    image: {{ .Values.Component.rbd_node.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-node:{{ .Values.Cluster.installVersion }}
-    {{- end }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: true
-    {{- if .Values.Cluster.enableHA  }} 
-    replicas: {{ .Values.Cluster.replicas }}
-    {{ else }}
-    replicas: 1
-    {{- end }}
+#
+#- apiVersion: rainbond.io/v1alpha1
+#  kind: RbdComponent
+#  metadata:
+#    labels:
+#      belongTo: rainbond-operator
+#      creator: Rainbond
+#      name: rbd-node
+#      priorityComponent: "true"
+#    name: rbd-node
+#    namespace: rbd-system
+#  spec:
+#    {{- if .Values.Component.rbd_node.args }}
+#    args:
+#    {{- range .Values.Component.rbd_node.args }}
+#    - {{ . | toString  }}
+#    {{- end }}
+#    {{- end }}
+#    {{- if .Values.Component.rbd_node.env }}
+#    env:
+#    {{- range $key,$value := .Values.Component.rbd_node.env }}
+#    - name: {{ $key }}
+#      value: "{{ $value }}"
+#    {{- end }}
+#    {{- end }}
+#    {{- if .Values.useK3sContainerd }}
+#    volumeMounts:
+#    - name: containerdsock
+#      mountPath: /run/containerd
+#    volumes:
+#    - name: containerdsock
+#      hostPath:
+#        path: /var/run/k3s/containerd
+#        type: Directory
+#    {{- end }}
+#    {{- if .Values.Component.rbd_node.image }}
+#    image: {{ .Values.Component.rbd_node.image }}
+#    {{- else }}
+#    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-node:{{ .Values.Cluster.installVersion }}
+#    {{- end }}
+#    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
+#    priorityComponent: true
+#    {{- if .Values.Cluster.enableHA  }}
+#    replicas: {{ .Values.Cluster.replicas }}
+#    {{ else }}
+#    replicas: 1
+#    {{- end }}
 
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
