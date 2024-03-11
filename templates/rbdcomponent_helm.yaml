@@ -373,7 +373,7 @@ items:
     {{- end }}  
     {{- end }}
     {{- if .Values.Component.rbd_monitor.image }}
-    image: {{ .Values.Component.rbd_monitor.image }}
+    image: registry.cn-hangzhou.aliyuncs.com/goodrain/rbd-monitor:v2.20.0
     {{- else }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-monitor:{{ .Values.Cluster.installVersion }}
     {{- end }}
