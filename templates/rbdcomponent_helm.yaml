@@ -372,11 +372,7 @@ items:
 {{ $value | toYaml |indent 6}}
     {{- end }}  
     {{- end }}
-    {{- if .Values.Component.rbd_monitor.image }}
     image: registry.cn-hangzhou.aliyuncs.com/goodrain/rbd-monitor:v2.20.0
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-monitor:{{ .Values.Cluster.installVersion }}
-    {{- end }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     priorityComponent: false
     replicas: 1
