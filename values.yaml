@@ -20,14 +20,14 @@ rbac:
 ## Service account name and whether to create it
 serviceAccount:
   create: true
-  name: rainbond-operator
+  name: yx-operator
 
 # Use K3s Containerd
 useK3sContainerd: false
 
 # rainbondOperator
 operator:
-  name: rainbond-operator
+  name: yx-operator
   # operator environment variable, ref: https://www.rainbond.com/docs/ops-guide/management/change-ports
   # env:
   # - name: API_PORT
@@ -49,7 +49,7 @@ Cluster:
   enableHA: false
   
   # Enable cluster environment detectio
-  enableEnvCheck: true
+  enableEnvCheck: false
 
   # Use an external image repository
   imageHub:
