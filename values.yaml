@@ -20,14 +20,14 @@ rbac:
 ## Service account name and whether to create it
 serviceAccount:
   create: true
-  name: rainbond-operator
+  name: nb-operator
 
 # Use K3s Containerd
 useK3sContainerd: false
 
 # rainbondOperator
 operator:
-  name: rainbond-operator
+  name: nb-operator
   # operator environment variable, ref: https://www.rainbond.com/docs/ops-guide/management/change-ports
   # env:
   # - name: API_PORT
@@ -35,8 +35,8 @@ operator:
   # - name: API_WS_PORT
   #   value: "6066"
   image:
-    name: registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond-operator
-    tag: v5.17.1-release
+    name: rainbond/rainbond-operator
+    tag: v6.0.0-release
     pullPolicy: IfNotPresent
   logLevel: 4
 
@@ -117,10 +117,10 @@ Cluster:
   #   name: node2
 
   # Component unified image repository and namespace, ref: https://www.rainbond.com/docs/installation/install-with-helm/vaules-config/#%E9%85%8D%E7%BD%AE%E9%9B%86%E7%BE%A4%E7%AB%AF%E9%95%9C%E5%83%8F%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80
-  rainbondImageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
+  rainbondImageRepository: rainbond
   
   # Component image version, ref: https://www.rainbond.com/docs/installation/install-with-helm/vaules-config/#%E9%85%8D%E7%BD%AE%E5%AE%89%E8%A3%85%E7%89%88%E6%9C%AC
-  installVersion: v5.17.1-release
+  installVersion: v6.0.0-release
 
   # Component image pull policy, ref: https://www.rainbond.com/docs/installation/install-with-helm/vaules-config/#%E9%85%8D%E7%BD%AE%E9%9B%86%E7%BE%A4%E7%AB%AF%E9%95%9C%E5%83%8F%E6%8B%89%E5%8F%96%E7%AD%96%E7%95%A5
   imagePullPolicy: IfNotPresent

@@ -10,29 +10,6 @@
 
 apiVersion: v1
 items:
-{{- if .Values.Cluster.etcd.enable }}
-{{ else }}
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: rbd-etcd
-      priorityComponent: "true"
-    name: rbd-etcd
-    namespace: rbd-system
-  spec:
-    {{- if .Values.Component.rbd_etcd.image }}
-    image: {{ .Values.Component.rbd_etcd.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/etcd:v3.3.18
-    {{- end }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: true
-    replicas: 1
- {{- end }}
-
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
   metadata:
@@ -42,7 +19,7 @@ items:
       name: rbd-gateway
       priorityComponent: "true"
     name: rbd-gateway
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_gateway.args }}
     args:
@@ -78,54 +55,6 @@ items:
     replicas: 1
     {{- end }}
 
-
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: rbd-node      
-      priorityComponent: "true"
-    name: rbd-node
-    namespace: rbd-system
-  spec:
-    {{- if .Values.Component.rbd_node.args }}
-    args:
-    {{- range .Values.Component.rbd_node.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_node.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_node.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.useK3sContainerd }}
-    volumeMounts:
-    - name: containerdsock
-      mountPath: /run/containerd
-    volumes:
-    - name: containerdsock
-      hostPath:
-        path: /var/run/k3s/containerd
-        type: Directory
-    {{- end }}
-    {{- if .Values.Component.rbd_node.image }}
-    image: {{ .Values.Component.rbd_node.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-node:{{ .Values.Cluster.installVersion }}
-    {{- end }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: true
-    {{- if .Values.Cluster.enableHA  }} 
-    replicas: {{ .Values.Cluster.replicas }}
-    {{ else }}
-    replicas: 1
-    {{- end }}
-
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
   metadata:
@@ -135,7 +64,7 @@ items:
       name: rbd-hub      
       priorityComponent: "true"
     name: rbd-hub
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_hub.args }}
     args:
@@ -180,9 +109,7 @@ items:
       creator: Rainbond
       name: metrics-server
     name: metrics-server
-    namespace: rbd-system
-    resourceVersion: "1154"
-    uid: bf4b41e2-ad73-4601-a7ee-d58b65e8abf8
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.metrics_server.image }}
     image: {{ .Values.Component.metrics_server.image }}
@@ -206,7 +133,7 @@ items:
       creator: Rainbond
       name: rbd-mq
     name: rbd-mq
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_mq.args }}
     args:
@@ -251,7 +178,7 @@ items:
       creator: Rainbond
       name: rbd-resource-proxy
     name: rbd-resource-proxy
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_resource_proxy.args }}
     args:
@@ -291,7 +218,7 @@ items:
       creator: Rainbond
       name: rbd-webcli
     name: rbd-webcli
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_webcli.args }}
     args:
@@ -336,7 +263,7 @@ items:
       creator: Rainbond
       name: dashboard-metrics-scraper
     name: dashboard-metrics-scraper
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.dashboard_metrics_scraper.image }}
     image: {{ .Values.Component.dashboard_metrics_scraper.image }}
@@ -360,7 +287,7 @@ items:
       creator: Rainbond
       name: kubernetes-dashboard
     name: kubernetes-dashboard
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.kubernetes_dashboard.image }}
     image: {{ .Values.Component.kubernetes_dashboard.image }}
@@ -384,7 +311,7 @@ items:
       creator: Rainbond
       name: rbd-monitor
     name: rbd-monitor
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_monitor.args }}
     args:
@@ -407,11 +334,7 @@ items:
     volumes:
 {{ toYaml .Values.Component.rbd_monitor.volumes | indent 4 }}
     {{- end }}
-    {{- if .Values.Component.rbd_monitor.image }}
-    image: {{ .Values.Component.rbd_monitor.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-monitor:{{ .Values.Cluster.installVersion }}
-    {{- end }}
+    image: registry.cn-hangzhou.aliyuncs.com/goodrain/rbd-monitor:v2.20.0
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     priorityComponent: false
     replicas: 1
@@ -426,7 +349,7 @@ items:
       creator: Rainbond
       name: rbd-db
     name: rbd-db
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_db.args }}
     args:
@@ -468,7 +391,7 @@ items:
       creator: Rainbond
       name: rbd-chaos      
     name: rbd-chaos
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_chaos.args }}
     args:
@@ -515,7 +438,7 @@ items:
       creator: Rainbond
       name: rbd-worker      
     name: rbd-worker
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_worker.env }}
     env:
@@ -567,7 +490,7 @@ items:
       creator: Rainbond
       name: rbd-eventlog      
     name: rbd-eventlog
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_eventlog.args }}
     args:
@@ -607,7 +530,7 @@ items:
       creator: Rainbond
       name: rbd-api
     name: rbd-api
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:  
     {{- if .Values.Component.rbd_api.args }}
     args:
@@ -652,7 +575,7 @@ items:
       creator: Rainbond
       name: rbd-app-ui
     name: rbd-app-ui
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_app_ui.args }}
     args:
@@ -696,7 +619,7 @@ items:
       name: nfs-provisioner
       priorityComponent: "true"
     name: nfs-provisioner
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.nfs_provisioner.image }}
     image: {{ .Values.Component.nfs_provisioner.image }}
