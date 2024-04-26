@@ -16,7 +16,7 @@ metadata:
     belongTo: rainbond-operator
     creator: Rainbond
   name: rainbondvolumerwo
-  namespace: rbd-system
+  namespace: {{ .Release.Namespace }}
 spec:
   storageClassName: {{ .Values.Cluster.RWO.storageClassName | quote }}
   imageRepository: {{ .Values.Cluster.rainbondImageRepository }}

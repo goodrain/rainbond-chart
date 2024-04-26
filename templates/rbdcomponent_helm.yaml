@@ -19,7 +19,7 @@ items:
       name: rbd-gateway
       priorityComponent: "true"
     name: rbd-gateway
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_gateway.args }}
     args:
@@ -70,7 +70,7 @@ items:
       name: rbd-hub      
       priorityComponent: "true"
     name: rbd-hub
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_hub.args }}
     args:
@@ -121,9 +121,7 @@ items:
       creator: Rainbond
       name: metrics-server
     name: metrics-server
-    namespace: rbd-system
-    resourceVersion: "1154"
-    uid: bf4b41e2-ad73-4601-a7ee-d58b65e8abf8
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.metrics_server.image }}
     image: {{ .Values.Component.metrics_server.image }}
@@ -147,7 +145,7 @@ items:
       creator: Rainbond
       name: rbd-mq
     name: rbd-mq
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_mq.args }}
     args:
@@ -198,7 +196,7 @@ items:
       creator: Rainbond
       name: rbd-resource-proxy
     name: rbd-resource-proxy
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_resource_proxy.args }}
     args:
@@ -244,7 +242,7 @@ items:
       creator: Rainbond
       name: rbd-webcli
     name: rbd-webcli
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_webcli.args }}
     args:
@@ -295,7 +293,7 @@ items:
       creator: Rainbond
       name: dashboard-metrics-scraper
     name: dashboard-metrics-scraper
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.dashboard_metrics_scraper.image }}
     image: {{ .Values.Component.dashboard_metrics_scraper.image }}
@@ -319,7 +317,7 @@ items:
       creator: Rainbond
       name: kubernetes-dashboard
     name: kubernetes-dashboard
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.kubernetes_dashboard.image }}
     image: {{ .Values.Component.kubernetes_dashboard.image }}
@@ -343,7 +341,7 @@ items:
       creator: Rainbond
       name: rbd-monitor
     name: rbd-monitor
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_monitor.args }}
     args:
@@ -387,7 +385,7 @@ items:
       creator: Rainbond
       name: rbd-db
     name: rbd-db
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_db.args }}
     args:
@@ -435,7 +433,7 @@ items:
       creator: Rainbond
       name: rbd-chaos      
     name: rbd-chaos
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_chaos.args }}
     args:
@@ -482,7 +480,7 @@ items:
       creator: Rainbond
       name: rbd-worker      
     name: rbd-worker
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_worker.env }}
     env:
@@ -540,7 +538,7 @@ items:
       creator: Rainbond
       name: rbd-eventlog      
     name: rbd-eventlog
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_eventlog.args }}
     args:
@@ -586,7 +584,7 @@ items:
       creator: Rainbond
       name: rbd-api
     name: rbd-api
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:  
     {{- if .Values.Component.rbd_api.args }}
     args:
@@ -637,7 +635,7 @@ items:
       creator: Rainbond
       name: rbd-app-ui
     name: rbd-app-ui
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.rbd_app_ui.args }}
     args:
@@ -687,7 +685,7 @@ items:
       name: nfs-provisioner
       priorityComponent: "true"
     name: nfs-provisioner
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     {{- if .Values.Component.nfs_provisioner.image }}
     image: {{ .Values.Component.nfs_provisioner.image }}

@@ -13,7 +13,7 @@ items:
   kind: RainbondCluster
   metadata:
     name: rainbondcluster
-    namespace: rbd-system
+    namespace: {{ .Release.Namespace }}
   spec:
     enableHA: {{ .Values.Cluster.enableHA }}
 {{- if .Values.Cluster.etcd.enable }}   
