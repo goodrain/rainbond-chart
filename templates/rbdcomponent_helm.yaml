@@ -36,17 +36,11 @@ items:
     {{- end }}
     {{- if .Values.Component.rbd_gateway.volumeMounts }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_gateway.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_gateway.volumeMounts | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_gateway.volumes }}
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_gateway.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_gateway.volumes | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_gateway.image }}
     image: {{ .Values.Component.rbd_gateway.image }}
@@ -87,17 +81,11 @@ items:
     {{- end }}
     {{- if .Values.Component.rbd_hub.volumeMounts }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_hub.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_hub.volumeMounts | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_hub.volumes }}
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_hub.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_hub.volumes | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_hub.image }}
     image: {{ .Values.Component.rbd_hub.image }}
@@ -162,17 +150,11 @@ items:
     {{- end }}
     {{- if .Values.Component.rbd_mq.volumeMounts }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_mq.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_mq.volumeMounts | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_mq.volumes }}
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_mq.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_mq.volumes | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_mq.image }}
     image: {{ .Values.Component.rbd_mq.image }}
@@ -213,17 +195,11 @@ items:
     {{- end }}
     {{- if .Values.Component.rbd_resource_proxy.volumeMounts }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_resource_proxy.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_resource_proxy.volumeMounts | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_resource_proxy.volumes }}
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_resource_proxy.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_resource_proxy.volumes | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_resource_proxy.image }}
     image: {{ .Values.Component.rbd_resource_proxy.image }}
@@ -259,17 +235,11 @@ items:
     {{- end }}
     {{- if .Values.Component.rbd_webcli.volumeMounts }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_webcli.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_webcli.volumeMounts | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_webcli.volumes }}
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_webcli.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_webcli.volumes | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_webcli.image }}
     image: {{ .Values.Component.rbd_webcli.image }}
@@ -358,17 +328,11 @@ items:
     {{- end }}
     {{- if .Values.Component.rbd_monitor.volumeMounts }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_monitor.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_monitor.volumeMounts | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_monitor.volumes }}
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_monitor.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_monitor.volumes | indent 4 }}
     {{- end }}
     image: registry.cn-hangzhou.aliyuncs.com/goodrain/rbd-monitor:v2.20.0
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
@@ -402,17 +366,11 @@ items:
     {{- end }}
     {{- if .Values.Component.rbd_db.volumeMounts }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_db.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_db.volumeMounts | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_db.volumes }}
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_db.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_db.volumes | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_db.image }}
     image: {{ .Values.Component.rbd_db.image }}
@@ -504,17 +462,11 @@ items:
     {{- end }}
     {{- if .Values.Component.rbd_worker.volumeMounts }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_worker.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_worker.volumeMounts | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_worker.volumes }}
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_worker.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_worker.volumes | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_worker.image }}
     image: {{ .Values.Component.rbd_worker.image }}
@@ -555,17 +507,11 @@ items:
     {{- end }}
     {{- if .Values.Component.rbd_eventlog.volumeMounts }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_eventlog.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_eventlog.volumeMounts | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_eventlog.volumes }}
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_eventlog.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_eventlog.volumes | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_eventlog.image }}
     image: {{ .Values.Component.rbd_eventlog.image }}
@@ -601,17 +547,11 @@ items:
     {{- end }}
     {{- if .Values.Component.rbd_api.volumeMounts }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_api.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_api.volumeMounts | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_api.volumes }}
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_api.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_api.volumes | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_api.image }}
     image: {{ .Values.Component.rbd_api.image }}
@@ -654,17 +594,11 @@ items:
     {{- end }}
     {{- if .Values.Component.rbd_app_ui.volumeMounts }}
     volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_app_ui.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_app_ui.volumeMounts | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_app_ui.volumes }}
     volumes:
-    {{- range $key,$value := .Values.Component.rbd_app_ui.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}  
+{{ toYaml .Values.Component.rbd_app_ui.volumes | indent 4 }}
     {{- end }}
     {{- if .Values.Component.rbd_app_ui.image }}
     image: {{ .Values.Component.rbd_app_ui.image }}
