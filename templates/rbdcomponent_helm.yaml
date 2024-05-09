@@ -48,11 +48,7 @@ items:
 {{ $value | toYaml |indent 6}}
     {{- end }}  
     {{- end }}
-    {{- if .Values.Component.rbd_gateway.image }}
-    image: {{ .Values.Component.rbd_gateway.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-gateway:{{ .Values.Cluster.installVersion }}
-    {{- end }}
+    image: {{ .Values.Component.rbd_gateway.apisix-image }},{{ .Values.Component.rbd_gateway.apisix-ingress-image }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     priorityComponent: true
     {{- if .Values.Cluster.enableHA  }} 
