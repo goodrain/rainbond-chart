@@ -148,8 +148,8 @@ Component:
   # ref: https://www.rainbond.com/docs/installation/install-with-helm/vaules-config#%E9%85%8D%E7%BD%AE-rbd-gateway-%E5%8F%82%E6%95%B0
   # ref: ref: https://www.rainbond.com/docs/ops-guide/management/change-ports
   rbd_gateway:
-    apisix-image: "registry.ap-southeast-1.aliyuncs.com/goodrain-ee/apisix:3.8.0-debian"
     apisix-ingress-image: "registry.ap-southeast-1.aliyuncs.com/goodrain-ee/apisix-ingress-controller:1.8.0"
+    apisix-image: "registry.ap-southeast-1.aliyuncs.com/goodrain-ee/apisix:3.8.0-debian"
     args:
     # - --service-http-port 80
     # - --service-https-port 443
