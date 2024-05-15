@@ -550,3 +550,8 @@ items:
     priorityComponent: false
     replicas: {{ .Values.Cluster.replicas }}
 {{- end }}
+
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
