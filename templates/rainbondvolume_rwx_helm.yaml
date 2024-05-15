@@ -16,7 +16,7 @@ metadata:
     belongTo: rainbond-operator
     creator: Rainbond
   name: rainbondvolumerwx
-  namespace: rbd-system
+  namespace: {{ .Release.Namespace }}
 spec:
 {{- if .Values.Cluster.RWX.enable  }}
   {{- if eq .Values.Cluster.RWX.type "aliyun" }}
