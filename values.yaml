@@ -20,14 +20,14 @@ rbac:
 ## Service account name and whether to create it
 serviceAccount:
   create: true
-  name: yx-operator
+  name: appstore-operator
 
 # Use K3s Containerd
 useK3sContainerd: false
 
 # rainbondOperator
 operator:
-  name: yx-operator
+  name: appstore-operator
   # operator environment variable, ref: https://www.rainbond.com/docs/ops-guide/management/change-ports
   # env:
   # - name: API_PORT
@@ -44,9 +44,6 @@ operator:
 # Rainbondcluster install Configuration
 #############################################
 Cluster:
-
-  # Enable the HA installation
-  enableHA: false
   
   # Enable cluster environment detectio
   enableEnvCheck: false
@@ -58,15 +55,6 @@ Cluster:
     namespace: rainbond
     password: admin
     username: admin
-
-  # external ETCD, ref: https://www.rainbond.com/docs/installation/ha-deployment/overview/#%E5%85%AB%E5%A4%8D%E7%94%A8-kubernetes-etcd
-  etcd:
-    enable: false
-    endpoints: 
-    - 192.168.0.1:2379 
-    - 192.168.0.2:2379
-    - 192.168.0.3:2379
-    secretName: "rbd-etcd-secret"
 
   # External storage, fill storageClassName, ref: https://www.rainbond.com/docs/installation/install-with-helm/vaules-config#%E9%85%8D%E7%BD%AE%E5%A4%96%E9%83%A8%E5%AD%98%E5%82%A8
   RWX:
@@ -127,7 +115,7 @@ Cluster:
   imagePullPolicy: IfNotPresent
 
   # Number of component copies, ref: https://www.rainbond.com/docs/installation/install-with-helm/vaules-config/#%E9%85%8D%E7%BD%AE%E9%9B%86%E7%BE%A4%E5%89%AF%E6%9C%AC
-  replicas: 2
+  replicas: 1
  
 
 
@@ -153,10 +141,6 @@ Component:
     args:
     # - --service-http-port 80
     # - --service-https-port 443
-  
-  # rbd-node component configuration
-  rbd_node:
-    args:
 
   # rbd-hub component configuration
   rbd_hub:
@@ -198,27 +182,9 @@ Component:
   rbd_app_ui:
     enable: true
     args:
-
-  # nfs-provisioner component configuration
-  nfs_provisioner:
-    image:
-
-  # rbd-etcd component configuration
-  rbd_etcd:
-    image:
-
-  # metrics-server component configuration
-  metrics_server:
-    image:
-
-  # dashboard-metrics-scraper component configuration
-  dashboard_metrics_scraper:
-    image:
-
-
-  # kubernetes-dashboard component configuration
-  kubernetes_dashboard:
-    image:
+  
+  region:
+    enable: true
 
 ## Enable nfs chart, default is false
 nfs-client-provisioner:

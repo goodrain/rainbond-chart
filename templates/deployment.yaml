@@ -51,6 +51,10 @@ spec:
             - --leader-elect
             - --zap-log-level={{ .Values.operator.logLevel }}
           env:
+          - name: SERVICE_ACCOUNT_NAME
+            value: {{ .Values.serviceAccount.name }}
+          - name: RBD_NAMESPACE
+            value: {{ .Release.Namespace }}
           {{- range .Values.operator.env }}
           - name: {{ .name }}
             value: "{{ .value }}"
