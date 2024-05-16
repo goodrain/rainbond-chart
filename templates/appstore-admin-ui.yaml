@@ -1,0 +1,39 @@
+{{- if .Values.Component.rbd_app_ui.enable }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: appstore-admin-ui
+  name: appstore-admin-ui
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: appstore-admin-ui
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: appstore-admin-ui
+      name: appstore-admin-ui
+      namespace: {{ .Release.Namespace }}
+    spec:
+      containers:
+      - image: {{ .Values.Cluster.rainbondImageRepository }}/appstore-admin-ui:{{ .Values.Cluster.installVersion }}
+        imagePullPolicy: IfNotPresent
+        name: appstore-admin-ui
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+{{- end }}

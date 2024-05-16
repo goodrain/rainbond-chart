@@ -6,7 +6,7 @@
 # the terms and conditions of version 3 of the GNU General Public License.
 # 
 #############################################
-
+{{- if .Values.Component.region_all.enable }}
 {{- if .Values.rbac.create }}
 apiVersion: rbac.authorization.k8s.io/{{ required "A valid .Values.rbac.apiVersion entry required!" .Values.rbac.apiVersion }}
 kind: ClusterRoleBinding
@@ -26,3 +26,4 @@ subjects:
     name: {{ .Values.serviceAccount.name }}
     namespace: {{ .Release.Namespace }}
 {{- end}}
+{{- end }}

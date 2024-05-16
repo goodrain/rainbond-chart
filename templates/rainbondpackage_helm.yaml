@@ -6,7 +6,7 @@
 # the terms and conditions of version 3 of the GNU General Public License.
 # 
 #############################################
-
+{{- if .Values.Component.region_all.enable }}
 apiVersion: rainbond.io/v1alpha1
 kind: RainbondPackage
 metadata:

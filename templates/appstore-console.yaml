@@ -1,0 +1,74 @@
+{{- if .Values.Component.rbd_app_ui.enable }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: appstore-console
+  name: appstore-console
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: appstore-console
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: appstore-console
+      name: appstore-console
+    spec:
+      containers:
+      - env:
+        - name: DB_TYPE
+          value: mysql
+        - name: MYSQL_HOST
+          value: {{ .Values.Cluster.uiDatabase.host }}
+        - name: MYSQL_PORT
+          value: {{ .Values.Cluster.uiDatabase.port }}
+        - name: MYSQL_USER
+          value: {{ .Values.Cluster.uiDatabase.username }}
+        - name: MYSQL_PASS
+          value: {{ .Values.Cluster.uiDatabase.password }}
+        - name: MYSQL_DB
+          value: {{ .Values.Cluster.uiDatabase.name }}
+        image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond:{{ .Values.Cluster.installVersion }}-allinone
+        imagePullPolicy: IfNotPresent
+        name: appstore-console
+        readinessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          tcpSocket:
+            port: 7070
+          timeoutSeconds: 5
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /app/data
+          name: app
+          subPath: data
+        - mountPath: /app/region/ssl
+          name: ssl
+        - mountPath: /app/logs/
+          name: app
+          subPath: logs
+        - mountPath: /app/lock
+          name: app
+          subPath: lock
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 0
+      volumes:
+      - name: app
+        emptyDir: {}
+{{- end }}

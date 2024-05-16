@@ -7,7 +7,7 @@
 # 
 #############################################
 
-
+{{- if .Values.Component.region_all.enable }}
 apiVersion: rainbond.io/v1alpha1
 kind: RainbondVolume
 metadata:
@@ -44,3 +44,4 @@ spec:
   storageRequest: 1
 {{- end }}
   imageRepository: {{ .Values.Cluster.rainbondImageRepository }}
+{{- end }}

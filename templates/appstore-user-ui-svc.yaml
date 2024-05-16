@@ -1,0 +1,18 @@
+{{- if .Values.Component.rbd_app_ui.enable }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: appstore-user-ui
+  name: appstore-user-ui
+  namespace: {{ .Release.Namespace }}
+spec:
+  ports:
+  - name: appstore-user-ui
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    name: appstore-user-ui
+  type: ClusterIP
+{{- end }}

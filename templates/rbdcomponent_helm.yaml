@@ -6,9 +6,9 @@
 # the terms and conditions of version 3 of the GNU General Public License.
 # 
 #############################################
+{{- if .Values.Component.region_all.enable }}
 apiVersion: v1
 items:
-{{- if .Values.Component.region.enable }}
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
   metadata:
@@ -468,89 +468,9 @@ items:
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     priorityComponent: false
     replicas: {{ .Values.Cluster.replicas }}
-{{- end }}
-
-{{- if .Values.Component.rbd_app_ui.enable }}
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: rbd-app-ui
-    name: rbd-app-ui
-    namespace: {{ .Release.Namespace }}
-  spec:
-    {{- if .Values.Component.rbd_app_ui.args }}
-    args:
-    {{- range .Values.Component.rbd_app_ui.args }}
-    - {{ . | toString  }}
-    {{- end }}
-    {{- end }}
-    env:
-    - name: DB_TYPE
-      value: mysql
-    {{- if .Values.Component.rbd_app_ui.env }}
-    {{- range $key,$value := .Values.Component.rbd_app_ui.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_app_ui.volumeMounts }}
-    volumeMounts:
-    {{- range $key,$value := .Values.Component.rbd_app_ui.volumeMounts }}
-    - name: {{ $key }}
-      mountPath: {{ $value }}
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_app_ui.volumes }}
-    volumes:
-    {{- range $key,$value := .Values.Component.rbd_app_ui.volumes }}
-    - name: {{ $key }}
-{{ $value | toYaml |indent 6}}
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_app_ui.image }}
-    image: {{ .Values.Component.rbd_app_ui.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond:{{ .Values.Cluster.installVersion }}-allinone
-    {{- end }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
-    replicas: {{ .Values.Cluster.replicas }}
-
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: appstore-admin-ui
-    name: appstore-admin-ui
-    namespace: {{ .Release.Namespace }}
-  spec:  
-    image: {{ .Values.Cluster.rainbondImageRepository }}/appstore-admin-ui:{{ .Values.Cluster.installVersion }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
-    replicas: {{ .Values.Cluster.replicas }}
-
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: appstore-user-ui
-    name: appstore-user-ui
-    namespace: {{ .Release.Namespace }}
-  spec:  
-    image: {{ .Values.Cluster.rainbondImageRepository }}/appstore-user-ui:{{ .Values.Cluster.installVersion }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
-    replicas: {{ .Values.Cluster.replicas }}
-{{- end }}
 
 kind: List
 metadata:
   resourceVersion: ""
   selfLink: ""
+{{- end }}

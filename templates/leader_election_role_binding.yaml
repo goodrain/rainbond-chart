@@ -6,7 +6,7 @@
 # the terms and conditions of version 3 of the GNU General Public License.
 # 
 #############################################
-
+{{- if .Values.Component.region_all.enable }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
@@ -19,3 +19,4 @@ subjects:
 - kind: ServiceAccount
   name: default
   namespace: system
+{{- end }}

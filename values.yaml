@@ -124,6 +124,9 @@ Cluster:
 ############################################
 Component:
 
+  region_all:
+    enable: true
+
   # rbd-api component configuration
   # ref: https://www.rainbond.com/docs/installation/install-with-helm/vaules-config#%E9%85%8D%E7%BD%AE-rbd-api-%E5%8F%82%E6%95%B0
   # ref: ref: https://www.rainbond.com/docs/ops-guide/management/change-ports
@@ -182,9 +185,6 @@ Component:
   rbd_app_ui:
     enable: true
     args:
-  
-  region:
-    enable: true
 
 ## Enable nfs chart, default is false
 nfs-client-provisioner:
