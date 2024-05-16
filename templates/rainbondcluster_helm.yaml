@@ -6,7 +6,7 @@
 # the terms and conditions of version 3 of the GNU General Public License.
 # 
 #############################################
-
+{{- if .Values.Component.region_all.enable }}
 apiVersion: v1
 items:
 - apiVersion: rainbond.io/v1alpha1
@@ -64,14 +64,6 @@ items:
       port: {{ .Values.Cluster.regionDatabase.port }}
       username: {{ .Values.Cluster.regionDatabase.username | quote }}
 {{- end }}
-{{- if .Values.Cluster.uiDatabase.enable }}
-    uiDatabase:
-      host: {{ required ".Values.Cluster.uiDatabase.host cannot be empty!" .Values.Cluster.uiDatabase.host }}
-      name: {{ .Values.Cluster.uiDatabase.name | quote }}
-      password: {{ .Values.Cluster.uiDatabase.password | quote }}
-      port: {{ .Values.Cluster.uiDatabase.port }}
-      username: {{ .Values.Cluster.uiDatabase.username | quote }}
-{{- end }}
     suffixHTTPHost: ""
     installMode: WithoutPackage
     installVersion: {{ .Values.Cluster.installVersion }}     
@@ -91,3 +83,4 @@ kind: List
 metadata:
   resourceVersion: ""
   selfLink: ""
+{{- end }}

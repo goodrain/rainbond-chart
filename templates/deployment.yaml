@@ -6,7 +6,7 @@
 # the terms and conditions of version 3 of the GNU General Public License.
 # 
 #############################################
-
+{{- if .Values.Component.region_all.enable }}
 {{- if .Values.operator }}
 apiVersion: apps/v1
 kind: Deployment
@@ -95,4 +95,5 @@ spec:
               name: rundir
             {{- end }}
       terminationGracePeriodSeconds: 10
+{{- end }}
 {{- end }}

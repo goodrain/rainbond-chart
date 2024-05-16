@@ -1,0 +1,18 @@
+{{- if .Values.Component.rbd_app_ui.enable }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: appstore-console
+  name: appstore-console
+  namespace: {{ .Release.Namespace }}
+spec:
+  ports:
+  - name: http
+    port: 7070
+    protocol: TCP
+    targetPort: 7070
+  selector:
+    name: appstore-console
+  type: ClusterIP
+{{- end }}
