@@ -16,3 +16,4 @@ spec:
   imageHubPass: ""
   imageHubUser: ""
   pkgPath: /opt/rainbond/pkg/tgz/rainbond.tgz
+{{- end }}
