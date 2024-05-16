@@ -28,15 +28,15 @@ spec:
         - name: DB_TYPE
           value: mysql
         - name: MYSQL_HOST
-          value: {{ .Values.Cluster.uiDatabase.host }}
+          value: "{{ .Values.Cluster.uiDatabase.host }}"
         - name: MYSQL_PORT
-          value: {{ .Values.Cluster.uiDatabase.port }}
+          value: "{{ .Values.Cluster.uiDatabase.port }}"
         - name: MYSQL_USER
-          value: {{ .Values.Cluster.uiDatabase.username }}
+          value: "{{ .Values.Cluster.uiDatabase.username }}"
         - name: MYSQL_PASS
-          value: {{ .Values.Cluster.uiDatabase.password }}
+          value: "{{ .Values.Cluster.uiDatabase.password }}"
         - name: MYSQL_DB
-          value: {{ .Values.Cluster.uiDatabase.name }}
+          value: "{{ .Values.Cluster.uiDatabase.name }}"
         image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond:{{ .Values.Cluster.installVersion }}-allinone
         imagePullPolicy: IfNotPresent
         name: appstore-console
@@ -55,8 +55,6 @@ spec:
         - mountPath: /app/data
           name: app
           subPath: data
-        - mountPath: /app/region/ssl
-          name: ssl
         - mountPath: /app/logs/
           name: app
           subPath: logs
