@@ -1,0 +1,15 @@
+{{- if .Values.Component.rbd_app_ui.enable }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: appstore-admin-ui
+  namespace: {{ .Release.Namespace }}
+data:
+  config.js: |
+    window.BASE_URL_INFO={
+      REACT_BASE_URL: '{{ .Values.IAM.admin_base_url }}',
+      YANXIANG_OPEN_API_URL: '{{ .Values.IAM.yanxiang_open_api_url }}',
+      YANXIANG_INST_URL: '{{ .Values.IAM.yanxiang_inst_url }}',
+      REACT_ENV: 'admin'
+    }
+{{- end }}

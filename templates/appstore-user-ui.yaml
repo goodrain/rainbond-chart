@@ -31,9 +31,18 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /app/www/static/config.js
+          subPath: config.js
+          name: config
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 0644
+          name: appstore-user-ui
+        name: config
 {{- end }}
