@@ -41,6 +41,19 @@ operator:
   logLevel: 4
 
 #############################################
+# IAM Configuration
+#############################################
+IAM:
+  # 管理端鉴权网关
+  admin_base_url: https://91iam-mgmt-gateway.9n1m.com/appstore-gys-admin
+  # 用户端鉴权网关
+  user_base_url: https://91iam-gateway.9n1m.com/appstore-gys-user
+  # 管理端 OPEN API
+  yanxiang_open_api_url: https://91iam-mgmt.9n1m.com
+  # 用户端 OPEN API
+  yanxiang_inst_url: https://91iam-inst.9n1m.com
+
+#############################################
 # Rainbondcluster install Configuration
 #############################################
 Cluster:
