@@ -7,9 +7,17 @@ metadata:
 data:
   config.js: |
     window.BASE_URL_INFO={
-      REACT_BASE_URL: '{{ .Values.IAM.admin_base_url }}',
-      YANXIANG_OPEN_API_URL: '{{ .Values.IAM.yanxiang_open_api_url }}',
-      YANXIANG_INST_URL: '{{ .Values.IAM.yanxiang_inst_url }}',
-      REACT_ENV: 'admin'
+      REACT_BASE_URL: '{{ .Values.IAM.REACT_BASE_URL_ADMIN }}',
+      YANXIANG_MGMT_AUTH_URL: '{{ .Values.IAM.YANXIANG_MGMT_AUTH_URL }}',
+      YANXIANG_INST_AUTH_URL: '{{ .Values.IAM.YANXIANG_INST_AUTH_URL }}',
+      YANXIANG_MGMT_HOME_URL: '{{ .Values.IAM.YANXIANG_MGMT_HOME_URL }}',
+      YANXIANG_INST_HOME_URL: '{{ .Values.IAM.YANXIANG_INST_HOME_URL }}',
+      REACT_ENV: 'admin',
+      MARKET_INFO: {
+        MARKET_OPEN: '{{ .Values.IAM.MARKET_INFO.MARKET_OPEN }}',
+        MARKET_DETAIL: '{{ .Values.IAM.MARKET_INFO.MARKET_DETAIL }}',
+        MARKET_ONLINE: '{{ .Values.IAM.MARKET_INFO.MARKET_ONLINE }}',
+      },
+      APP_CODE: '{{ .Values.IAM.APP_CODE_ADMIN }}',
     }
 {{- end }}
