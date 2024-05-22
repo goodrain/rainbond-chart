@@ -44,14 +44,18 @@ operator:
 # IAM Configuration
 #############################################
 IAM:
-  # 管理端鉴权网关
-  admin_base_url: https://91iam-mgmt-gateway.9n1m.com/appstore-gys-admin
-  # 用户端鉴权网关
-  user_base_url: https://91iam-gateway.9n1m.com/appstore-gys-user
-  # 管理端 OPEN API
-  yanxiang_open_api_url: https://91iam-mgmt.9n1m.com
-  # 用户端 OPEN API
-  yanxiang_inst_url: https://91iam-inst.9n1m.com
+  REACT_BASE_URL_ADMIN: https://91iam-mgmt-gateway.9n1m.com/appstore-gys-admin
+  REACT_BASE_URL_USER: https://91iam-gateway.9n1m.com/appstore-gys-user
+  YANXIANG_MGMT_AUTH_URL: https://91iam-mgmt.9n1m.com
+  YANXIANG_INST_AUTH_URL: https://91iam-inst.9n1m.com
+  YANXIANG_MGMT_HOME_URL: https://91iam-mgmt.9n1m.com/console
+  YANXIANG_INST_HOME_URL: https://91iam-inst.9n1m.com/account
+  MARKET_INFO:
+    MARKET_OPEN:
+    MARKET_DETAIL:
+    MARKET_ONLINE:
+  APP_CODE_ADMIN: appstore-gyx-admin
+  APP_CODE_USER: appstore-gyx-user
 
 #############################################
 # Rainbondcluster install Configuration
