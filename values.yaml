@@ -201,7 +201,13 @@ Component:
   # rbd-app-ui component configuration
   rbd_app_ui:
     enable: true
-    args:
+    env:
+    - name: TZSTORE_HOST
+      value: http://118.31.115.79:31000/api
+    - name: YXREGION_HOST
+      value: http://manageswagger-iot.9n1m.com/api
+    - name: IAM_HOST
+      value: https://iam-gw-test.9n1m.com/iam/api
 
 ## Enable nfs chart, default is false
 nfs-client-provisioner:
