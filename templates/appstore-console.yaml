@@ -37,6 +37,7 @@ spec:
           value: "{{ .Values.Cluster.uiDatabase.password }}"
         - name: MYSQL_DB
           value: "{{ .Values.Cluster.uiDatabase.name }}"
+{{ toYaml .Values.Component.rbd_app_ui.env | indent 8 }}
         image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond:{{ .Values.Cluster.installVersion }}-allinone
         imagePullPolicy: IfNotPresent
         name: appstore-console
