@@ -20,14 +20,14 @@ rbac:
 ## Service account name and whether to create it
 serviceAccount:
   create: true
-  name: nb-operator
+  name: rainbond-operator
 
 # Use K3s Containerd
 useK3sContainerd: false
 
 # rainbondOperator
 operator:
-  name: nb-operator
+  name: rainbond-operator
   # operator environment variable, ref: https://www.rainbond.com/docs/ops-guide/management/change-ports
   # env:
   # - name: API_PORT
@@ -166,10 +166,7 @@ Component:
   # rbd-resource-proxy component configuration  
   rbd_resource_proxy:
     args:
-  
-  # rbd-webcli component configuration  
-  rbd_webcli:
-    args:
+
 
   # rbd-monitor component configuration    
   rbd_monitor:
