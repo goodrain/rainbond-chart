@@ -208,52 +208,7 @@ items:
     {{- end }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     priorityComponent: false
-    replicas: 1 
-      
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: rbd-webcli
-    name: rbd-webcli
-    namespace: {{ .Release.Namespace }}
-  spec:
-    {{- if .Values.Component.rbd_webcli.args }}
-    args:
-    {{- range .Values.Component.rbd_webcli.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_webcli.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_webcli.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_webcli.volumeMounts }}
-    volumeMounts:
-{{ toYaml .Values.Component.rbd_webcli.volumeMounts | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_webcli.volumes }}
-    volumes:
-{{ toYaml .Values.Component.rbd_webcli.volumes | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_webcli.image }}
-    image: {{ .Values.Component.rbd_webcli.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-webcli:{{ .Values.Cluster.installVersion }}
-    {{- end }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
-    {{- if .Values.Cluster.enableHA  }} 
-    replicas: {{ .Values.Cluster.replicas }}
-    {{ else }}
     replicas: 1
-    {{- end }}
-
 
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
