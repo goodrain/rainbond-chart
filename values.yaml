@@ -104,6 +104,12 @@ Cluster:
     port: 3306
     username: admin 
 
+  # Rainbond ElasticSearch
+  elasticsearch:
+    host: "http://192.168.0.1:9200"
+    username: "elastic"
+    password: "elastic"
+
   # External gateway IP address
   # gatewayIngressIPs: 192.168.0.1
 

@@ -25,6 +25,12 @@ spec:
     spec:
       containers:
       - env:
+        - name: ES_URL
+          value: "{{ .Values.Cluster.elasticsearch.host }}"
+        - name: ES_USERNAME
+          value: "{{ .Values.Cluster.elasticsearch.username }}"
+        - name: ES_PASSWORD
+          value: "{{ .Values.Cluster.elasticsearch.password }}"
         - name: DB_TYPE
           value: mysql
         - name: MYSQL_HOST
