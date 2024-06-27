@@ -34,8 +34,8 @@ spec:
         app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
         app.kubernetes.io/instance: {{ .Release.Name | quote }}
     spec:
-      restartPolicy: Never
       hostNetwork: true
+      restartPolicy: Never
       containers:
       - name: gateway-checker
         image: "registry.cn-hangzhou.aliyuncs.com/goodrain/helm-env-checker:latest"
