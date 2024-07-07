@@ -292,11 +292,12 @@ items:
     name: rbd-chaos
     namespace: {{ .Release.Namespace }}
   spec:
-    {{- if .Values.Component.rbd_chaos.args }}
     args:
+    - --es-url={{ .Values.Cluster.elasticsearch.region.host }}
+    - --es-username={{ .Values.Cluster.elasticsearch.region.username }}
+    - --es-password={{ .Values.Cluster.elasticsearch.region.password }}
     {{- range .Values.Component.rbd_chaos.args }}
     - {{ . | toString  }}
-    {{- end }} 
     {{- end }}
     {{- if .Values.Component.rbd_chaos.env }}
     env:
@@ -341,12 +342,13 @@ items:
       value: "{{ $value }}"
     {{- end }}
     {{- end }}
-    {{- if .Values.Component.rbd_worker.args }}
     args:
+    - --es-url={{ .Values.Cluster.elasticsearch.region.host }}
+    - --es-username={{ .Values.Cluster.elasticsearch.region.username }}
+    - --es-password={{ .Values.Cluster.elasticsearch.region.password }}
     {{- range .Values.Component.rbd_worker.args }}
     - {{ . | toString  }}
     {{- end }} 
-    {{- end }}
     {{- if .Values.Component.rbd_worker.env }}
     env:
     {{- range $key,$value := .Values.Component.rbd_worker.env }}
@@ -387,11 +389,12 @@ items:
     name: rbd-eventlog
     namespace: {{ .Release.Namespace }}
   spec:
-    {{- if .Values.Component.rbd_eventlog.args }}
     args:
+    - --es-url={{ .Values.Cluster.elasticsearch.region.host }}
+    - --es-username={{ .Values.Cluster.elasticsearch.region.username }}
+    - --es-password={{ .Values.Cluster.elasticsearch.region.password }}
     {{- range .Values.Component.rbd_eventlog.args }}
     - {{ . | toString  }}
-    {{- end }} 
     {{- end }}
     {{- if .Values.Component.rbd_eventlog.env }}
     env:
@@ -433,11 +436,12 @@ items:
     name: rbd-api
     namespace: {{ .Release.Namespace }}
   spec:  
-    {{- if .Values.Component.rbd_api.args }}
     args:
+    - --es-url={{ .Values.Cluster.elasticsearch.region.host }}
+    - --es-username={{ .Values.Cluster.elasticsearch.region.username }}
+    - --es-password={{ .Values.Cluster.elasticsearch.region.password }}
     {{- range .Values.Component.rbd_api.args }}
     - {{ . | toString  }}
-    {{- end }} 
     {{- end }}
     {{- if .Values.Component.rbd_api.env }}
     env:
