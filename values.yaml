@@ -106,9 +106,14 @@ Cluster:
 
   # Rainbond ElasticSearch
   elasticsearch:
-    host: "http://192.168.0.1:9200"
-    username: "elastic"
-    password: "elastic"
+    console:
+      host: http://192.168.0.1:9200
+      username: elastic
+      password: elastic
+    region:
+      host: http://192.168.0.1:9200
+      username: elastic
+      password: elastic
 
   # External gateway IP address
   # gatewayIngressIPs: 192.168.0.1
