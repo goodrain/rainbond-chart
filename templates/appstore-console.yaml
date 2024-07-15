@@ -73,6 +73,10 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 0
+      {{- if .Values.Cluster.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.Cluster.imagePullSecrets }}
+      {{- end }}
       volumes:
       - name: app
         emptyDir: {}

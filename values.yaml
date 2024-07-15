@@ -61,7 +61,8 @@ IAM:
 # Rainbondcluster install Configuration
 #############################################
 Cluster:
-  
+  imagePullSecrets: ""
+
   # Enable cluster environment detectio
   enableEnvCheck: false
 
