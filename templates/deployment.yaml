@@ -63,6 +63,10 @@ spec:
           - name: CHECK_PORT_OCCUPIED
             value: "{{ .Values.Cluster.enableEnvCheck }}"
           {{- end }}
+          {{- if .Values.Cluster.imagePullSecrets }}
+          - name: CUSTOM_IMAGE_PULL_SECRETS
+            value: {{ .Values.Cluster.imagePullSecrets }}
+          {{- end }}
           image: {{ .Values.operator.image.name }}:{{ .Values.operator.image.tag }}
           imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
           name: {{ .Values.operator.name }}
@@ -95,5 +99,9 @@ spec:
               name: rundir
             {{- end }}
       terminationGracePeriodSeconds: 10
+      {{- if .Values.Cluster.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.Cluster.imagePullSecrets }}
+      {{- end }}
 {{- end }}
 {{- end }}

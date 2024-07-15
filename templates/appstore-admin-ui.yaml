@@ -40,6 +40,10 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      {{- if .Values.Cluster.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.Cluster.imagePullSecrets }}
+      {{- end }}
       volumes:
       - configMap:
           defaultMode: 0644
