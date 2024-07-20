@@ -79,5 +79,6 @@ spec:
       {{- end }}
       volumes:
       - name: app
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: appstore-console-pvc
 {{- end }}
