@@ -351,6 +351,8 @@ items:
     {{- end }} 
     {{- if .Values.Component.rbd_worker.env }}
     env:
+    - key: CLUSTER_STATUS
+      value: {{ .Values.Cluster.role }}
     {{- range $key,$value := .Values.Component.rbd_worker.env }}
     - name: {{ $key }}
       value: "{{ $value }}"
