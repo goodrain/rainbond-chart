@@ -58,6 +58,23 @@ IAM:
   APP_CODE_USER: appstore-gyx-user
 
 #############################################
+# Ingress Configuration
+#############################################
+Ingress:
+  console:
+    host: console-gw-test.9n1m.com
+    tls:
+      secretName: 9n1m-com
+  admin:
+    host: admin-gw-test.9n1m.com
+    tls:
+      secretName: 9n1m-com
+  user:
+    host: user-gw-test.9n1m.com
+    tls:
+      secretName: 9n1m-com
+
+#############################################
 # Rainbondcluster install Configuration
 #############################################
 Cluster:
