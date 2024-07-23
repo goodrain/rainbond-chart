@@ -1,0 +1,25 @@
+{{- if .Values.Component.rbd_app_ui.enable }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: appstore-console
+  name: appstore-console
+  namespace: {{ .Release.Namespace }}
+spec:
+  rules:
+  - host: {{ .Values.Ingress.console.host }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: appstore-console
+            port:
+              number: 7070
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - {{ .Values.Ingress.console.host }}
+    secretName: {{ .Values.Ingress.console.tls.secretName }}
+{{- end }}

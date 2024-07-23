@@ -1,0 +1,25 @@
+{{- if .Values.Component.rbd_app_ui.enable }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: appstore-admin-ui
+  name: appstore-admin-ui
+  namespace: {{ .Release.Namespace }}
+spec:
+  rules:
+  - host: {{ .Values.Ingress.admin.host }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: appstore-admin-ui
+            port:
+              number: 80
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - {{ .Values.Ingress.admin.host }}
+    secretName: {{ .Values.Ingress.admin.tls.secretName }}
+{{- end }}
