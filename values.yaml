@@ -239,6 +239,16 @@ Component:
       value: http://manageswagger-iot.9n1m.com/api
     - name: IAM_HOST
       value: https://iam-gw-test.9n1m.com/iam/api
+    - name: ADMIN_USER_HOST
+      value: https://iam-gw-mg-test.9n1m.com/iam/api
+    - name: IAM_CHANNEL_CODE
+      value: APPSTORE
+    - name: IAM_TERMINAL_TYPE
+      value: PC_WEB
+    - name: BJOERN_PROCESSES
+      value: "20"
+    - name: ALERT_URL
+      value: ""
     storageClassName: ""
 
 ## Enable nfs chart, default is false
