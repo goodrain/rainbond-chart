@@ -16,14 +16,6 @@ items:
     namespace: {{ .Release.Namespace }}
   spec:
     enableHA: {{ .Values.Cluster.enableHA }}
-{{- if .Values.Cluster.etcd.enable }}   
-    etcdConfig:
-      endpoints: 
-      {{- range .Values.Cluster.etcd.endpoints }}
-      - {{ . | toString  }}
-      {{- end }}    
-      secretName: {{ .Values.Cluster.etcd.secretName | quote }}
-{{- end }}
     configCompleted: true
 {{- if .Values.Cluster.gatewayIngressIPs }}
     gatewayIngressIPs:
