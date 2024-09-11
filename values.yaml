@@ -59,15 +59,6 @@ Cluster:
     password: admin
     username: admin
 
-  # external ETCD, ref: https://www.rainbond.com/docs/installation/ha-deployment/overview/#%E5%85%AB%E5%A4%8D%E7%94%A8-kubernetes-etcd
-  etcd:
-    enable: false
-    endpoints: 
-    - 192.168.0.1:2379 
-    - 192.168.0.2:2379
-    - 192.168.0.3:2379
-    secretName: "rbd-etcd-secret"
-
   # External storage, fill storageClassName, ref: https://www.rainbond.com/docs/installation/install-with-helm/vaules-config#%E9%85%8D%E7%BD%AE%E5%A4%96%E9%83%A8%E5%AD%98%E5%82%A8
   RWX:
     enable: false
@@ -151,10 +142,6 @@ Component:
     # - --service-http-port 80
     # - --service-https-port 443
   
-  # rbd-node component configuration
-  rbd_node:
-    args:
-
   # rbd-hub component configuration
   rbd_hub:
     args:
@@ -166,7 +153,6 @@ Component:
   # rbd-resource-proxy component configuration  
   rbd_resource_proxy:
     args:
-
 
   # rbd-monitor component configuration    
   rbd_monitor:
@@ -195,23 +181,6 @@ Component:
 
   # nfs-provisioner component configuration
   nfs_provisioner:
-    image:
-
-  # rbd-etcd component configuration
-  rbd_etcd:
-    image:
-
-  # metrics-server component configuration
-  metrics_server:
-    image:
-
-  # dashboard-metrics-scraper component configuration
-  dashboard_metrics_scraper:
-    image:
-
-
-  # kubernetes-dashboard component configuration
-  kubernetes_dashboard:
     image:
 
 ## Enable nfs chart, default is false

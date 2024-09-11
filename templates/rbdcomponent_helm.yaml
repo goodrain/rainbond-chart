@@ -100,31 +100,6 @@ items:
     replicas: 1
     {{- end }}
 
-
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: metrics-server
-    name: metrics-server
-    namespace: {{ .Release.Namespace }}
-  spec:
-    {{- if .Values.Component.metrics_server.image }}
-    image: {{ .Values.Component.metrics_server.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/metrics-server:v0.4.1
-    {{- end }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
-    {{- if .Values.Cluster.enableHA  }} 
-    replicas: {{ .Values.Cluster.replicas }}
-    {{ else }}
-    replicas: 1
-    {{- end }}
-
-
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
   metadata:
@@ -209,54 +184,6 @@ items:
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     priorityComponent: false
     replicas: 1
-
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: dashboard-metrics-scraper
-    name: dashboard-metrics-scraper
-    namespace: {{ .Release.Namespace }}
-  spec:
-    {{- if .Values.Component.dashboard_metrics_scraper.image }}
-    image: {{ .Values.Component.dashboard_metrics_scraper.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/metrics-scraper:v1.0.4
-    {{- end }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
-    {{- if .Values.Cluster.enableHA  }} 
-    replicas: {{ .Values.Cluster.replicas }}
-    {{ else }}
-    replicas: 1
-    {{- end }}
-
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      app.kubernetes.io/managed-by: Helm
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: kubernetes-dashboard
-    name: kubernetes-dashboard
-    namespace: {{ .Release.Namespace }}
-  spec:
-    {{- if .Values.Component.kubernetes_dashboard.image }}
-    image: {{ .Values.Component.kubernetes_dashboard.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/kubernetes-dashboard:v2.6.1
-    {{- end }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
-    {{- if .Values.Cluster.enableHA  }} 
-    replicas: {{ .Values.Cluster.replicas }}
-    {{ else }}
-    replicas: 1
-    {{- end }}
-
 
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
