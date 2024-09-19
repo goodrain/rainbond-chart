@@ -18,6 +18,13 @@ spec:
               number: 7070
         path: /
         pathType: ImplementationSpecific
+      - backend:
+          service:
+            name: appstore-console
+            port:
+              number: 80
+        path: /proxy
+        pathType: Prefix
   tls:
   - hosts:
     - {{ .Values.Ingress.console.host }}
