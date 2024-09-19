@@ -12,6 +12,10 @@ spec:
     port: 7070
     protocol: TCP
     targetPort: 7070
+  - name: proxy
+    port: 80
+    protocol: TCP
+    targetPort: 80
   selector:
     name: appstore-console
   type: ClusterIP

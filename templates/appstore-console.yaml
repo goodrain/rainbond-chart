@@ -68,6 +68,9 @@ spec:
         - mountPath: /app/lock
           name: app
           subPath: lock
+      - name: proxy
+        image: registry.cn-hangzhou.aliyuncs.com/goodrain/console-proxy-yx:latest
+        imagePullPolicy: IfNotPresent
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
