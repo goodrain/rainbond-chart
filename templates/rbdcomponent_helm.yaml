@@ -16,6 +16,46 @@ items:
     labels:
       belongTo: rainbond-operator
       creator: Rainbond
+      name: local-path-provisioner
+      priorityComponent: "true"
+    name: local-path-provisioner
+    namespace: {{ .Release.Namespace }}
+  spec:
+  {{- if .Values.Component.local_path_provisioner.image }}
+    image: {{ .Values.Component.local_path_provisioner.image }}
+  {{- else }}
+    image: rancher/local-path-provisioner:v0.0.29
+  {{- end}}
+    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
+    priorityComponent: true
+    replicas: 1
+
+- apiVersion: rainbond.io/v1alpha1
+  kind: RbdComponent
+  metadata:
+    labels:
+      belongTo: rainbond-operator
+      creator: Rainbond
+      name: minio
+      priorityComponent: "true"
+    name: minio
+    namespace: {{ .Release.Namespace }}
+  spec:
+  {{- if .Values.Component.minio.image }}
+    image: {{ .Values.Component.minio.image }}
+  {{- else }}
+    image: minio/minio:latest
+  {{- end}}
+    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
+    priorityComponent: true
+    replicas: 1
+
+- apiVersion: rainbond.io/v1alpha1
+  kind: RbdComponent
+  metadata:
+    labels:
+      belongTo: rainbond-operator
+      creator: Rainbond
       name: rbd-gateway
       priorityComponent: "true"
     name: rbd-gateway
@@ -491,27 +531,6 @@ items:
     priorityComponent: false      
     replicas: 1
 {{- end }}
-
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: nfs-provisioner
-      priorityComponent: "true"
-    name: nfs-provisioner
-    namespace: {{ .Release.Namespace }}
-  spec:
-    {{- if .Values.Component.nfs_provisioner.image }}
-    image: {{ .Values.Component.nfs_provisioner.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/nfs-provisioner:{{ .Values.Cluster.installVersion }}
-    {{- end}}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: true
-    replicas: 1
-
 
 kind: List
 metadata:

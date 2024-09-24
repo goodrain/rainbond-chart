@@ -179,14 +179,8 @@ Component:
     enable: true
     args:
 
-  # nfs-provisioner component configuration
-  nfs_provisioner:
+  local_path_provisioner:
     image:
 
-## Enable nfs chart, default is false
-nfs-client-provisioner:
-  childChart:
-    enable: false
-  nfs:
-    server: 
-    path: 
+  minio:
+    image:
