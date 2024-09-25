@@ -46,6 +46,21 @@ items:
     labels:
       belongTo: rainbond-operator
       creator: Rainbond
+      name: rbd-gateway
+    name: rbd-gateway
+    namespace: {{ .Release.Namespace }}
+  spec:
+    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-gateway:{{ .Values.Cluster.installVersion }}
+    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
+    priorityComponent: true
+    replicas: {{ .Values.Cluster.replicas }}
+
+- apiVersion: rainbond.io/v1alpha1
+  kind: RbdComponent
+  metadata:
+    labels:
+      belongTo: rainbond-operator
+      creator: Rainbond
       name: rbd-hub      
     name: rbd-hub
     namespace: {{ .Release.Namespace }}

@@ -40,10 +40,14 @@ items:
       port: {{ .Values.Cluster.uiDatabase.port }}
       username: {{ .Values.Cluster.uiDatabase.username | quote }}
 {{- end }}
+{{- if .Values.Cluster.nodesForChaos }}
     nodesForChaos:
 {{ toYaml .Values.Cluster.nodesForChaos | indent 4 }}
+{{- end }}
+{{- if .Values.Cluster.nodesForGateway }}
     nodesForGateway:
 {{ toYaml .Values.Cluster.nodesForGateway | indent 4 }}
+{{- end }}
     rainbondImageRepository: {{ .Values.Cluster.rainbondImageRepository }}
     installVersion: {{ .Values.Cluster.installVersion }}
     suffixHTTPHost: ""
