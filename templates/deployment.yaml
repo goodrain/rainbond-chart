@@ -7,7 +7,6 @@
 # 
 #############################################
 
-{{- if .Values.operator }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -49,22 +48,14 @@ spec:
             - /manager
           args:
             - --leader-elect
-            - --zap-log-level={{ .Values.operator.logLevel }}
+            - --zap-log-level=4
           env:
           - name: SERVICE_ACCOUNT_NAME
             value: {{ .Values.serviceAccount.name }}
           - name: RBD_NAMESPACE
             value: {{ .Release.Namespace }}
-          {{- range .Values.operator.env }}
-          - name: {{ .name }}
-            value: "{{ .value }}"
-          {{- end }}
-          {{- if .Values.Cluster.enableEnvCheck }}
-          - name: CHECK_PORT_OCCUPIED
-            value: "{{ .Values.Cluster.enableEnvCheck }}"
-          {{- end }}
-          image: {{ .Values.operator.image.name }}:{{ .Values.operator.image.tag }}
-          imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
+          image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond-operator:{{ .Values.Cluster.installVersion }}
+          imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
           name: {{ .Values.operator.name }}
           securityContext:
             allowPrivilegeEscalation: false
@@ -95,4 +86,3 @@ spec:
               name: rundir
             {{- end }}
       terminationGracePeriodSeconds: 10
-{{- end }}
