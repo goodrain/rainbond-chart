@@ -15,47 +15,14 @@ items:
     name: rainbondcluster
     namespace: {{ .Release.Namespace }}
   spec:
-    enableHA: {{ .Values.Cluster.enableHA }}
-    configCompleted: true
-{{- if .Values.Cluster.gatewayIngressIPs }}
-    gatewayIngressIPs:
+    gatewayIngressIPs: 
     - {{ .Values.Cluster.gatewayIngressIPs }}
-{{- else }}
-{{ end }}
 {{- if .Values.Cluster.imageHub.enable  }}
     imageHub:
       domain: {{ .Values.Cluster.imageHub.domain | quote }}
       password: {{ .Values.Cluster.imageHub.password | quote }}
       username: {{ .Values.Cluster.imageHub.username | quote }}
       namespace: {{ .Values.Cluster.imageHub.namespace | quote }} 
-{{- end }}
-{{- if .Values.Cluster.RWO.enable  }} 
-    rainbondVolumeSpecRWO:
-      storageClassName: {{ .Values.Cluster.RWO.storageClassName | quote }}
-      imageRepository: {{ .Values.Cluster.rainbondImageRepository }}
-{{- end }}
-{{- if .Values.Cluster.RWX.enable  }} 
-    rainbondVolumeSpecRWX:
-      {{- if eq .Values.Cluster.RWX.type "aliyun" }}
-      storageClassParameters:
-        mountOptions:
-        - "nolock,tcp,noresvport"
-        - "vers=4"
-        - "minorversion=0"
-        - "rsize=1048576"
-        - "wsize=1048576"
-        - "timeo=600"
-        - "retrans=2"
-        - "hard"
-        parameters:
-          volumeAs: subpath
-          archiveOnDelete: "true"
-          server: {{ .Values.Cluster.RWX.config.server }}
-        provisioner: nasplugin.csi.alibabacloud.com
-      {{- else }}
-      storageClassName: {{ .Values.Cluster.RWX.config.storageClassName | quote }}
-      {{- end }}
-      imageRepository: {{ .Values.Cluster.rainbondImageRepository }}
 {{- end }}
 {{- if .Values.Cluster.regionDatabase.enable }}
     regionDatabase:
@@ -73,20 +40,13 @@ items:
       port: {{ .Values.Cluster.uiDatabase.port }}
       username: {{ .Values.Cluster.uiDatabase.username | quote }}
 {{- end }}
-    suffixHTTPHost: ""
-    installMode: WithoutPackage
-    installVersion: {{ .Values.Cluster.installVersion }}     
-{{- if .Values.Cluster.nodesForChaos }}
     nodesForChaos:
-{{ .Values.Cluster.nodesForChaos | toYaml | indent 4 }}
-{{- else }}
-{{ end }}
-{{- if .Values.Cluster.nodesForGateway }}
+{{ toYaml .Values.Cluster.nodesForChaos | indent 4 }}
     nodesForGateway:
-{{ .Values.Cluster.nodesForGateway | toYaml | indent 4 }}
-{{- else }}
-{{ end }}
+{{ toYaml .Values.Cluster.nodesForGateway | indent 4 }}
     rainbondImageRepository: {{ .Values.Cluster.rainbondImageRepository }}
+    installVersion: {{ .Values.Cluster.installVersion }}
+    suffixHTTPHost: ""
 
 kind: List
 metadata:

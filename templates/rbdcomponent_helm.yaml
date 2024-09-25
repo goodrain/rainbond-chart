@@ -17,18 +17,13 @@ items:
       belongTo: rainbond-operator
       creator: Rainbond
       name: local-path-provisioner
-      priorityComponent: "true"
     name: local-path-provisioner
     namespace: {{ .Release.Namespace }}
   spec:
-  {{- if .Values.Component.local_path_provisioner.image }}
-    image: {{ .Values.Component.local_path_provisioner.image }}
-  {{- else }}
-    image: rancher/local-path-provisioner:v0.0.29
-  {{- end}}
+    image: {{ .Values.Cluster.rainbondImageRepository }}/local-path-provisioner:v0.0.29
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: true
     replicas: 1
+    priorityComponent: true
 
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
@@ -37,63 +32,13 @@ items:
       belongTo: rainbond-operator
       creator: Rainbond
       name: minio
-      priorityComponent: "true"
     name: minio
     namespace: {{ .Release.Namespace }}
   spec:
-  {{- if .Values.Component.minio.image }}
-    image: {{ .Values.Component.minio.image }}
-  {{- else }}
-    image: minio/minio:latest
-  {{- end}}
+    image: {{ .Values.Cluster.rainbondImageRepository }}/minio:RELEASE.2024-09-22T00-33-43Z
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: true
     replicas: 1
-
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: rbd-gateway
-      priorityComponent: "true"
-    name: rbd-gateway
-    namespace: {{ .Release.Namespace }}
-  spec:
-    {{- if .Values.Component.rbd_gateway.args }}
-    args:
-    {{- range .Values.Component.rbd_gateway.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_gateway.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_gateway.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_gateway.volumeMounts }}
-    volumeMounts:
-{{ toYaml .Values.Component.rbd_gateway.volumeMounts | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_gateway.volumes }}
-    volumes:
-{{ toYaml .Values.Component.rbd_gateway.volumes | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_gateway.image }}
-    image: {{ .Values.Component.rbd_gateway.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-gateway:{{ .Values.Cluster.installVersion }}
-    {{- end }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     priorityComponent: true
-    {{- if .Values.Cluster.enableHA  }} 
-    replicas: {{ .Values.Cluster.replicas }}
-    {{ else }}
-    replicas: 1
-    {{- end }}
 
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
@@ -102,43 +47,13 @@ items:
       belongTo: rainbond-operator
       creator: Rainbond
       name: rbd-hub      
-      priorityComponent: "true"
     name: rbd-hub
     namespace: {{ .Release.Namespace }}
   spec:
-    {{- if .Values.Component.rbd_hub.args }}
-    args:
-    {{- range .Values.Component.rbd_hub.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_hub.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_hub.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_hub.volumeMounts }}
-    volumeMounts:
-{{ toYaml .Values.Component.rbd_hub.volumeMounts | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_hub.volumes }}
-    volumes:
-{{ toYaml .Values.Component.rbd_hub.volumes | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_hub.image }}
-    image: {{ .Values.Component.rbd_hub.image }}
-    {{- else }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/registry:2.6.2
-    {{- end }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: true
-    {{- if .Values.Cluster.enableHA  }} 
     replicas: {{ .Values.Cluster.replicas }}
-    {{ else }}
-    replicas: 1
-    {{- end }}
+    priorityComponent: true
 
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
@@ -150,80 +65,10 @@ items:
     name: rbd-mq
     namespace: {{ .Release.Namespace }}
   spec:
-    {{- if .Values.Component.rbd_mq.args }}
-    args:
-    {{- range .Values.Component.rbd_mq.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_mq.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_mq.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_mq.volumeMounts }}
-    volumeMounts:
-{{ toYaml .Values.Component.rbd_mq.volumeMounts | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_mq.volumes }}
-    volumes:
-{{ toYaml .Values.Component.rbd_mq.volumes | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_mq.image }}
-    image: {{ .Values.Component.rbd_mq.image }}
-    {{- else }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-mq:{{ .Values.Cluster.installVersion }}
-    {{- end }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
-    {{- if .Values.Cluster.enableHA  }} 
     replicas: {{ .Values.Cluster.replicas }}
-    {{ else }}
-    replicas: 1
-    {{- end }}
-
-
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: rbd-resource-proxy
-    name: rbd-resource-proxy
-    namespace: {{ .Release.Namespace }}
-  spec:
-    {{- if .Values.Component.rbd_resource_proxy.args }}
-    args:
-    {{- range .Values.Component.rbd_resource_proxy.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_resource_proxy.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_resource_proxy.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_resource_proxy.volumeMounts }}
-    volumeMounts:
-{{ toYaml .Values.Component.rbd_resource_proxy.volumeMounts | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_resource_proxy.volumes }}
-    volumes:
-{{ toYaml .Values.Component.rbd_resource_proxy.volumes | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_resource_proxy.image }}
-    image: {{ .Values.Component.rbd_resource_proxy.image }}
-    {{- else }}
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-resource-proxy:{{ .Values.Cluster.installVersion }}
-    {{- end }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
-    replicas: 1
+    priorityComponent: true
 
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
@@ -235,34 +80,12 @@ items:
     name: rbd-monitor
     namespace: {{ .Release.Namespace }}
   spec:
-    {{- if .Values.Component.rbd_monitor.args }}
-    args:
-    {{- range .Values.Component.rbd_monitor.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_monitor.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_monitor.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_monitor.volumeMounts }}
-    volumeMounts:
-{{ toYaml .Values.Component.rbd_monitor.volumeMounts | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_monitor.volumes }}
-    volumes:
-{{ toYaml .Values.Component.rbd_monitor.volumes | indent 4 }}
-    {{- end }}
-    image: registry.cn-hangzhou.aliyuncs.com/goodrain/rbd-monitor:v2.20.0
+    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-monitor:v2.20.0
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
     replicas: 1
+    priorityComponent: true
 
-{{- if and .Values.Cluster.uiDatabase.enable .Values.Cluster.regionDatabase.enable }}
-{{- else }}
+{{- if not (or .Values.Cluster.uiDatabase.enable .Values.Cluster.regionDatabase.enable) }}
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
   metadata:
@@ -273,35 +96,10 @@ items:
     name: rbd-db
     namespace: {{ .Release.Namespace }}
   spec:
-    {{- if .Values.Component.rbd_db.args }}
-    args:
-    {{- range .Values.Component.rbd_db.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_db.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_db.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_db.volumeMounts }}
-    volumeMounts:
-{{ toYaml .Values.Component.rbd_db.volumeMounts | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_db.volumes }}
-    volumes:
-{{ toYaml .Values.Component.rbd_db.volumes | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_db.image }}
-    image: {{ .Values.Component.rbd_db.image }}
-    {{- else }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-db:8.0.19
-    {{- end }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
     replicas: 1
+    priorityComponent: true
 {{- end }}
 
 
@@ -315,19 +113,6 @@ items:
     name: rbd-chaos
     namespace: {{ .Release.Namespace }}
   spec:
-    {{- if .Values.Component.rbd_chaos.args }}
-    args:
-    {{- range .Values.Component.rbd_chaos.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_chaos.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_chaos.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
     {{- if .Values.useK3sContainerd }}
     volumeMounts:
     - name: containerdsock
@@ -338,19 +123,10 @@ items:
         path: /var/run/k3s/containerd
         type: Directory
     {{- end }}
-    {{- if .Values.Component.rbd_chaos.image }}
-    image: {{ .Values.Component.rbd_chaos.image }}
-    {{- else }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-chaos:{{ .Values.Cluster.installVersion }}
-    {{- end }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
-    {{- if .Values.Cluster.enableHA  }} 
     replicas: {{ .Values.Cluster.replicas }}
-    {{ else }}
-    replicas: 1
-    {{- end }}
-
+    priorityComponent: true
 
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
@@ -362,47 +138,10 @@ items:
     name: rbd-worker
     namespace: {{ .Release.Namespace }}
   spec:
-    {{- if .Values.Component.rbd_worker.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_worker.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_worker.args }}
-    args:
-    {{- range .Values.Component.rbd_worker.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_worker.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_worker.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_worker.volumeMounts }}
-    volumeMounts:
-{{ toYaml .Values.Component.rbd_worker.volumeMounts | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_worker.volumes }}
-    volumes:
-{{ toYaml .Values.Component.rbd_worker.volumes | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_worker.image }}
-    image: {{ .Values.Component.rbd_worker.image }}
-    {{- else }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-worker:{{ .Values.Cluster.installVersion }}
-    {{- end}}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
-    {{- if .Values.Cluster.enableHA  }} 
     replicas: {{ .Values.Cluster.replicas }}
-    {{ else }}
-    replicas: 1
-    {{- end }}
-
+    priorityComponent: true
 
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
@@ -414,35 +153,10 @@ items:
     name: rbd-eventlog
     namespace: {{ .Release.Namespace }}
   spec:
-    {{- if .Values.Component.rbd_eventlog.args }}
-    args:
-    {{- range .Values.Component.rbd_eventlog.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_eventlog.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_eventlog.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_eventlog.volumeMounts }}
-    volumeMounts:
-{{ toYaml .Values.Component.rbd_eventlog.volumeMounts | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_eventlog.volumes }}
-    volumes:
-{{ toYaml .Values.Component.rbd_eventlog.volumes | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_eventlog.image }}
-    image: {{ .Values.Component.rbd_eventlog.image }}
-    {{- else }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-eventlog:{{ .Values.Cluster.installVersion }}
-    {{- end }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
     replicas: 1
+    priorityComponent: true
 
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
@@ -454,39 +168,10 @@ items:
     name: rbd-api
     namespace: {{ .Release.Namespace }}
   spec:  
-    {{- if .Values.Component.rbd_api.args }}
-    args:
-    {{- range .Values.Component.rbd_api.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
-    {{- if .Values.Component.rbd_api.env }}
-    env:
-    {{- range $key,$value := .Values.Component.rbd_api.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_api.volumeMounts }}
-    volumeMounts:
-{{ toYaml .Values.Component.rbd_api.volumeMounts | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_api.volumes }}
-    volumes:
-{{ toYaml .Values.Component.rbd_api.volumes | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_api.image }}
-    image: {{ .Values.Component.rbd_api.image }}
-    {{- else }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-api:{{ .Values.Cluster.installVersion }}
-    {{- end }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false
-    {{- if .Values.Cluster.enableHA  }} 
     replicas: {{ .Values.Cluster.replicas }}
-    {{ else }}
-    replicas: 1
-    {{- end }}
+    priorityComponent: true
 
 {{- if .Values.Component.rbd_app_ui.enable }}
 - apiVersion: rainbond.io/v1alpha1
@@ -499,37 +184,13 @@ items:
     name: rbd-app-ui
     namespace: {{ .Release.Namespace }}
   spec:
-    {{- if .Values.Component.rbd_app_ui.args }}
-    args:
-    {{- range .Values.Component.rbd_app_ui.args }}
-    - {{ . | toString  }}
-    {{- end }} 
-    {{- end }}
     env:
     - name: DB_TYPE
       value: mysql
-    {{- if .Values.Component.rbd_app_ui.env }}
-    {{- range $key,$value := .Values.Component.rbd_app_ui.env }}
-    - name: {{ $key }}
-      value: "{{ $value }}"
-    {{- end }}
-    {{- end }}
-    {{- if .Values.Component.rbd_app_ui.volumeMounts }}
-    volumeMounts:
-{{ toYaml .Values.Component.rbd_app_ui.volumeMounts | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_app_ui.volumes }}
-    volumes:
-{{ toYaml .Values.Component.rbd_app_ui.volumes | indent 4 }}
-    {{- end }}
-    {{- if .Values.Component.rbd_app_ui.image }}
-    image: {{ .Values.Component.rbd_app_ui.image }}
-    {{- else }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond:{{ .Values.Cluster.installVersion }}-allinone
-    {{- end }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    priorityComponent: false      
     replicas: 1
+    priorityComponent: false
 {{- end }}
 
 kind: List
