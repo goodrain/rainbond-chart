@@ -15,8 +15,10 @@ items:
     name: rainbondcluster
     namespace: {{ .Release.Namespace }}
   spec:
+{{- if .Values.Cluster.gatewayIngressIPs }}
     gatewayIngressIPs: 
     - {{ .Values.Cluster.gatewayIngressIPs }}
+{{- end }}
 {{- if .Values.Cluster.imageHub.enable  }}
     imageHub:
       domain: {{ .Values.Cluster.imageHub.domain | quote }}
