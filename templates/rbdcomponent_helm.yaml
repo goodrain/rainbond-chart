@@ -164,21 +164,6 @@ items:
     labels:
       belongTo: rainbond-operator
       creator: Rainbond
-      name: rbd-eventlog      
-    name: rbd-eventlog
-    namespace: {{ .Release.Namespace }}
-  spec:
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-eventlog:{{ .Values.Cluster.installVersion }}
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    replicas: 1
-    priorityComponent: true
-
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
       name: rbd-api
     name: rbd-api
     namespace: {{ .Release.Namespace }}

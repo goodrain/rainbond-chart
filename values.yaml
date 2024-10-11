@@ -88,25 +88,5 @@ Cluster:
 # Rainbond Component Configuration
 ############################################
 Component:
-
-  # rbd-api component configuration
-  rbd_api:
-
-  # rbd-hub component configuration
-  rbd_hub:
-
-  # rbd-monitor component configuration    
-  rbd_monitor:
-  
-  # rbd-chaos component configuration
-  rbd_chaos:
-
-  # rbd-worker component configuration
-  rbd_worker:
-
-  # rbd-eventlog component configuration
-  rbd_eventlog:
-  
-  # rbd-app-ui component configuration
   rbd_app_ui:
     enable: true
