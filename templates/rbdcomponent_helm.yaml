@@ -50,7 +50,7 @@ items:
     name: rbd-gateway
     namespace: {{ .Release.Namespace }}
   spec:
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-gateway:{{ .Values.Cluster.installVersion }}
+    image: {{ .Values.Cluster.rainbondImageRepository }}/apisix-ingress-controller:1.8.0@{{ .Values.Cluster.rainbondImageRepository }}/apisix:3.8.0-debian
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     priorityComponent: true
     replicas: {{ .Values.Cluster.replicas }}
