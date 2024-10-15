@@ -54,8 +54,8 @@ spec:
             value: {{ .Values.serviceAccount.name }}
           - name: RBD_NAMESPACE
             value: {{ .Release.Namespace }}
-          - name: RBD_HELPER_IMAGE
-            value: {{ .Values.Cluster.rainbondImageRepository }}/busybox:latest
+          - name: RAINBOND_IMAGE_REPOSITORY
+            value: {{ .Values.Cluster.rainbondImageRepository }}
           image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond-operator:{{ .Values.Cluster.installVersion }}
           imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
           name: {{ .Values.operator.name }}
