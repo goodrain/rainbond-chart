@@ -16,7 +16,7 @@
 serviceAccount:
   name: rainbond-operator
 
-# Use K3s Containerd
+# Use K3s or RKE2 Containerd runtime
 useK3sContainerd: false
 
 # rainbondOperator
@@ -88,5 +88,14 @@ Cluster:
 # Rainbond Component Configuration
 ############################################
 Component:
+  # Enable sqlit mode, only for rainbond stand-alone version use
+  sqlite_mode:
+    enable: false
+  
+  # Enable rbd-app-ui component
   rbd_app_ui:
+    enable: true
+  
+  # Enable default mysql database component. if you have set regionDatabase or uiDatabase, it will be disabled
+  rbd_db:
     enable: true
