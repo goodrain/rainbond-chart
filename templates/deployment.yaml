@@ -15,6 +15,7 @@ metadata:
   labels:
     control-plane: {{ .Values.operator.name }}
     release: {{ .Release.Name }}
+    name: {{ .Values.operator.name }}
 spec:
   selector:
     matchLabels:
@@ -25,6 +26,7 @@ spec:
       labels:
         control-plane: {{ .Values.operator.name }}
         release: {{ .Release.Name }}
+        name: {{ .Values.operator.name }}
     spec:
       serviceAccountName: {{ .Values.serviceAccount.name }}
       volumes:
