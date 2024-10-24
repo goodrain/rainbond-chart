@@ -16,16 +16,11 @@
 serviceAccount:
   name: rainbond-operator
 
-# Use K3s or RKE2 Containerd runtime
-useK3sContainerd: false
-
 # rainbondOperator
 operator:
   name: rainbond-operator
 
-#############################################
 # Rainbondcluster install Configuration
-#############################################
 Cluster:
   # Use an external image repository
   imageHub:
@@ -82,11 +77,15 @@ Cluster:
   # Number of component copies
   replicas: 1
  
+ # This is default containerd socket path for containerd
+containerd:
+  volumes:
+  - name: containerdsock
+    hostPath:
+      path: /run/containerd  # If you use K3s and RKE2, you can change this path to /var/run/k3s/containerd
+      type: Directory
 
-
-############################################
 # Rainbond Component Configuration
-############################################
 Component:
   # Enable sqlit mode, only for rainbond stand-alone version use
   sqlite_mode:

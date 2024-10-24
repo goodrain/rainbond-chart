@@ -130,30 +130,25 @@ items:
     name: rbd-chaos
     namespace: {{ .Release.Namespace }}
   spec:
-  {{- if .Values.Component.sqlite_mode.enable }}
+    {{- if .Values.Component.sqlite_mode.enable }}
     args:
     - --db-type=sqlite
-  {{- end }}
-  {{- if .Values.useK3sContainerd }}
+    {{- end }}
     volumeMounts:
-    - name: containerdsock
-      mountPath: /run/containerd
+    - mountPath: /run/containerd
+      name: containerdsock
     {{- if .Values.Component.sqlite_mode.enable }}
     - name: sqlite
       mountPath: /db
     {{- end }}
     volumes:
-    - name: containerdsock
-      hostPath:
-        path: /var/run/k3s/containerd
-        type: Directory
+    {{- toYaml .Values.containerd.volumes | nindent 4 }}
     {{- if .Values.Component.sqlite_mode.enable }}
     - name: sqlite
       hostPath:
         path: /var/lib/rancher/rainbond
         type: DirectoryOrCreate
     {{- end }}
-  {{- end }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-chaos:{{ .Values.Cluster.installVersion }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: {{ .Values.Cluster.replicas }}
