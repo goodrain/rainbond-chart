@@ -100,24 +100,6 @@ items:
     replicas: 1
     priorityComponent: true
 
-{{- if not (or .Values.Cluster.uiDatabase.enable .Values.Cluster.regionDatabase.enable) }}
-- apiVersion: rainbond.io/v1alpha1
-  kind: RbdComponent
-  metadata:
-    labels:
-      belongTo: rainbond-operator
-      creator: Rainbond
-      name: rbd-db
-    name: rbd-db
-    namespace: {{ .Release.Namespace }}
-  spec:
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-db:8.0.19
-    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    replicas: 1
-    priorityComponent: true
-{{- end }}
-
-
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
   metadata:
@@ -128,16 +110,22 @@ items:
     name: rbd-chaos
     namespace: {{ .Release.Namespace }}
   spec:
-    {{- if .Values.useK3sContainerd }}
+    args:
+    - --db-type=sqlite
     volumeMounts:
+    - mountPath: /db
+      name: sqlite    
     - name: containerdsock
       mountPath: /run/containerd
     volumes:
     - name: containerdsock
       hostPath:
-        path: /var/run/k3s/containerd
+        path: /run/k3s/containerd
         type: Directory
-    {{- end }}
+    - hostPath:
+        path: /var/lib/rancher/rainbond/chaos
+        type: DirectoryOrCreate
+      name: sqlite
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-chaos:{{ .Values.Cluster.installVersion }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: {{ .Values.Cluster.replicas }}
@@ -157,6 +145,16 @@ items:
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: {{ .Values.Cluster.replicas }}
     priorityComponent: true
+    args:
+    - --db-type=sqlite
+    volumeMounts:
+    - mountPath: /db
+      name: sqlite
+    volumes:
+    - hostPath:
+        path: /var/lib/rancher/rainbond/worker
+        type: DirectoryOrCreate
+      name: sqlite
 
 - apiVersion: rainbond.io/v1alpha1
   kind: RbdComponent
@@ -172,6 +170,16 @@ items:
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: {{ .Values.Cluster.replicas }}
     priorityComponent: true
+    args:
+    - --db-type=sqlite
+    volumeMounts:
+    - mountPath: /db
+      name: sqlite
+    volumes:
+    - hostPath:
+        path: /var/lib/rancher/rainbond/api
+        type: DirectoryOrCreate
+      name: sqlite
 
 {{- if .Values.Component.rbd_app_ui.enable }}
 - apiVersion: rainbond.io/v1alpha1
@@ -184,9 +192,6 @@ items:
     name: rbd-app-ui
     namespace: {{ .Release.Namespace }}
   spec:
-    env:
-    - name: DB_TYPE
-      value: mysql
     image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond:{{ .Values.Cluster.installVersion }}-allinone
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: 1
