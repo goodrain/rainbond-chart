@@ -31,7 +31,7 @@ spec:
       serviceAccountName: {{ .Values.serviceAccount.name }}
       volumes:
         - hostPath:
-            path: /run/k3s/containerd
+            path: /var/run/k3s/containerd
             type: Directory
           name: rundir
         - hostPath:

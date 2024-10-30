@@ -120,10 +120,10 @@ items:
     volumes:
     - name: containerdsock
       hostPath:
-        path: /run/k3s/containerd
+        path: /var/run/k3s/containerd
         type: Directory
     - hostPath:
-        path: /var/lib/rancher/rainbond
+        path: /opt/rainbond/region
         type: DirectoryOrCreate
       name: sqlite
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-chaos:{{ .Values.Cluster.installVersion }}
@@ -152,7 +152,7 @@ items:
       name: sqlite
     volumes:
     - hostPath:
-        path: /var/lib/rancher/rainbond
+        path: /opt/rainbond/region
         type: DirectoryOrCreate
       name: sqlite
 
@@ -177,7 +177,7 @@ items:
       name: sqlite
     volumes:
     - hostPath:
-        path: /var/lib/rancher/rainbond
+        path: /opt/rainbond/region
         type: DirectoryOrCreate
       name: sqlite
 
