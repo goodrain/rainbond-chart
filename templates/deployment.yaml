@@ -30,17 +30,10 @@ spec:
     spec:
       serviceAccountName: {{ .Values.serviceAccount.name }}
       volumes:
-        {{- if .Values.useK3sContainerd }}
         - hostPath:
-            path: /var/run/k3s/containerd
+            path: {{ .Values.Cluster.containerdRuntimePath }}
             type: Directory
           name: rundir
-        {{- else }}
-        - hostPath:
-            path: /run
-            type: Directory
-          name: rundir
-        {{- end }}
         - hostPath:
             path: /var
             type: Directory
@@ -82,11 +75,6 @@ spec:
           volumeMounts:
             - mountPath: /var
               name: vardir
-            {{- if .Values.useK3sContainerd }}
             - mountPath: /run/containerd
               name: rundir
-            {{- else }}
-            - mountPath: /run
-              name: rundir
-            {{- end }}
       terminationGracePeriodSeconds: 10

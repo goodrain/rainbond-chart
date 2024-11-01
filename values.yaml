@@ -16,9 +16,6 @@
 serviceAccount:
   name: rainbond-operator
 
-# Use K3s Containerd
-useK3sContainerd: false
-
 # rainbondOperator
 operator:
   name: rainbond-operator
@@ -82,6 +79,8 @@ Cluster:
   # Number of component copies
   replicas: 1
  
+  # Define containerd runtime directory path, default: /run/containerd, if use k3s or RKE2, set to /var/run/k3s/containerd
+  containerdRuntimePath: /run/containerd
 
 
 ############################################
