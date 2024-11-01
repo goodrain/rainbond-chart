@@ -128,16 +128,14 @@ items:
     name: rbd-chaos
     namespace: {{ .Release.Namespace }}
   spec:
-    {{- if .Values.useK3sContainerd }}
     volumeMounts:
     - name: containerdsock
       mountPath: /run/containerd
     volumes:
     - name: containerdsock
       hostPath:
-        path: /var/run/k3s/containerd
+        path: {{ .Values.Cluster.containerdRuntimePath }}
         type: Directory
-    {{- end }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-chaos:{{ .Values.Cluster.installVersion }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: {{ .Values.Cluster.replicas }}
