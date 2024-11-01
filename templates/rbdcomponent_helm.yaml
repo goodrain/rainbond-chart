@@ -192,6 +192,11 @@ items:
     name: rbd-app-ui
     namespace: {{ .Release.Namespace }}
   spec:
+    volumes:
+    - name: app
+      hostPath:
+        path: /opt/rainbond/rainbonddata
+        type: DirectoryOrCreate
     image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond:{{ .Values.Cluster.installVersion }}-allinone
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: 1
