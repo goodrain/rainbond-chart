@@ -197,7 +197,7 @@ items:
       hostPath:
         path: /opt/rainbond/rainbonddata
         type: DirectoryOrCreate
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond:{{ .Values.Cluster.installVersion }}-allinone
+    image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond:{{ .Values.Cluster.installVersion }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: 1
     priorityComponent: false
