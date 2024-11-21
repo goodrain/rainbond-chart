@@ -1,14 +1,6 @@
 
-The installation process lasts about 10 minutes. If you encounter problems, you can refer to the helm troubleshooting document:
+Please use the following command to view the installation progress:
 
-https://www.rainbond.com/docs/installation/install-troubleshoot/helm-install-troubleshoot
+kubectl get pod -n {{ .Release.Namespace }}
 
-Dynamic view of rainbond installation progress command:
-
-watch kubectl get po -n ${namespace}
-
-Observe pod status, When the status of rbd-app-ui is running, you can access the console of Rainbond. the following is the access address:
-
-{{ if .Values.Cluster.gatewayIngressIPs }}
-  {{ .Values.Cluster.gatewayIngressIPs }}:7070
-{{ end }}
+Enter http://{{ .Values.Cluster.gatewayIngressIPs }}:7070 in your browser to access Rainbond
