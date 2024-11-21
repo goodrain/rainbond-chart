@@ -15,13 +15,13 @@ Add `rainbond` helm charts repo
 
 ```
 kubectl create namespace rbd-system
-helm repo add rainbond https://openchart.goodrain.com/goodrain/rainbond
+helm repo add rainbond https://chart.rainbond.com
 helm repo update
 ```
 Installing helm chart
 
 ```
-helm install rainbond rainbond/rainbond-cluster -n rbd-system
+helm install rainbond rainbond/rainbond -n rbd-system
 ```
 
 
