@@ -51,6 +51,9 @@ spec:
             value: {{ .Release.Namespace }}
           - name: RAINBOND_IMAGE_REPOSITORY
             value: {{ .Values.Cluster.rainbondImageRepository }}
+          {{- if .Values.operator.env }}
+{{ toYaml .Values.operator.env | indent 10 }}
+          {{- end }}
           image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond-operator:{{ .Values.Cluster.installVersion }}
           imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
           name: {{ .Values.operator.name }}
