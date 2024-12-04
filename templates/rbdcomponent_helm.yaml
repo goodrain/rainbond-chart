@@ -185,6 +185,9 @@ items:
     env:
     - name: DB_TYPE
       value: mysql
+{{- if .Values.Component.rbd_app_ui.env }}
+{{ toYaml .Values.Component.rbd_app_ui.env | indent 4 }}
+{{- end }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond:{{ .Values.Cluster.installVersion }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: 1
