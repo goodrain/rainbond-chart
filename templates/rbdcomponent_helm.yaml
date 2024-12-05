@@ -35,7 +35,7 @@ items:
     name: minio
     namespace: {{ .Release.Namespace }}
   spec:
-    image: {{ .Values.Cluster.rainbondImageRepository }}/minio:RELEASE.2024-09-22T00-33-43Z
+    image: {{ .Values.Cluster.rainbondImageRepository }}/minio:RELEASE.2023-10-24T04-42-36Z
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: 1
     priorityComponent: true
