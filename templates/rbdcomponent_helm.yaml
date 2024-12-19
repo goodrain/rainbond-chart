@@ -20,7 +20,7 @@ items:
     name: local-path-provisioner
     namespace: {{ .Release.Namespace }}
   spec:
-    image: {{ .Values.Cluster.rainbondImageRepository }}/local-path-provisioner:v0.0.29
+    image: {{ .Values.Cluster.rainbondImageRepository }}/local-path-provisioner:v0.0.30
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: 1
     priorityComponent: true
