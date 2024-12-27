@@ -53,6 +53,10 @@ spec:
             value: {{ .Values.Cluster.rainbondImageRepository }}
           - name: IS_SQLLITE
             value: "TRUE"
+          - name: DEPLOY_VERSION
+            value: "standalone"
+          - name: ENTERPRISE_ID
+            value: {{ .Values.Cluster.eid }}
           image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond-operator:{{ .Values.Cluster.installVersion }}
           imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
           name: {{ .Values.operator.name }}
