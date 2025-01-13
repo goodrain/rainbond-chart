@@ -82,7 +82,7 @@ items:
   spec:
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-mq:{{ .Values.Cluster.installVersion }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
-    replicas: {{ .Values.Cluster.replicas }}
+    replicas: 1
     priorityComponent: true
 
 - apiVersion: rainbond.io/v1alpha1
