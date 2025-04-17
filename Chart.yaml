@@ -2,7 +2,7 @@ apiVersion: v2
 name: rainbond
 description: Rainbond Helm chart
 type: application
-version: 6.2.0
+version: 6.2.1
 appVersion: v6
 icon: https://static.goodrain.com/logo/logo-blue.png
 home: https://www.rainbond.com
