@@ -1,8 +1,7 @@
-## Rainbond
+## Rainbond Helm Charts
 
-* Use helm install Rainbond in kubernetes
+You can deploy the Rainbond in Kubernetes using Helm Chart.
 
-## Installing the Chart
+## Installation
 
-* Reference the [Rainbond doc](https://www.rainbond.com/docs/install/other-methods/install-from-rancher/) for more details.
-
+See [Rainbond Installation Guide](https://www.rainbond.com/docs/installation/install-with-helm)
