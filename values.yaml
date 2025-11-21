@@ -71,7 +71,7 @@ Cluster:
   rainbondImageRepository: registry.cn-hangzhou.aliyuncs.com/goodrain
   
   # Component image version
-  installVersion: v6.3.4-release
+  installVersion: v6.4.0-release
 
   # Component image pull policy
   imagePullPolicy: IfNotPresent
