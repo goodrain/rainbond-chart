@@ -20,7 +20,7 @@ items:
     name: local-path-provisioner
     namespace: {{ .Release.Namespace }}
   spec:
-    image: {{ .Values.Cluster.rainbondImageRepository }}/local-path-provisioner:v0.0.30
+    image: {{ .Values.Cluster.rainbondImageRepository }}/local-path-provisioner:v0.0.30-esgz
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: 1
     priorityComponent: true
@@ -35,7 +35,7 @@ items:
     name: minio
     namespace: {{ .Release.Namespace }}
   spec:
-    image: {{ .Values.Cluster.rainbondImageRepository }}/minio:RELEASE.2023-10-24T04-42-36Z
+    image: {{ .Values.Cluster.rainbondImageRepository }}/minio:RELEASE.2023-10-24T04-42-36Z-esgz
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: 1
     priorityComponent: true
@@ -50,7 +50,7 @@ items:
     name: rbd-gateway
     namespace: {{ .Release.Namespace }}
   spec:
-    image: {{ .Values.Cluster.rainbondImageRepository }}/apisix-ingress-controller:v1.8.3@{{ .Values.Cluster.rainbondImageRepository }}/apisix:3.9.1-debian-fix
+    image: {{ .Values.Cluster.rainbondImageRepository }}/apisix-ingress-controller:v1.8.3-esgz@{{ .Values.Cluster.rainbondImageRepository }}/apisix:3.9.1-debian-fix-esgz
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     priorityComponent: true
     replicas: {{ .Values.Cluster.replicas }}
@@ -65,7 +65,7 @@ items:
     name: rbd-hub
     namespace: {{ .Release.Namespace }}
   spec:
-    image: {{ .Values.Cluster.rainbondImageRepository }}/registry:2.6.2
+    image: {{ .Values.Cluster.rainbondImageRepository }}/registry:2.6.2-esgz
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: {{ .Values.Cluster.replicas }}
     priorityComponent: true
@@ -95,7 +95,7 @@ items:
     name: rbd-monitor
     namespace: {{ .Release.Namespace }}
   spec:
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-monitor:v2.20.0
+    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-monitor:v2.20.0-esgz
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: 1
     priorityComponent: true
