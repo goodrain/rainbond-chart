@@ -80,7 +80,7 @@ items:
     name: rbd-mq
     namespace: {{ .Release.Namespace }}
   spec:
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-mq:{{ .Values.Cluster.installVersion }}
+    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-mq:{{ .Values.Cluster.installVersion }}-esgz
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: {{ .Values.Cluster.replicas }}
     priorityComponent: true
@@ -126,7 +126,7 @@ items:
         path: /opt/rainbond/region
         type: DirectoryOrCreate
       name: sqlite
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-chaos:{{ .Values.Cluster.installVersion }}
+    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-chaos:{{ .Values.Cluster.installVersion }}-esgz
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: {{ .Values.Cluster.replicas }}
     priorityComponent: true
@@ -141,7 +141,7 @@ items:
     name: rbd-worker
     namespace: {{ .Release.Namespace }}
   spec:
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-worker:{{ .Values.Cluster.installVersion }}
+    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-worker:{{ .Values.Cluster.installVersion }}-esgz
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: {{ .Values.Cluster.replicas }}
     priorityComponent: true
@@ -166,7 +166,7 @@ items:
     name: rbd-api
     namespace: {{ .Release.Namespace }}
   spec:  
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-api:{{ .Values.Cluster.installVersion }}
+    image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-api:{{ .Values.Cluster.installVersion }}-esgz
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: {{ .Values.Cluster.replicas }}
     priorityComponent: true
@@ -197,7 +197,7 @@ items:
       hostPath:
         path: /opt/rainbond/rainbonddata
         type: DirectoryOrCreate
-    image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond:{{ .Values.Cluster.installVersion }}
+    image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond:{{ .Values.Cluster.installVersion }}-esgz
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: 1
     priorityComponent: false
