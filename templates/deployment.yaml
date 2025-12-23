@@ -31,7 +31,7 @@ spec:
       serviceAccountName: {{ .Values.serviceAccount.name }}
       volumes:
         - hostPath:
-            path: {{ .Values.Cluster.containerdRuntimePath }}
+            path: {{ include "rainbond.containerdRuntimePath" . }}
             type: Directory
           name: rundir
         - hostPath:

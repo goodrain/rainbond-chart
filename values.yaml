@@ -78,9 +78,13 @@ Cluster:
 
   # Number of component copies
   replicas: 1
- 
-  # Define containerd runtime directory path, default: /run/containerd, if use k3s or RKE2, set to /var/run/k3s/containerd
-  containerdRuntimePath: /run/containerd
+
+  # Define containerd runtime directory path
+  # If not specified, will auto-detect based on Kubernetes distribution:
+  # - Standard K8s: /run/containerd
+  # - K3s/RKE2: /var/run/k3s/containerd
+  # You can manually override this value if needed
+  containerdRuntimePath: # /run/containerd
 
 
 ############################################
