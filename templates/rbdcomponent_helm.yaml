@@ -134,7 +134,7 @@ items:
     volumes:
     - name: containerdsock
       hostPath:
-        path: {{ .Values.Cluster.containerdRuntimePath }}
+        path: {{ include "rainbond.containerdRuntimePath" . }}
         type: Directory
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-chaos:{{ .Values.Cluster.installVersion }}
     imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}

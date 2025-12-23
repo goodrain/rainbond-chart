@@ -3,4 +3,38 @@ Please use the following command to view the installation progress:
 
 kubectl get pod -n {{ .Release.Namespace }}
 
+{{- if .Values.Cluster.gatewayIngressIPs }}
+
 Enter http://{{ .Values.Cluster.gatewayIngressIPs }}:7070 in your browser to access Rainbond
+{{- else }}
+{{- $gatewayIP := "" }}
+{{- if .Values.Cluster.nodesForGateway }}
+{{- $gatewayIP = (index .Values.Cluster.nodesForGateway 0).externalIP }}
+{{- else }}
+{{- $nodes := (lookup "v1" "Node" "" "").items }}
+{{- if $nodes }}
+{{- range $nodes }}
+{{- $nodeAddr := "" }}
+{{- range .status.addresses }}
+{{- if eq .type "InternalIP" }}
+{{- $nodeAddr = .address }}
+{{- end }}
+{{- end }}
+{{- if $nodeAddr }}
+{{- $gatewayIP = $nodeAddr }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- if $gatewayIP }}
+
+Enter http://{{ $gatewayIP }}:7070 in your browser to access Rainbond
+{{- else }}
+
+To access Rainbond, please run the following command to get the gateway IP:
+
+kubectl get pod -n {{ .Release.Namespace }} -l name=rbd-gateway -o wide
+
+Then visit: http://<GATEWAY_NODE_IP>:7070
+{{- end }}
+{{- end }}
