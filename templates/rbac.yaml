@@ -57,6 +57,23 @@ metadata:
 rules:
 - apiGroups:
   - ""
+  resources:
+  - nodes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - delete
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
   - coordination.k8s.io
   resources:
   - configmaps

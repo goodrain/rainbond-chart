@@ -29,6 +29,16 @@ spec:
         name: {{ .Values.operator.name }}
     spec:
       serviceAccountName: {{ .Values.serviceAccount.name }}
+      {{- if .Values.Cluster.nodesForGateway }}
+      {{- $gatewayNode := index .Values.Cluster.nodesForGateway 0 }}
+      {{- if $gatewayNode.internalIP }}
+      hostAliases:
+        - ip: {{ $gatewayNode.internalIP | quote }}
+          hostnames:
+            - goodrain.me
+            - region.goodrain.me
+      {{- end }}
+      {{- end }}
       volumes:
         - hostPath:
             path: {{ include "rainbond.containerdRuntimePath" . }}
