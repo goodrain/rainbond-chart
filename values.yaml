@@ -19,6 +19,9 @@ serviceAccount:
 # rainbondOperator
 operator:
   name: rainbond-operator
+  env:
+  - name: DEPLOY_VERSION
+    value: helm
 
 #############################################
 # Rainbondcluster install Configuration
