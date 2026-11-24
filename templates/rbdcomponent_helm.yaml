@@ -167,7 +167,7 @@ items:
     namespace: {{ .Release.Namespace }}
   spec:  
     image: {{ .Values.Cluster.rainbondImageRepository }}/rbd-api:{{ .Values.Cluster.installVersion }}
-    imagePullPolicy: {{ include "rainbond.consoleUpgradeImagePullPolicy" . }}
+    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: {{ .Values.Cluster.replicas }}
     priorityComponent: true
 
@@ -189,7 +189,7 @@ items:
 {{ toYaml .Values.Component.rbd_app_ui.env | indent 4 }}
 {{- end }}
     image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond:{{ .Values.Cluster.installVersion }}
-    imagePullPolicy: {{ include "rainbond.consoleUpgradeImagePullPolicy" . }}
+    imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
     replicas: 1
     priorityComponent: false
 {{- end }}
