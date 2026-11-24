@@ -65,7 +65,7 @@ spec:
 {{ toYaml .Values.operator.env | indent 10 }}
           {{- end }}
           image: {{ .Values.Cluster.rainbondImageRepository }}/rainbond-operator:{{ .Values.Cluster.installVersion }}
-          imagePullPolicy: {{ .Values.Cluster.imagePullPolicy }}
+          imagePullPolicy: {{ include "rainbond.consoleUpgradeImagePullPolicy" . }}
           name: {{ .Values.operator.name }}
           securityContext:
             allowPrivilegeEscalation: false

@@ -1,0 +1,33 @@
+name: Chart checks
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chart-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: azure/setup-helm@v4
+        with:
+          version: v3.16.4
+      - name: Prepare test dependencies
+        run: |
+          python3 -m venv "$RUNNER_TEMP/chart-tests"
+          "$RUNNER_TEMP/chart-tests/bin/python" -m pip install PyYAML==6.0.2
+      - name: Verify source migration and rendered resources
+        run: |
+          "$RUNNER_TEMP/chart-tests/bin/python" -m unittest discover -s tests -v
+          helm lint .
+          helm package . --destination "$RUNNER_TEMP/chart-package"

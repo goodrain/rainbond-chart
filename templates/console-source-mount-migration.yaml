@@ -1,0 +1,232 @@
+{{- $migration := .Values.Component.rbd_app_ui.sourceMountMigration | default dict -}}
+{{- if and .Release.IsUpgrade .Values.Component.rbd_app_ui.enable (dig "enabled" true $migration) -}}
+{{- $name := include "rainbond.consoleSourceMountMigrationName" . -}}
+{{- $backup := include "rainbond.consoleSourceMountBackupName" . -}}
+{{- $image := printf "%s/rainbond:%s" .Values.Cluster.rainbondImageRepository .Values.Cluster.installVersion -}}
+{{- $pullSecrets := include "rainbond.consoleSourceMountPullSecrets" . -}}
+{{- $baseline := "" -}}
+{{- if .Release.IsUpgrade -}}
+{{- $baseline = include "rainbond.consoleSourceMountBaselineImage" . -}}
+{{- end -}}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ $name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: console-source-mount-migration
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  annotations:
+    helm.sh/hook: pre-upgrade
+    helm.sh/hook-weight: "-40"
+    helm.sh/hook-delete-policy: before-hook-creation
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: console-source-mount-migration
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  annotations:
+    helm.sh/hook: pre-upgrade
+    helm.sh/hook-weight: "-30"
+    helm.sh/hook-delete-policy: before-hook-creation
+rules:
+  - apiGroups: ["rainbond.io"]
+    resources: ["rbdcomponents"]
+    resourceNames: ["rbd-app-ui"]
+    verbs: ["get", "patch"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "create"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    resourceNames:
+      - {{ $name }}-pre-{{ .Release.Revision }}
+      - {{ $name }}-post-{{ .Release.Revision }}
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: console-source-mount-migration
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  annotations:
+    helm.sh/hook: pre-upgrade
+    helm.sh/hook-weight: "-20"
+    helm.sh/hook-delete-policy: before-hook-creation
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $name }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ $name }}
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $name }}-script
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: console-source-mount-migration
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  annotations:
+    helm.sh/hook: pre-upgrade
+    helm.sh/hook-weight: "-10"
+    helm.sh/hook-delete-policy: before-hook-creation
+data:
+  migrate_console_source_mounts.py: |
+{{ required "Console migration helper is missing from the chart package" (.Files.Get "files/migrate_console_source_mounts.py") | indent 4 }}
+{{- $phases := list "apply" -}}
+{{- if .Release.IsUpgrade -}}
+{{- $phases = list "prepare" "apply" -}}
+{{- end -}}
+{{- range $phase := $phases }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $name }}-{{ ternary "pre" "post" (eq $phase "prepare") }}-{{ $.Release.Revision }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: console-source-mount-migration
+    app.kubernetes.io/instance: {{ $.Release.Name }}
+  annotations:
+    helm.sh/hook: {{ ternary "pre-upgrade" "post-upgrade" (eq $phase "prepare") }}
+    helm.sh/hook-weight: {{ ternary "-5" "5" (eq $phase "prepare") | quote }}
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  activeDeadlineSeconds: 300
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 86400
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: console-source-mount-migration
+        app.kubernetes.io/instance: {{ $.Release.Name }}
+    spec:
+      serviceAccountName: {{ $name }}
+      automountServiceAccountToken: false
+{{- if $pullSecrets }}
+      imagePullSecrets:
+{{ $pullSecrets | indent 8 }}
+{{- end }}
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
+{{- if and (eq $phase "prepare") $baseline }}
+      initContainers:
+        - name: inspect-baseline
+          image: {{ $baseline | quote }}
+          imagePullPolicy: IfNotPresent
+          command: ["python3", "-I", "-S", "-B", "/migration/migrate_console_source_mounts.py"]
+          args: ["inspect", "--output=/native-baseline/files.json"]
+          env:
+            - name: BASELINE_IMAGE
+              value: {{ $baseline | quote }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+          volumeMounts:
+            - name: script
+              mountPath: /migration
+              readOnly: true
+            - name: native-baseline
+              mountPath: /native-baseline
+{{- end }}
+      containers:
+        - name: migration
+          image: {{ $image | quote }}
+          imagePullPolicy: {{ include "rainbond.consoleUpgradeImagePullPolicy" $ }}
+          command: ["python3", "-I", "-S", "-B", "/migration/migrate_console_source_mounts.py"]
+          args: [{{ $phase | quote }}]
+          env:
+            - name: TARGET_IMAGE
+              value: {{ $image | quote }}
+            - name: NAMESPACE
+              value: {{ $.Release.Namespace | quote }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: BASELINE_IMAGE
+              value: {{ $baseline | quote }}
+            - name: BASELINE_FILE
+              value: /native-baseline/files.json
+            - name: BACKUP_CONFIGMAP
+              value: {{ $backup | quote }}
+            - name: RELEASE_REVISION
+              value: {{ $.Release.Revision | quote }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+          volumeMounts:
+            - name: script
+              mountPath: /migration
+              readOnly: true
+            - name: native-baseline
+              mountPath: /native-baseline
+              readOnly: true
+            - name: api-access
+              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+              readOnly: true
+      volumes:
+        - name: script
+          configMap:
+            name: {{ $name }}-script
+            defaultMode: 0444
+        - name: native-baseline
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Mi
+        - name: api-access
+          projected:
+            defaultMode: 0440
+            sources:
+              - serviceAccountToken:
+                  path: token
+                  expirationSeconds: 600
+              - configMap:
+                  name: kube-root-ca.crt
+                  items:
+                    - key: ca.crt
+                      path: ca.crt
+              - downwardAPI:
+                  items:
+                    - path: namespace
+                      fieldRef:
+                        fieldPath: metadata.namespace
+{{- end }}
+{{- end }}
