@@ -96,3 +96,10 @@ Cluster:
 Component:
   rbd_app_ui:
     enable: true
+    # Retire verified legacy Console source overrides during Helm upgrades.
+    # Unknown custom source mounts are preserved; source ConfigMaps are retained.
+    sourceMountMigration:
+      enabled: true
+      # Additional Secret name references for a new target image registry.
+      # Current Console Pod imagePullSecrets are inherited without reading data.
+      imagePullSecrets: []
